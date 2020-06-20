@@ -1,0 +1,13 @@
+build
+
+src/Buildtools.exe.lnk
+
+src/TypeScript/.tsconfig
+src/TypeScript/UIX/tsconfig.json
+src/TypeScript/UIX.AjaxWorker/tsconfig.json
+src/TypeScript/UIX.ServiceWorker/tsconfig.json
+
+src/Utilities/Buildtools.config.json
+src/Utilities/Buildtools/.vs
+src/Utilities/Buildtools/bin
+src/Utilities/Buildtools/obj
