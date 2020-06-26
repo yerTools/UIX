@@ -12,22 +12,43 @@ namespace Buildtools
     {
         private static List<DirectoryInfo> possiblePaths = new List<DirectoryInfo>();
         private static List<string> fileExtensions = new List<string>();
-        
+        private static char replacedirectorySlash;
+        private static char replacedirectorySlashWith;
+
+
         static CommandExecuter()
         {
+            char splitChar
+                ;
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                string[] paths = (AppDomain.CurrentDomain.BaseDirectory + ";" +
-                        Environment.CurrentDirectory + ";" +
-                        Environment.GetEnvironmentVariable("PATH")).Replace('/', '\\').Split(';', StringSplitOptions.RemoveEmptyEntries);
+                splitChar = ';';
+                replacedirectorySlash = '/';
+                replacedirectorySlashWith = '\\';
+            }
+            else
+            {
+                splitChar = ':';
+                replacedirectorySlash = '\\';
+                replacedirectorySlashWith = '/';
+                fileExtensions.Add("");
+            }
+
+            {
+                string[] paths = (AppDomain.CurrentDomain.BaseDirectory + splitChar +
+                        Environment.CurrentDirectory + splitChar +
+                        Environment.GetEnvironmentVariable("PATH")).Replace(replacedirectorySlash, replacedirectorySlashWith).Split(splitChar, StringSplitOptions.RemoveEmptyEntries);
+
 
                 HashSet<string> pathHashSet = new HashSet<string>();
 
                 foreach (string path in paths)
                 {
-                    string trimedPath = path?.Trim().TrimEnd('\\');
+                    string trimedPath = path?.Trim().TrimEnd(replacedirectorySlashWith);
                     if (!string.IsNullOrEmpty(trimedPath) && pathHashSet.Add(trimedPath))
                     {
                         DirectoryInfo directoryInfo = new DirectoryInfo(path);
+
                         if (directoryInfo.Exists)
                         {
                             possiblePaths.Add(directoryInfo);
@@ -41,7 +62,7 @@ namespace Buildtools
                 if (!string.IsNullOrWhiteSpace(extensions))
                 {
                     HashSet<string> extensionHashSet = new HashSet<string>();
-                    foreach (string extension in extensions.Split(';', StringSplitOptions.RemoveEmptyEntries))
+                    foreach (string extension in extensions.Split(splitChar, StringSplitOptions.RemoveEmptyEntries))
                     {
                         string trimedExtension = extension?.Trim().TrimStart('.').ToLower();
                         if (!string.IsNullOrEmpty(trimedExtension) && extensionHashSet.Add(trimedExtension))
@@ -51,12 +72,11 @@ namespace Buildtools
                     }
                 }
             }
-            Console.WriteLine();
         }
 
         public static FileInfo GetFileInfo(string executable)
         {
-            executable = executable?.Trim().Replace('/', '\\');
+            executable = executable?.Trim().Replace(replacedirectorySlash, replacedirectorySlashWith);
 
             if (!string.IsNullOrEmpty(executable))
             {
@@ -70,7 +90,7 @@ namespace Buildtools
                 {
                     for (int x = 0; x < possiblePaths.Count; x++)
                     {
-                        fileInfo = new FileInfo(possiblePaths[x].FullName + "\\" + executable);
+                        fileInfo = new FileInfo(possiblePaths[x].FullName + replacedirectorySlashWith + executable);
                         if (fileInfo.Exists)
                         {
                             return fileInfo;
@@ -81,7 +101,7 @@ namespace Buildtools
                 {
                     for (int y = 0; y < fileExtensions.Count; y++)
                     {
-                        fileInfo = new FileInfo((x >= 0 ? possiblePaths[x].FullName + "\\" : "") + executable + fileExtensions[y]);
+                        fileInfo = new FileInfo((x >= 0 ? possiblePaths[x].FullName + replacedirectorySlashWith : "") + executable + fileExtensions[y]);
                         if (fileInfo.Exists)
                         {
                             return fileInfo;
@@ -92,12 +112,37 @@ namespace Buildtools
             return null;
         }
 
+        public enum StatusType
+        {
+            Running,
+            SuccessfullyCompleted,
+            ErrorOccurred
+        }
+
         public Process CommandProcess { get; }
         public FileInfo Executable { get; }
         public string Name { get; set; }
 
-        char[] charBuffer = new char[8192];
+        public StatusType Status
+        {
+            get
+            {
+                if (!CommandProcess.HasExited)
+                {
+                    return StatusType.Running;
+                }
+                if(CommandProcess.ExitCode == 0)
+                {
+                    return StatusType.SuccessfullyCompleted;
+                }
+                StartProcessOutputTasks();
+                return StatusType.ErrorOccurred;
+            }
+        }
+
+        private char[] charBuffer = new char[8192];
         private StringBuilder stringBuffer = new StringBuilder(32768);
+        private bool muted = true;
 
         public CommandExecuter(string command, string arguments = null, DirectoryInfo workingDirectory = null, string name = null, bool mute = false)
         {
@@ -130,18 +175,47 @@ namespace Buildtools
 
             if (!mute)
             {
+                StartProcessOutputTasks();
+            }
+        }
+    
+        private void StartProcessOutputTasks()
+        {
+            if (muted)
+            {
+                muted = false;
                 Task.Factory.StartNew(async () =>
                 {
-                    while (!CommandProcess.HasExited)
+                    int runAfterExit = 2;
+                    while (runAfterExit-- != 0)
                     {
                         int length = await CommandProcess.StandardOutput.ReadAsync(charBuffer);
                         stringBuffer.Append(charBuffer, 0, length);
-                        await Task.Delay(1);
+                        await Task.Delay(2);
+                        if (!CommandProcess.HasExited)
+                        {
+                            runAfterExit++;
+                        }
+                    }
+                }, TaskCreationOptions.AttachedToParent);
+
+                Task.Factory.StartNew(async () =>
+                {
+                    int runAfterExit = 2;
+                    while (runAfterExit-- != 0)
+                    {
+                        int length = await CommandProcess.StandardError.ReadAsync(charBuffer);
+                        stringBuffer.Append(charBuffer, 0, length);
+                        await Task.Delay(2);
+                        if (!CommandProcess.HasExited)
+                        {
+                            runAfterExit++;
+                        }
                     }
                 }, TaskCreationOptions.AttachedToParent);
             }
         }
-    
+
         public string ReadLine()
         {
             if(stringBuffer.Length > 0)
@@ -152,6 +226,10 @@ namespace Buildtools
                 {
                     stringBuffer.Remove(0, index + 1);
                     return data.Slice(0, index + 1).ToString();
+                }else if(Status != StatusType.Running)
+                {
+                    stringBuffer.Clear();
+                    return data.ToString();
                 }
             }
             return null;
