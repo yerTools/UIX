@@ -55,6 +55,7 @@ namespace Buildtools
             {
                 Console.WriteLine("Can't find 'src' directory!");
                 Console.WriteLine("Please set the working directory of this tool inside the 'src' directory or one of its children.");
+                errorOccurredDuringBuild = true;
             }
             else if(SearchNodePackages())
             {
@@ -168,16 +169,19 @@ namespace Buildtools
             if(CommandExecuter.GetFileInfo("npm") == null)
             {
                 Console.WriteLine("Can't find Node.js and npm!");
+                errorOccurredDuringBuild = true;
                 return false;
             }
             if (CommandExecuter.GetFileInfo("tsc") == null)
             {
                 Console.WriteLine("Can't find 'tsc'! You can install it with: 'npm install -g typescript'");
+                errorOccurredDuringBuild = true;
                 return false;
             }
             if (CommandExecuter.GetFileInfo("sass") == null)
             {
                 Console.WriteLine("Can't find 'sass'! You can install it with: 'npm install -g sass'");
+                errorOccurredDuringBuild = true;
                 return false;
             }
             return true;
