@@ -1,4 +1,4 @@
-name: .NET Core
+name: Build Buildtools and UIX
 
 on:
   push:
