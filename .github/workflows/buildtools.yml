@@ -17,9 +17,16 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: 3.1.101
-    - name: Install dependencies
+    - name: Use Node.js 14.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Install buildtools dependencies
       run: dotnet restore
-    - name: Build
+      working-directory: ./src/Utilities/Buildtools
+    - name: Build buildtools
       run: dotnet build --configuration Release --no-restore
+      working-directory: ./src/Utilities/Buildtools
     - name: Test
-      run: dotnet test --no-restore --verbosity normal
+      run: dotnet run --configuration Release --no-restore -b
+      working-directory: ./src/Utilities/Buildtools
