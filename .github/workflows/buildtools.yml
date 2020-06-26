@@ -21,12 +21,16 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 14.x
+    - name: Install npm dependencies
+      run: |
+        npm install -g typescript
+        npm install -g sass
     - name: Install buildtools dependencies
       run: dotnet restore
       working-directory: ./src/Utilities/Buildtools
     - name: Build buildtools
       run: dotnet build --configuration Release --no-restore
       working-directory: ./src/Utilities/Buildtools
-    - name: Test
+    - name: Run buildtools
       run: dotnet run --configuration Release --no-restore -b
       working-directory: ./src/Utilities/Buildtools
