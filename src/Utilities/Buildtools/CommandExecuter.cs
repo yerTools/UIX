@@ -12,22 +12,43 @@ namespace Buildtools
     {
         private static List<DirectoryInfo> possiblePaths = new List<DirectoryInfo>();
         private static List<string> fileExtensions = new List<string>();
-        
+        private static char replacedirectorySlash;
+        private static char replacedirectorySlashWith;
+
+
         static CommandExecuter()
         {
+            char splitChar
+                ;
+            if (Environment.OSVersion.Platform == PlatformID.Win32NT)
             {
-                string[] paths = (AppDomain.CurrentDomain.BaseDirectory + ";" +
-                        Environment.CurrentDirectory + ";" +
-                        Environment.GetEnvironmentVariable("PATH")).Replace('/', '\\').Split(';', StringSplitOptions.RemoveEmptyEntries);
+                splitChar = ';';
+                replacedirectorySlash = '/';
+                replacedirectorySlashWith = '\\';
+            }
+            else
+            {
+                splitChar = ':';
+                replacedirectorySlash = '\\';
+                replacedirectorySlashWith = '/';
+                fileExtensions.Add("");
+            }
+
+            {
+                string[] paths = (AppDomain.CurrentDomain.BaseDirectory + splitChar +
+                        Environment.CurrentDirectory + splitChar +
+                        Environment.GetEnvironmentVariable("PATH")).Replace(replacedirectorySlash, replacedirectorySlashWith).Split(splitChar, StringSplitOptions.RemoveEmptyEntries);
+
 
                 HashSet<string> pathHashSet = new HashSet<string>();
 
                 foreach (string path in paths)
                 {
-                    string trimedPath = path?.Trim().TrimEnd('\\');
+                    string trimedPath = path?.Trim().TrimEnd(replacedirectorySlashWith);
                     if (!string.IsNullOrEmpty(trimedPath) && pathHashSet.Add(trimedPath))
                     {
                         DirectoryInfo directoryInfo = new DirectoryInfo(path);
+
                         if (directoryInfo.Exists)
                         {
                             possiblePaths.Add(directoryInfo);
@@ -41,7 +62,7 @@ namespace Buildtools
                 if (!string.IsNullOrWhiteSpace(extensions))
                 {
                     HashSet<string> extensionHashSet = new HashSet<string>();
-                    foreach (string extension in extensions.Split(';', StringSplitOptions.RemoveEmptyEntries))
+                    foreach (string extension in extensions.Split(splitChar, StringSplitOptions.RemoveEmptyEntries))
                     {
                         string trimedExtension = extension?.Trim().TrimStart('.').ToLower();
                         if (!string.IsNullOrEmpty(trimedExtension) && extensionHashSet.Add(trimedExtension))
@@ -51,12 +72,11 @@ namespace Buildtools
                     }
                 }
             }
-            Console.WriteLine();
         }
 
         public static FileInfo GetFileInfo(string executable)
         {
-            executable = executable?.Trim().Replace('/', '\\');
+            executable = executable?.Trim().Replace(replacedirectorySlash, replacedirectorySlashWith);
 
             if (!string.IsNullOrEmpty(executable))
             {
@@ -70,7 +90,7 @@ namespace Buildtools
                 {
                     for (int x = 0; x < possiblePaths.Count; x++)
                     {
-                        fileInfo = new FileInfo(possiblePaths[x].FullName + "\\" + executable);
+                        fileInfo = new FileInfo(possiblePaths[x].FullName + replacedirectorySlashWith + executable);
                         if (fileInfo.Exists)
                         {
                             return fileInfo;
@@ -81,7 +101,7 @@ namespace Buildtools
                 {
                     for (int y = 0; y < fileExtensions.Count; y++)
                     {
-                        fileInfo = new FileInfo((x >= 0 ? possiblePaths[x].FullName + "\\" : "") + executable + fileExtensions[y]);
+                        fileInfo = new FileInfo((x >= 0 ? possiblePaths[x].FullName + replacedirectorySlashWith : "") + executable + fileExtensions[y]);
                         if (fileInfo.Exists)
                         {
                             return fileInfo;
