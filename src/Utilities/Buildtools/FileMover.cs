@@ -43,6 +43,9 @@ namespace Buildtools
                                 if (targetFile.Exists)
                                 {
                                     targetFile.Delete();
+                                }else if (!fileInfo.Directory.Exists)
+                                {
+                                    fileInfo.Directory.Create();
                                 }
                                 fileInfo.MoveTo(targetFile.FullName, true);
                             }
