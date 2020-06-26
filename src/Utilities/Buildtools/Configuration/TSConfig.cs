@@ -37,7 +37,7 @@ namespace Buildtools.Configuration
                     pretty = buildtools.BuildInRelease ? false : buildtools.TypeScript.Pretty,
                     preserveConstEnums = buildtools.BuildInRelease ? false : buildtools.TypeScript.PreserveConstEnums,
                     removeComments = buildtools.BuildInRelease ? true : buildtools.TypeScript.RemoveComments,
-                    sourceMap = buildtools.BuildInRelease ? false : buildtools.TypeScript.SourceMap,
+                    sourceMap = buildtools.TypeScript.SourceMap,
                     declaration = buildtools.TypeScript.Declaration
                 };
 
