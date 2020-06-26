@@ -92,12 +92,37 @@ namespace Buildtools
             return null;
         }
 
+        public enum StatusType
+        {
+            Running,
+            SuccessfullyCompleted,
+            ErrorOccurred
+        }
+
         public Process CommandProcess { get; }
         public FileInfo Executable { get; }
         public string Name { get; set; }
 
-        char[] charBuffer = new char[8192];
+        public StatusType Status
+        {
+            get
+            {
+                if (!CommandProcess.HasExited)
+                {
+                    return StatusType.Running;
+                }
+                if(CommandProcess.ExitCode == 0)
+                {
+                    return StatusType.SuccessfullyCompleted;
+                }
+                StartProcessOutputTasks();
+                return StatusType.ErrorOccurred;
+            }
+        }
+
+        private char[] charBuffer = new char[8192];
         private StringBuilder stringBuffer = new StringBuilder(32768);
+        private bool muted = true;
 
         public CommandExecuter(string command, string arguments = null, DirectoryInfo workingDirectory = null, string name = null, bool mute = false)
         {
@@ -130,18 +155,47 @@ namespace Buildtools
 
             if (!mute)
             {
+                StartProcessOutputTasks();
+            }
+        }
+    
+        private void StartProcessOutputTasks()
+        {
+            if (muted)
+            {
+                muted = false;
                 Task.Factory.StartNew(async () =>
                 {
-                    while (!CommandProcess.HasExited)
+                    int runAfterExit = 2;
+                    while (runAfterExit-- != 0)
                     {
                         int length = await CommandProcess.StandardOutput.ReadAsync(charBuffer);
                         stringBuffer.Append(charBuffer, 0, length);
-                        await Task.Delay(1);
+                        await Task.Delay(2);
+                        if (!CommandProcess.HasExited)
+                        {
+                            runAfterExit++;
+                        }
+                    }
+                }, TaskCreationOptions.AttachedToParent);
+
+                Task.Factory.StartNew(async () =>
+                {
+                    int runAfterExit = 2;
+                    while (runAfterExit-- != 0)
+                    {
+                        int length = await CommandProcess.StandardError.ReadAsync(charBuffer);
+                        stringBuffer.Append(charBuffer, 0, length);
+                        await Task.Delay(2);
+                        if (!CommandProcess.HasExited)
+                        {
+                            runAfterExit++;
+                        }
                     }
                 }, TaskCreationOptions.AttachedToParent);
             }
         }
-    
+
         public string ReadLine()
         {
             if(stringBuffer.Length > 0)
@@ -152,6 +206,10 @@ namespace Buildtools
                 {
                     stringBuffer.Remove(0, index + 1);
                     return data.Slice(0, index + 1).ToString();
+                }else if(Status != StatusType.Running)
+                {
+                    stringBuffer.Clear();
+                    return data.ToString();
                 }
             }
             return null;

@@ -9,6 +9,7 @@ namespace Buildtools
     public class FileMover
     {
         public bool Running { get; private set; } = true;
+        public Task MoverTask { get; }
         public FileMover(DirectoryInfo sourceDirectory, DirectoryInfo targetDirectory, string searchPattern)
         {
             if (!sourceDirectory.Exists)
@@ -25,9 +26,10 @@ namespace Buildtools
 
             bool isTargetInSource = sourceUri.IsBaseOf(targetUri);
 
-            Task.Factory.StartNew(async () =>
+            MoverTask = Task.Factory.StartNew(async () =>
             {
-                while (Running)
+                int runAfterExit = 2;
+                while (runAfterExit-- != 0)
                 {
                     foreach (FileInfo fileInfo in sourceDirectory.GetFiles(searchPattern, SearchOption.AllDirectories))
                     {
@@ -46,6 +48,11 @@ namespace Buildtools
                         }
                     }
                     await Task.Delay(500);
+
+                    if (Running)
+                    {
+                        runAfterExit++;
+                    }
                 }
             });
         }
