@@ -28,7 +28,7 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
     - [x] Compiling multiple versions of multiple TypeScript 'projects'
     - [x] File watcher to move source maps and declarations to different folders
     - [ ] Compiling sass stylesheets with autoprefixer
-    - [ ] Arguments to control the behaviour
+    - [x] Arguments to control the behaviour
 - [ ] A basic but solid framework
     - [x] A concept for implementing easy Web Worker communication with fallbacks
     - [ ] Libararies for basic tasks
