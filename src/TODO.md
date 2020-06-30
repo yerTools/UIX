@@ -38,4 +38,4 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
 
 ---
 
-##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](LICENSE.md)
+##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)

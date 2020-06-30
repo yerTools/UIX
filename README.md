@@ -73,8 +73,8 @@ You can write me an E-Mail: [FelixM@yer.tools](mailto:FelixM@yer.tools), get in 
 ---
 
 ## Want to try it?
-Just go into the [`src`](src/) directory, there is another [README](src/README.md)-file.
+Just go into the [`src`](/src/) directory, there is another [README](/src/README.md)-file.
 
 ---
 
-##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](LICENSE.md)
+##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)
