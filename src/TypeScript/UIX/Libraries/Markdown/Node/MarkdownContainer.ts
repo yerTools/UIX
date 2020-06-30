@@ -1,15 +1,9 @@
-/// <reference path="ContainerNode.ts" />
-/// <reference path="NodeType.ts" />
+/// <reference path="Node.ts" />
 
 namespace UIX.Libraries.Markdown.Node{
-    export class MarkdownNode extends ContainerNode{
-        public type:NodeType;
-        public readonly children:Node[] = [];
+    export class MarkdownContainer{
 
-        public constructor(){
-            super();
-            this.type = NodeType.Markdown;
-        }
+        public readonly children:Node[] = [];
 
         public getHTML(className = "uix-markdown"){
             let result = "<div" + (className ? " class=\"" + className + "\"" : "") + ">";

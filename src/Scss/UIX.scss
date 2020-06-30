@@ -1,3 +1,23 @@
 body{
     margin: 0;
 }
+
+body, input, textarea{
+    font-family: Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
+    font-size: 16px;
+}
+
+code, .monospace{
+    font-family: Consolas, Liberation Mono, Menlo, monospace;
+}
+
+div.uix-markdown{
+    word-wrap: break-word;
+
+    code{
+        padding: .2em .2em;
+        font-size: 86%;
+        background-color: rgba(0,0,0,.08);
+        border-radius: .5em;
+    }
+}

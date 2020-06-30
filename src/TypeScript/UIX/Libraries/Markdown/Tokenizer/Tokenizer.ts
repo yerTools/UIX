@@ -1,25 +1,65 @@
 /// <reference path="Token.ts" />
 /// <reference path="TokenType.ts" />
+/// <reference path="../Syntax/LanguageDefinition.ts" />
 
 namespace UIX.Libraries.Markdown.Tokenizer{
+    
+
     export class Tokenizer{
-        private readonly markdownParser:MarkdownParser;
+        public static isCharEndOfLine(char:string){
+            return char === '\r' || char === '\n';
+        }
+
+        public static isCharWhitespace(char:string){
+            return !Tokenizer.isCharEndOfLine(char) && char && char.trimStart().length === 0;
+        }
+
+        public static isCharDigit(char:string){
+            switch(char){
+                case '0':
+                case '1':
+                case '2':
+                case '3':
+                case '4':
+                case '5':
+                case '6':
+                case '7':
+                case '8':
+                case '9':
+                    return true;
+            }
+            return false;
+        }
+
+        public static isSpecialChar(char:string){
+            return Syntax.LanguageDefinition.usedSpecialChars.has(char);
+        }
+
+        public static isTextChar(char:string){
+            return char && 
+                !Tokenizer.isCharWhitespace(char) && 
+                !Tokenizer.isSpecialChar(char) &&
+                !Tokenizer.isCharEndOfLine(char) &&
+                !Tokenizer.isCharDigit(char);
+        }
+
+        private readonly text:string;
         private index = 0;
 
         private get peekChar(){
-            if(this.index < this.markdownParser.markdown.length){
-                return this.markdownParser.markdown[this.index];
+            if(this.index < this.text.length){
+                return this.text[this.index];
             }
             return "";
         }
 
-        public constructor(markdownParser:MarkdownParser){
-            this.markdownParser = markdownParser;
+        public constructor(text:string){
+            this.text = text;
         }
 
         private substring(startIndex:number){
             if(startIndex < this.index){
-                return this.markdownParser.markdown.substring(startIndex, this.index < this.markdownParser.markdown.length ? this.index : this.markdownParser.markdown.length);
+                return this.text.substring(startIndex, this.index < this.text.length ? this.index : this.text.length);
             }
             return "";
         }
@@ -40,115 +80,57 @@ namespace UIX.Libraries.Markdown.Tokenizer{
             this.index = 0;
         }
 
-        private isCharEndOfLine(char:string){
-            return char === '\r' || char === '\n';
-        }
-
         private tryParseEndOfLine(startIndex:number, startChar:string){
-            if(this.isCharEndOfLine(startChar)){
-                
-                let count = 1;
+            if(Tokenizer.isCharEndOfLine(startChar)){
                 let includedLineFeed = startChar === '\n';
                 let includedCarriageReturn = startChar === '\r';
 
-                while(this.isCharEndOfLine(this.peekChar)){
+                while(Tokenizer.isCharEndOfLine(this.peekChar)){
 
                     if(this.peekChar === '\n'){
                         if(includedLineFeed){
-                            count++;
-                            includedCarriageReturn = false;
+                            break;
                         }
                         includedLineFeed = true;
                     }else if(this.peekChar === '\r'){
                         if(includedCarriageReturn){
-                            count++;
-                            includedLineFeed = false;
+                            break;
                         }
                         includedCarriageReturn = true;
                     }
 
                     this.next();
                 }
-                return new Token(TokenType.EndOfLine, "\n", startIndex, count);
+                return new Token(TokenType.EndOfLine, "\n", startIndex);
             }
             return null;
         }
         
-        private isCharWhitespace(char:string){
-            return !this.isCharEndOfLine(char) && char && char.trimStart().length === 0;
-        }
-
         private tryParseWhitespace(startIndex:number, startChar:string){
-            if(this.isCharWhitespace(startChar)){
-                while(this.isCharWhitespace(this.peekChar)){
+            if(Tokenizer.isCharWhitespace(startChar)){
+                let text = " ";
+                while(Tokenizer.isCharWhitespace(this.peekChar)){
                     this.next();
+                    text += " ";
                 }
-                return new Token(TokenType.Whitespace, this.substring(startIndex), startIndex, 1);
+                return new Token(TokenType.Whitespace, text, startIndex);
             }
             return null;
-        }
-
-        private isCharDigit(char:string){
-            switch(char){
-                case '0':
-                case '1':
-                case '2':
-                case '3':
-                case '4':
-                case '5':
-                case '6':
-                case '7':
-                case '8':
-                case '9':
-                    return true;
-            }
-            return false;
         }
 
         private tryParseNumber(startIndex:number, startChar:string){
-            if(this.isCharDigit(startChar)){
-                while(this.isCharDigit(this.peekChar)){
+            if(Tokenizer.isCharDigit(startChar)){
+                while(Tokenizer.isCharDigit(this.peekChar)){
                     this.next();
                 }
-                return new Token(TokenType.Number, this.substring(startIndex), startIndex, 1);
+                return new Token(TokenType.Number, this.substring(startIndex), startIndex);
             }
             return null;
         }
-
-        private isSpecialChar(char:string){
-            switch(char){
-                case '*':
-                case '<':
-                case '>':
-                case '#':
-                case '-':
-                case '+':
-                case '=':
-                case '*':
-                case '_':
-                case '~':
-                case '[':
-                case ']':
-                case '(':
-                case ')':
-                case '!':
-                case '`':
-                case '.':
-                case ':':
-                case '\\':
-                    return true;
-            }
-            return false;
-        }
-
+       
         private tryParseSpecialChar(startIndex:number, startChar:string){
-            if(this.isSpecialChar(startChar)){
-                let count = 1;
-                while(this.isSpecialChar(this.peekChar) && this.peekChar === startChar){
-                    count++;
-                    this.next();
-                }
-                return new Token(TokenType.SpecialChar, startChar, startIndex, count);
+            if(Tokenizer.isSpecialChar(startChar)){
+                return new Token(TokenType.SpecialChar, startChar, startIndex);
             }
             return null;
         }
@@ -156,17 +138,14 @@ namespace UIX.Libraries.Markdown.Tokenizer{
         private parseText(startIndex:number){
             let currentChar = this.peekChar;
 
-            while(!this.isCharWhitespace(currentChar) && 
-                  !this.isSpecialChar(currentChar) &&
-                  !this.isCharEndOfLine(currentChar) &&
-                  !this.isCharDigit(currentChar)){
+            while(Tokenizer.isTextChar(currentChar)){
                 this.next();
                 currentChar = this.peekChar;
             };
-            return new Token(TokenType.Text, this.substring(startIndex), startIndex, 1);
+            return new Token(TokenType.Text, this.substring(startIndex), startIndex);
         }
 
-        public getNextToken(){
+        public getNextToken():Token{
             let startIndex = this.index;
             let startChar = this.readChar();
             
@@ -220,7 +199,11 @@ namespace UIX.Libraries.Markdown.Tokenizer{
             let merge = (endIndex:number) => {
                 if(startIndex !== null && startIndex !== endIndex){
                     for(let i = startIndex + 1; i <= endIndex; i++){
-                        (<string>tokens[startIndex].value) += tokens[i].value;
+                        if(tokens[i].type === TokenType.Whitespace){
+                            (<string>tokens[startIndex].value) += " ";
+                        }else{
+                            (<string>tokens[startIndex].value) += tokens[i].value;
+                        }
                     }
                     let deleteCount = endIndex - startIndex;
                     tokens.splice(startIndex + 1, deleteCount);
@@ -255,12 +238,14 @@ namespace UIX.Libraries.Markdown.Tokenizer{
             return tokens;
         }
 
-        private cleanTokens(tokens:Token[]){
-            this.removeWhitespaceFromEmptyLines(tokens);
+        private cleanTokens(tokens:Token[], removeWhitespaceFromEmptyLines:boolean){
+            if(removeWhitespaceFromEmptyLines){
+                this.removeWhitespaceFromEmptyLines(tokens);
+            }
             this.combineTextAndWhitespaceTokens(tokens);
         }
 
-        public getTokensUntilEndOfLine(){
+        public getTokensUntilEndOfLine(removeWhitespaceFromEmptyLines = true){
             let tokens:Token[] = [];
             let currentToken:Token;
 
@@ -269,11 +254,11 @@ namespace UIX.Libraries.Markdown.Tokenizer{
                 tokens.push(currentToken);                
             }while(currentToken.type !== TokenType.EndOfMarkdown && currentToken.type !== TokenType.EndOfLine);
 
-            this.cleanTokens(tokens);
+            this.cleanTokens(tokens, removeWhitespaceFromEmptyLines);
             return tokens;
         }
 
-        public getAllTokens(reset = true){
+        public getAllTokens(reset = true, removeWhitespaceFromEmptyLines = true){
             if(reset){
                 this.reset();
             }
@@ -286,7 +271,7 @@ namespace UIX.Libraries.Markdown.Tokenizer{
                 tokens.push(currentToken);                
             }while(currentToken.type !== TokenType.EndOfMarkdown);
 
-            this.cleanTokens(tokens);
+            this.cleanTokens(tokens, removeWhitespaceFromEmptyLines);
             return tokens;
         }
     }
