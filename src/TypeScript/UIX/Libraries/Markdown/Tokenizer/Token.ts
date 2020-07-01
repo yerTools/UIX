@@ -2,35 +2,25 @@
 
 namespace UIX.Libraries.Markdown.Tokenizer{
     export class Token{
-
-
         public static createEndOfMarkdown(index:number){
-            return new Token(TokenType.EndOfMarkdown, "", index, 1);
+            return new Token(TokenType.EndOfMarkdown, "", index);
         }
 
         public type:TokenType;
         public value:string;
         public index:number;
-        public count:number;
 
-        public constructor(type:TokenType, value:string, index:number, count:number){
+        public constructor(type:TokenType, value:string, index:number){
             this.type = type;
             this.value = value;
             this.index = index;
-            this.count = count;
         }
 
-        public getText(){
-            if(this.count === 0){
-                return "";
-            }else if(this.count === 1){
-                return this.value;
+        public isSimilar(token:Token){
+            if(this.type === TokenType.Whitespace){
+                return this.type === token.type;
             }
-            let text = "";
-            while(this.count--){
-                text += this.value;
-            }
-            return text;
+            return this.type === token.type && this.value === token.value;
         }
     }
 }
