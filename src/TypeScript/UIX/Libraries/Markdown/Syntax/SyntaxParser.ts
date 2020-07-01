@@ -23,13 +23,13 @@ namespace UIX.Libraries.Markdown.Syntax{
                     featureStack.pushToken(this.tokens[this.position]);
                     this.position++;
                 }else{
-                    featureStack.pushOrPopTokenFeatureDefinition(feature);
+                    featureStack.pushOrPopTokenFeatureDefinition(feature, this.tokens[this.position].index);
                     this.position += feature.length;
                 }
             }
 
             featureStack.processPendignOperations();
-            return featureStack.markdownContainer;
+            return featureStack;
         }
 
         private getNextFeature(isContainer:boolean){

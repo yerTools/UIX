@@ -32,7 +32,7 @@ namespace UIX.Libraries.Markdown.Tokenizer{
         }
 
         public static isSpecialChar(char:string){
-            return Syntax.LanguageDefinition.usedSpecialChars.has(char);
+            return char === '\\' || Syntax.LanguageDefinition.usedSpecialChars.has(char);
         }
 
         public static isTextChar(char:string){
@@ -129,6 +129,24 @@ namespace UIX.Libraries.Markdown.Tokenizer{
         }
        
         private tryParseSpecialChar(startIndex:number, startChar:string){
+            if(startChar === '\\'){
+                if(this.peekChar){
+                    startIndex = this.index;
+                    startChar = this.peekChar;
+                    this.next();
+
+                    let textToken = this.tryParseEndOfLine(startIndex, startChar);
+                    if(textToken === null){
+                        textToken = this.tryParseWhitespace(startIndex, startChar);
+                    }
+                    if(textToken !== null){
+                        return new Token(TokenType.Text, textToken.value, startIndex);
+                    }
+
+                    return new Token(TokenType.Text, startChar === "n" ? "\n" : startChar, startIndex);
+                }
+                return new Token(TokenType.Text, "\\", startIndex);
+            }
             if(Tokenizer.isSpecialChar(startChar)){
                 return new Token(TokenType.SpecialChar, startChar, startIndex);
             }

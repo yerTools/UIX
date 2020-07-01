@@ -1,8 +1,10 @@
+/// <reference path="Node/NodeError.ts" />
 /// <reference path="Node/Node.ts" />
 /// <reference path="Node/MarkdownContainer.ts" />
 /// <reference path="Node/FeatureNode.ts" />
 /// <reference path="Node/FeatureNodeOperation.ts" />
 /// <reference path="Tokenizer/Token.ts" />
+/// <reference path="Tokenizer/TokenType.ts" />
 /// <reference path="Syntax/TokenFeatureDefinition.ts" />
 /// <reference path="Syntax/SyntaxType.ts" />
 /// <reference path="Syntax/LanguageFeatures.ts" />
@@ -12,7 +14,8 @@ namespace UIX.Libraries.Markdown{
         private static readonly defaultTextContainer = new Syntax.TokenFeatureDefinition(Syntax.LanguageFeatures.defaultTextContainer, true, 0, 0); 
 
         public readonly markdownContainer = new Node.MarkdownContainer();
-        public readonly featureStack:Node.FeatureNode[] = [];
+        public readonly nodeErrors:Node.NodeError[] = [];
+        private readonly featureStack:Node.FeatureNode[] = [];
         private readonly pendingOperations:Node.FeatureNodeOperation[] = [];
 
         public pushToken(token:Tokenizer.Token){
@@ -20,9 +23,19 @@ namespace UIX.Libraries.Markdown{
                 this.endOfMarkdown();
             }else{
                 this.processPendignOperations();
+                if(token.type === Tokenizer.TokenType.EndOfLine && this.featureStack.length){
+                    for(let i = this.featureStack.length - 1; i !== -1; --i){
+                        if(this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.endsWithNewLine){
+                            this.pop(this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.syntaxType);
+                        }else{
+                            this.processPendignOperations();
+                            break;
+                        }
+                    }
+                }
                 let tokenNode = new Node.TokenNode(token);
                 if(this.featureStack.length === 0){
-                    this.pushTokenFeatureDefinition(FeatureStack.defaultTextContainer);
+                    this.pushTokenFeatureDefinition(FeatureStack.defaultTextContainer, token.index);
                     this.processPendignOperations();
                 }
                 this.featureStack[this.featureStack.length - 1].children.push(tokenNode);
@@ -35,7 +48,9 @@ namespace UIX.Libraries.Markdown{
                 let clearPops = () =>{
                     while(this.featureStack.length && pops.size){
                         if(!pops.delete(this.featureStack[this.featureStack.length - 1].tokenFeatureDefinition.featureDefinition.syntaxDefinition.syntaxType)){
-                            console.log("Popping " + Syntax.SyntaxType[this.featureStack[this.featureStack.length - 1].tokenFeatureDefinition.featureDefinition.syntaxDefinition.syntaxType] + " without command");
+                            if(this.featureStack[this.featureStack.length - 1].tokenFeatureDefinition.featureDefinition.syntaxDefinition.closeTokenRequired){
+                                this.nodeErrors.push(Node.NodeError.closingWithoutTag(this.featureStack[this.featureStack.length - 1]));
+                            }
                         }
                         this.featureStack.pop();
                     }
@@ -46,12 +61,17 @@ namespace UIX.Libraries.Markdown{
                 for(let i = 0; i < this.pendingOperations.length; i++){
                     if(this.pendingOperations[i].push){
                         clearPops();
+                        if(!this.featureStack.length && !(<Node.FeatureNode>this.pendingOperations[i].featureNode).tokenFeatureDefinition.featureDefinition.isContainer){
+                            let featureNode = new Node.FeatureNode(FeatureStack.defaultTextContainer, (<Node.FeatureNode>this.pendingOperations[i].featureNode).index);
+                            this.markdownContainer.children.push(featureNode);
+                            this.featureStack.push(featureNode);
+                        }
                         if(this.featureStack.length){
                             this.featureStack[this.featureStack.length - 1].children.push(<Node.FeatureNode>this.pendingOperations[i].featureNode);
                         }else{
                             this.markdownContainer.children.push(<Node.FeatureNode>this.pendingOperations[i].featureNode);
                         }
-                        if(this.pendingOperations[i].featureNode?.tokenFeatureDefinition.featureDefinition.syntaxDefinition.canHaveChildren){
+                        if((<Node.FeatureNode>this.pendingOperations[i].featureNode).tokenFeatureDefinition.featureDefinition.syntaxDefinition.canHaveChildren){
                             this.featureStack.push(<Node.FeatureNode>this.pendingOperations[i].featureNode);
                         }
                     }else{
@@ -83,15 +103,15 @@ namespace UIX.Libraries.Markdown{
             this.pendingOperations.push(Node.FeatureNodeOperation.push(featureNode));
         }
 
-        public pushOrPopTokenFeatureDefinition(tokenFeatureDefinition:Syntax.TokenFeatureDefinition){
+        public pushOrPopTokenFeatureDefinition(tokenFeatureDefinition:Syntax.TokenFeatureDefinition, index:number){
             if(tokenFeatureDefinition.isCloseSequence && tokenFeatureDefinition.isOpenSequence){
                 if(this.isInTokenFeatureDefinition(tokenFeatureDefinition)){
                     this.popTokenFeatureDefinition(tokenFeatureDefinition);
                 }else{
-                    this.pushTokenFeatureDefinition(tokenFeatureDefinition);
+                    this.pushTokenFeatureDefinition(tokenFeatureDefinition, index);
                 }
             }else if(tokenFeatureDefinition.isOpenSequence){
-                this.pushTokenFeatureDefinition(tokenFeatureDefinition);
+                this.pushTokenFeatureDefinition(tokenFeatureDefinition, index);
             }else{
                 this.popTokenFeatureDefinition(tokenFeatureDefinition);
             }
@@ -101,8 +121,8 @@ namespace UIX.Libraries.Markdown{
             return this.isIn( tokenFeatureDefinition.featureDefinition.syntaxDefinition.syntaxType);
         }
 
-        public pushTokenFeatureDefinition(tokenFeatureDefinition:Syntax.TokenFeatureDefinition){
-            this.push(new Node.FeatureNode(tokenFeatureDefinition));
+        public pushTokenFeatureDefinition(tokenFeatureDefinition:Syntax.TokenFeatureDefinition, index:number){
+            this.push(new Node.FeatureNode(tokenFeatureDefinition, index));
         }
 
         public popTokenFeatureDefinition(tokenFeatureDefinition:Syntax.TokenFeatureDefinition){
@@ -111,7 +131,19 @@ namespace UIX.Libraries.Markdown{
 
         public endOfMarkdown(){
             this.processPendignOperations();
-            console.log("end of markdown", this.featureStack.length);
+            if(this.featureStack.length){
+                for(let i = this.featureStack.length - 1; i !== -1; --i){
+                    if(!this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.closeTokenRequired){
+                        this.pop(this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.syntaxType);
+                    }
+                }
+                this.processPendignOperations();
+                if(this.featureStack.length){
+                    for(let i = 0; i < this.featureStack.length; i++){
+                        this.nodeErrors.push(Node.NodeError.wasNeverClosed(this.featureStack[i]));
+                    }
+                }
+            }
         }
     }
 }

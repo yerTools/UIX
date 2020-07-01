@@ -14,23 +14,28 @@ namespace UIX.Libraries.Markdown.Syntax.LanguageDefinition{
     ];
 
     export const specialDefinitions = [
-        SyntaxDefinition.createSpecial(SyntaxType.InlineLineBreak, "<br/>", "  \n"),
-        SyntaxDefinition.createSpecial(SyntaxType.InlineLineBreak, "<hr/>", "---\n"),
+        SyntaxDefinition.createSpecial(SyntaxType.InlineLineBreak, "<br/>", ["  \n", "<br>"]),
+        SyntaxDefinition.createSpecial(SyntaxType.InlineLineBreak, "<hr/>", ["---\n", "<hr>"]),
         SyntaxDefinition.createSpecial(SyntaxType.CopyrightSign, "©", ["(c)", "(C)"]),
         SyntaxDefinition.createSpecial(SyntaxType.RegisteredSign, "®", ["(r)", "(R)"]),
         SyntaxDefinition.createSpecial(SyntaxType.TrademarkSign, "™", ["(tm)", "(TM)"]),
         SyntaxDefinition.createSpecial(SyntaxType.ParagraphSign, "§", ["(p)", "(P)"]),
         SyntaxDefinition.createSpecial(SyntaxType.EuroSign, "€", ["(e)", "(E)"]),
-        SyntaxDefinition.createSpecial(SyntaxType.PlusMinusSign, "±", "+-")
+        SyntaxDefinition.createSpecial(SyntaxType.PlusMinusSign, "±", "+-"),
+        SyntaxDefinition.createSpecial(SyntaxType.UncheckedCheckbox, "<span class=\"checkbox\"></span>", "[ ]"),
+        SyntaxDefinition.createSpecial(SyntaxType.CheckedCheckbox, "<span class=\"checkbox checked\"></span>", "[x]"),
+        SyntaxDefinition.createSpecial(SyntaxType.PlusCheckbox, "<span class=\"checkbox plus\"></span>", "[+]"),
+        SyntaxDefinition.createSpecial(SyntaxType.MinusCheckbox, "<span class=\"checkbox minus\"></span>", "[-]")
+
     ];
 
     export const containerDefinitions = [
-        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH1, "<h1>", "</h1>", "#", false, false),
-        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH2, "<h2>", "</h2>", "##", false, false),
-        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH3, "<h3>", "</h3>", "###", false, false),
-        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH4, "<h4>", "</h4>", "####", false, false),
-        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH5, "<h5>", "</h5>", "#####", false, false),
-        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH6, "<h6>", "</h6>", "######", false, false)
+        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH1, "<h1>", "</h1>", "#", false, false, true),
+        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH2, "<h2>", "</h2>", "##", false, false, true),
+        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH3, "<h3>", "</h3>", "###", false, false, true),
+        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH4, "<h4>", "</h4>", "####", false, false, true),
+        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH5, "<h5>", "</h5>", "#####", false, false, true),
+        SyntaxDefinition.createSimpleEnclosed(SyntaxType.HeadingH6, "<h6>", "</h6>", "######", false, false, true)
     ];
 
     export const tokenStrings = new Set<string>();

@@ -16,7 +16,7 @@ namespace UIX.Libraries.Markdown.Syntax.LanguageFeatures{
             features[index++] = new FeatureDefinition(LanguageDefinition.inlineDefinitions[i], false);
         }
         for(let i = 0; i < LanguageDefinition.specialDefinitions.length; i++){
-            features[index++] = new FeatureDefinition(LanguageDefinition.specialDefinitions[i], true);
+            features[index++] = new FeatureDefinition(LanguageDefinition.specialDefinitions[i], false);
         }
         for(let i = 0; i < LanguageDefinition.containerDefinitions.length; i++){
             features[index++] = new FeatureDefinition(LanguageDefinition.containerDefinitions[i], true);

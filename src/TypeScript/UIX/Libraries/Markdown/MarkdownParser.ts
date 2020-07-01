@@ -2,6 +2,7 @@
 /// <reference path="../ObjectMerger/ObjectMerger.ts" />
 /// <reference path="Tokenizer/Tokenizer.ts" />
 /// <reference path="Syntax/LanguageDefinition.ts" />
+/// <reference path="Syntax/SyntaxParser.ts" />
 
 namespace UIX.Libraries.Markdown{
     export class MarkdownParser{
@@ -22,7 +23,7 @@ namespace UIX.Libraries.Markdown{
         }
 
         public parseToHTML(){
-            return this.parse().getHTML();
+            return this.parse().markdownContainer.getHTML();
         }
     }
 }

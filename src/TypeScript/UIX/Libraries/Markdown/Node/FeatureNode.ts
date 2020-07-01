@@ -11,10 +11,12 @@ namespace UIX.Libraries.Markdown.Node{
 
         public readonly tokenFeatureDefinition:Syntax.TokenFeatureDefinition;
         public readonly children:Node[] = [];
+        public readonly index:number;
 
-        public constructor(tokenFeatureDefinition:Syntax.TokenFeatureDefinition){
+        public constructor(tokenFeatureDefinition:Syntax.TokenFeatureDefinition, index:number){
             super();
             this.tokenFeatureDefinition = tokenFeatureDefinition;
+            this.index = index;
         }
 
         public getHTML(): string {
