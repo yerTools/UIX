@@ -51,10 +51,10 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
         - [ ] Advanced forms
     - [ ] Site templates
 - [ ] Simple graphical and asynchron scripting language
-- [ ] GitHub integration
-    - [ ] Learning and using GitHub actions
-    - [ ] Automated tests on push
-    - [ ] Automated build on push
+- [x] GitHub integration
+    - [x] Learning and using GitHub actions
+    - [x] Automated tests on push
+    - [x] Automated build on push
     
 ## Additional goals:
 - [ ] Plugin support
