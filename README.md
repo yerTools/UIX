@@ -2,6 +2,15 @@
 
 **`At the moment there is little to no documentation for this project because it isn't in Alpha/Beta stage yet.`**
 
+[![Build Buildtools and UIX](https://github.com/yerTools/UIX/workflows/Build%20Buildtools%20and%20UIX/badge.svg?branch=master)](https://github.com/yerTools/UIX/actions)
+[![Last commit](https://img.shields.io/github/last-commit/yerTools/UIX)](https://github.com/yerTools/UIX/branches/all)
+[![Issues](https://img.shields.io/github/issues-raw/yerTools/UIX)](https://github.com/yerTools/UIX/issues)
+[![Pull requests](https://img.shields.io/github/issues-pr/yerTools/UIX)](https://github.com/yerTools/UIX/pulls)
+[![Licence](https://img.shields.io/github/license/yerTools/UIX)](/LICENSE.md)
+[![Code size](https://img.shields.io/github/languages/code-size/yerTools/UIX)](https://github.com/yerTools/UIX/tree/master/src)
+
+---
+
 Hello world and welcome to a new project of mine.
 
 I'm developing a **C**ontent-**M**anagement-**S**ystem with the feature, that it should be able to perform `serverless`.
