@@ -3,13 +3,24 @@
 /// <reference path="Style/Dimensions.ts" />
 
 namespace UIX.Rendering.Widget{
-    export class ListWidget extends Definition.ContainerWidget {
-        
+    export class HorizontalDividerWidget extends Definition.ContainerWidget {
         public readonly parent:Definition.IWidget;
-        public readonly items:Definition.Widget[] = [];
 
-        public get children(): Definition.Widget[] { return this.items; }
-        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.List; }
+        private topChild:Definition.Widget|null = null;
+        private bottomChild:Definition.Widget|null = null;
+
+        public get children(): Definition.Widget[] { 
+            if(this.topChild && this.bottomChild){
+                return [this.topChild, this.bottomChild];
+            }else if(this.topChild){
+                return [this.topChild];
+            }else if(this.bottomChild){
+                return [this.bottomChild];
+            }else{
+                return [];
+            }
+        }
+        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.HorizontalDivider; }
 
         public constructor(parent:Definition.IWidget){
             super();

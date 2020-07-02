@@ -2,7 +2,7 @@
 
 namespace UIX.Rendering.Widget.Definition{
     export interface IRenderable {
-        render():void;
+        render():HTMLElement;
         getDimensions(invoker?:IRenderable):Style.Dimensions|null;
     }
 }

@@ -2,5 +2,5 @@
 /// <reference path="Rendering/Render.ts" />
 
 namespace UIX{
-    
+    Rendering.Render.test();
 }
