@@ -14,7 +14,7 @@ Currently this application consists of three types:
 
 **`At the moment there is little to no documentation for this project because it isn't in Alpha/Beta stage yet.`**
 
-If you want to try it anyways, there are some [additional informations](/src/Utilities/README.md) in the [`src/Utilities`](/src/Utilities/) directory.
+If you want to try it anyways, there are some [additional information's](/src/Utilities/README.md) in the [`src/Utilities`](/src/Utilities/) directory.
 
 ---
 

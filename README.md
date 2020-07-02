@@ -14,7 +14,7 @@
 Hello world and welcome to a new project of mine.
 
 I'm developing a **C**ontent-**M**anagement-**S**ystem with the feature, that it should be able to perform `serverless`.
-Ok, you stil need a server to serve your content but everything user specified is stored in a single json file, so no PHP, ASP.NET, Node.js, etc. is required.  
+Ok, you still need a server to serve your content but everything user specified is stored in a single json file, so no PHP, ASP.NET, Node.js, etc. is required.  
 If you have a backend that can support server-side scripts *(UIX should be able to perform on multiple platforms)*, the server will do the page rendering.
 So search engines, web crawler and even noscript users are able to read your page.
 But if the client supports javascript, the page rendering is performed on the client side.
@@ -22,8 +22,8 @@ But if the client supports javascript, the page rendering is performed on the cl
 `Web Workers` *(if available)* will perform most of the operations, so the main thread should always be responsive.
 Because to this multithreading approach, the available resources on the client devices are getting utilized for the best performance.
 
-A `Service Worker` *(if available)* will store the main parts of this sytem offline, on the client device.
-This will result in short to no loading times and site navigations should happen nearly instantly.
+A `Service Worker` *(if available)* will store the main parts of this system offline, on the client device.
+This will result in short to no loading times and site navigation's should happen nearly instantly.
 
 `Web Assembly` *(if available)* will be used to realize the HTML rendering engine. With it, it can leverage the most out of modern browsers and at the same time its code can also run outside the web. For example can the ASP.NET 'version' of this project use the same code for the server-side rendering of HTML.
 
@@ -37,10 +37,10 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
     - [x] Compiling multiple versions of multiple TypeScript 'projects'
     - [x] File watcher to move source maps and declarations to different folders
     - [ ] Compiling sass stylesheets with autoprefixer
-    - [x] Arguments to control the behaviour
+    - [x] Arguments to control the behavior
 - [ ] A basic but solid framework
     - [x] A concept for implementing easy Web Worker communication with fallbacks
-    - [ ] Libararies for basic tasks
+    - [ ] Libraries for basic tasks
         - [x] Promise based ajax interface
         - [x] URI parser
         - [ ] Data serializer
