@@ -35,6 +35,24 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
         - [ ] Code block (\`\`\`\` or 4 spaces indent)
             - [ ] Language formatting
         - [ ] Tables
+- [ ] Widget system
+    - [ ] Basic widgets
+        - [ ] Webpage
+            - [ ] Header
+            - [ ] Footer
+        - [x] Markdown
+        - [ ] Divider
+            - [ ] Horizontal
+            - [ ] Vertical
+            - [ ] Grid
+        - [ ] List
+    - [ ] Widget styles
+        - [ ] Basic styles
+        - [ ] State system
+    - [x] Render only updated widgets
+    - [ ] Serialization
+    - [ ] Drag and drop builder
+        - [ ] Templates
 
 ---
 
