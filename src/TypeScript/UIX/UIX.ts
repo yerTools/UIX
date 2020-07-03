@@ -1,6 +1,6 @@
 /// <reference path="Core/Static/Initialization.ts" />
-/// <reference path="Rendering/Render.ts" />
+/// <reference path="WidgetSystem/Render.ts" />
 
 namespace UIX{
-    Rendering.Render.test();
+    WidgetSystem.Render.test();
 }

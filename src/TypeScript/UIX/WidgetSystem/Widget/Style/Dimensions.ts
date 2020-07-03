@@ -1,4 +1,4 @@
-namespace UIX.Rendering.Widget.Style{
+namespace UIX.WidgetSystem.Widget.Style{
     export class Dimensions{
         
     }

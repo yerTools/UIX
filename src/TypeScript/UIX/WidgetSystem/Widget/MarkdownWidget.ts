@@ -3,7 +3,7 @@
 /// <reference path="Definition/ContainerWidgetType.ts" />
 /// <reference path="../../Libraries/Markdown/MarkdownParser.ts" />
 
-namespace UIX.Rendering.Widget{
+namespace UIX.WidgetSystem.Widget{
     export class MarkdownWidget extends Definition.Widget {
         private changed = true;
         private markdown:string;
@@ -33,6 +33,10 @@ namespace UIX.Rendering.Widget{
             this.parent.childWidgetChanged(this);
         }
 
+        public toSerializableWidget(){
+            return new Serializer.SerializableWidget(Serializer.WidgetType.Markdown, undefined, undefined, this.markdown);
+        }
+
         public parentWidgetChanged(widget:Definition.IWidget){ }
 
         public childWidgetChanged(widget:Definition.Widget){ }
@@ -40,6 +44,10 @@ namespace UIX.Rendering.Widget{
         public hasWidgetChanged(){
             return this.changed;
         }
+
+        public isParent(widget:Definition.Widget):boolean{
+            return widget === this || this.parent.isParent(widget);
+        };
 
         public render(){
             if(this.changed){
@@ -53,4 +61,8 @@ namespace UIX.Rendering.Widget{
             throw new Error("Method not implemented.");
         }
     }
+
+    Serializer.SerializableWidget.register(Serializer.WidgetType.Markdown, (serializableWidget, parent) => {
+        return new MarkdownWidget(parent,serializableWidget.data);
+    });
 }

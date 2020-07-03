@@ -1,8 +1,22 @@
 /// <reference path="Definition/IWidget.ts" />
 /// <reference path="Style/Dimensions.ts" />
 
-namespace UIX.Rendering.Widget{
+namespace UIX.WidgetSystem.Widget{
     export class WebpageWidget implements Widget.Definition.IWidget {
+        public static tryParse(serializableWidget:Serializer.SerializableWidget){
+            if(serializableWidget.widgetType === Serializer.WidgetType.Webpage && serializableWidget.children && serializableWidget.children.length === 1){
+                let webpageWidget = new WebpageWidget();
+                if(serializableWidget.children[0]){
+                    let parsed = Serializer.SerializableWidget.tryParse(serializableWidget.children[0], webpageWidget);
+                    if(parsed){
+                        webpageWidget.setBody(parsed);
+                    }
+                }
+                return webpageWidget;
+            }
+            return null;
+        }
+
         private body:Widget.Definition.Widget|null = null;
         private changed = true;
         private bodyChanged = false;
@@ -24,6 +38,10 @@ namespace UIX.Rendering.Widget{
             }
         }
 
+        public toSerializableWidget(){
+            return new Serializer.SerializableWidget(Serializer.WidgetType.Webpage, [ this.body?.toSerializableWidget() ?? null ]);
+        }
+
         public childWidgetChanged(widget:Definition.Widget):void {
             this.changed = true;
             if(this.requestedAnimationFrame === null){
@@ -37,6 +55,10 @@ namespace UIX.Rendering.Widget{
         public hasWidgetChanged(){
             return this.changed;
         }
+
+        public isParent(){
+            return false;
+        };
 
         public render():HTMLElement {
             if(this.changed){

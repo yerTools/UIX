@@ -2,7 +2,7 @@
 /// <reference path="WidgetType.ts" />
 /// <reference path="ContainerWidgetType.ts" />
 
-namespace UIX.Rendering.Widget.Definition{
+namespace UIX.WidgetSystem.Widget.Definition{
     export abstract class ContainerWidget extends Widget {
         public static isContainerWidget(widget:Widget):widget is ContainerWidget{ return widget.widgetType === WidgetType.Container; }
 

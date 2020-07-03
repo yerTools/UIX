@@ -2,7 +2,7 @@
 /// <reference path="Definition/ContainerWidgetType.ts" />
 /// <reference path="Style/Dimensions.ts" />
 
-namespace UIX.Rendering.Widget{
+namespace UIX.WidgetSystem.Widget{
     export class VerticalDividerWidget extends Definition.ContainerWidget {
         public readonly parent:Definition.IWidget;
 
@@ -41,7 +41,7 @@ namespace UIX.Rendering.Widget{
         }
 
         public setLeftChild(leftChild:Definition.Widget|null){
-            if(this.leftChild !== leftChild){
+            if(this.leftChild !== leftChild && (!leftChild || !this.isParent(leftChild))){
                 this.leftChild = leftChild;
                 this.leftChildChanged = true;
                 this.changed = true;
@@ -50,12 +50,20 @@ namespace UIX.Rendering.Widget{
         }
 
         public setRightChild(rightChild:Definition.Widget|null){
-            if(this.rightChild !== rightChild){
+            if(this.rightChild !== rightChild && (!rightChild || !this.isParent(rightChild))){
                 this.rightChild = rightChild;
                 this.changed = true;
                 this.rightChildChanged = true;
                 this.parent.childWidgetChanged(this);
             }
+        }
+
+        public toSerializableWidget(){
+            return new Serializer.SerializableWidget(Serializer.WidgetType.VerticalDivider, 
+                [
+                    this.leftChild?.toSerializableWidget() ?? null,
+                    this.rightChild?.toSerializableWidget() ?? null,
+                ]);
         }
 
         public parentWidgetChanged(widget:Definition.IWidget){
@@ -75,6 +83,10 @@ namespace UIX.Rendering.Widget{
         public hasWidgetChanged(){
             return this.changed;
         }
+
+        public isParent(widget:Definition.Widget):boolean{
+            return widget === this || this.parent.isParent(widget);
+        };
 
         public render(){
             if(this.changed){
@@ -125,4 +137,24 @@ namespace UIX.Rendering.Widget{
             throw new Error("Method not implemented.");
         }
     }
+
+    Serializer.SerializableWidget.register(Serializer.WidgetType.VerticalDivider, (serializableWidget, parent) => {
+        if(serializableWidget.children && serializableWidget.children.length === 2){
+            let verticalDividerWidget = new VerticalDividerWidget(parent);
+            if(serializableWidget.children[0]){
+                let parsed = Serializer.SerializableWidget.tryParse(serializableWidget.children[0], verticalDividerWidget);
+                if(parsed){
+                    verticalDividerWidget.setLeftChild(parsed);
+                }
+            }
+            if(serializableWidget.children[1]){
+                let parsed = Serializer.SerializableWidget.tryParse(serializableWidget.children[1], verticalDividerWidget);
+                if(parsed){
+                    verticalDividerWidget.setRightChild(parsed);
+                }
+            }
+            return verticalDividerWidget;
+        }
+        return null;
+    });
 }
