@@ -50,7 +50,7 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
         - [ ] Basic styles
         - [ ] State system
     - [x] Render only updated widgets
-    - [ ] Serialization
+    - [x] Serialization
     - [ ] Drag and drop builder
         - [ ] Templates
 
