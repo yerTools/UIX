@@ -90,7 +90,7 @@ namespace UIX.WidgetSystem.Widget{
 
         public render(){
             if(this.changed){
-                {
+                if(this.leftChildChanged){
                     let leftChildHTMLElement:HTMLElement|null;
                     if(this.leftChild){
                         leftChildHTMLElement = this.leftChild.render();
@@ -98,18 +98,16 @@ namespace UIX.WidgetSystem.Widget{
                         leftChildHTMLElement = null;
                     }
 
-                    if(this.leftChildChanged){
-                        if(this.leftChildWrapper.lastChild){
-                            this.leftChildWrapper.removeChild(this.leftChildWrapper.lastChild);
-                        }
-                        if(leftChildHTMLElement){
-                            this.leftChildWrapper.appendChild(leftChildHTMLElement);
-                        }
-                        this.leftChildChanged = false;
+                    if(this.leftChildWrapper.lastChild){
+                        this.leftChildWrapper.removeChild(this.leftChildWrapper.lastChild);
                     }
+                    if(leftChildHTMLElement){
+                        this.leftChildWrapper.appendChild(leftChildHTMLElement);
+                    }
+                    this.leftChildChanged = false;
                 }
 
-                {
+                if(this.rightChildChanged){
                     let rightChildHTMLElement:HTMLElement|null;
                     if(this.rightChild){
                         rightChildHTMLElement = this.rightChild.render();
@@ -117,15 +115,13 @@ namespace UIX.WidgetSystem.Widget{
                         rightChildHTMLElement = null;
                     }
 
-                    if(this.rightChildChanged){
-                        if(this.rightChildWrapper.lastChild){
-                            this.rightChildWrapper.removeChild(this.rightChildWrapper.lastChild);
-                        }
-                        if(rightChildHTMLElement){
-                            this.rightChildWrapper.appendChild(rightChildHTMLElement);
-                        }
-                        this.rightChildChanged = false;
+                    if(this.rightChildWrapper.lastChild){
+                        this.rightChildWrapper.removeChild(this.rightChildWrapper.lastChild);
                     }
+                    if(rightChildHTMLElement){
+                        this.rightChildWrapper.appendChild(rightChildHTMLElement);
+                    }
+                    this.rightChildChanged = false;
                 }
                 
                 this.changed = false;

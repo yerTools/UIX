@@ -97,10 +97,11 @@ div.uix-markdown{
     &.wrapper{
         position: relative;
         width: 100%;
+        vertical-align: top;
     }
 
     &.widget{
-        position: absolute;
+        //position: absolute;
         width: 100%;
         height: 100%;
 

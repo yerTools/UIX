@@ -6,7 +6,7 @@
 namespace UIX.WidgetSystem.Widget{
     export class MarkdownWidget extends Definition.Widget {
         private changed = true;
-        private markdown:string;
+        private _markdown:string;
         private readonly htmlElement:HTMLElement;
         private readonly markdownWrapper:HTMLElement;
 
@@ -14,23 +14,23 @@ namespace UIX.WidgetSystem.Widget{
 
         public get widgetType(){ return Definition.WidgetType.Markdown; };
         
+        public get markdown(){
+            return this._markdown;
+        }
+
+        public set markdown(value:string){
+            this._markdown = value;
+            this.changed = true;
+            this.parent.childWidgetChanged(this);
+        }
+
         public constructor(parent:Definition.IWidget, markdown = ""){
             super();
             this.parent = parent;
-            this.markdown = markdown;
+            this._markdown = markdown;
             this.htmlElement = Definition.Widget.createWidget("markdown");
             this.markdownWrapper = Definition.Widget.createWidgetWrapper();
             this.htmlElement.appendChild(this.markdownWrapper);
-        }
-
-        public getMarkdown(){
-            return this.markdown;
-        }
-
-        public setMarkdown(markdown:string){
-            this.markdown = markdown;
-            this.changed = true;
-            this.parent.childWidgetChanged(this);
         }
 
         public toSerializableWidget(){
