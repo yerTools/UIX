@@ -1,6 +1,12 @@
 body{
     margin: 0;
+
     font-size: $page-font-size;
+
+    backface-visibility: hidden;
+    perspective: 1000;
+    transform: translate3d(0,0,0);
+    transform: translateZ(0);
 }
 
 body, input, textarea{
@@ -23,5 +29,23 @@ b{
 }
 
 hr{
-    border-width: .125em;
+    height: .2em;
+    border: none;
+    
+    background-color: $page-underline-color;
+    opacity: .33;
+
+    transition: background-color ease-in-out $page-timing-hover;
+    &:hover{
+        background-color: $page-underline-hover-color;
+    }
+}
+
+u{
+    text-decoration-color: $page-underline-color;
+
+    transition: text-decoration-color ease-in-out $page-timing-hover;
+    &:hover{
+        text-decoration-color: $page-underline-hover-color;
+    }
 }

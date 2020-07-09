@@ -3,6 +3,7 @@ namespace UIX.Libraries.Markdown.Syntax{
         Italic,
         Bold,
         BoldAndItalic,
+        Underline,
         Strikethrough,
         InlineCode,
         InlineLineBreak,

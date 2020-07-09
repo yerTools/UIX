@@ -16,7 +16,11 @@ namespace UIX{
             }
 
             if(!success){
-                WidgetSystem.Render.fromSerializableWidget(<any>{});
+                AjaxInterface.get("https://uix.yer.tools/Webpage.json").then(fallbackResponse => {
+                    if(fallbackResponse && fallbackResponse.wasSuccessfully){
+                        success = WidgetSystem.Render.fromResponse(fallbackResponse);
+                    }
+                });
             }
         });
     }

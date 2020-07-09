@@ -9,6 +9,7 @@ namespace UIX.Libraries.Markdown.Syntax.LanguageDefinition{
     export const inlineDefinitions = [
         SyntaxDefinition.createSimpleEnclosed(SyntaxType.Italic, "<em>", "</em>", ["*", "_"]),
         SyntaxDefinition.createSimpleEnclosed(SyntaxType.Bold, "<b>", "</b>", ["**", "__"]),
+        SyntaxDefinition.createSimpleEnclosed(SyntaxType.Underline, "<u>", "</u>", "~"),
         SyntaxDefinition.createSimpleEnclosed(SyntaxType.Strikethrough, "<s>", "</s>", "~~"),
         SyntaxDefinition.createSimpleEnclosed(SyntaxType.InlineCode, "<code>", "</code>", "`")
     ];

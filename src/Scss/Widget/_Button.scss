@@ -6,16 +6,28 @@
         user-select: none;
 
         span{
-            cursor: pointer;
-            font-weight: $widget-button-font-weight;
-            font-size: $widget-button-font-size;
-            background-color: $widget-button-background-color;
-            color: $widget-button-color;
             display: inline-block;
-            padding: .2em .4em;
             box-sizing: border-box;
-            border: .15em solid $widget-button-color;
+
+            padding: .2em .4em;
+            border: .1em solid $widget-button-background-color;
             border-radius: .2em;
+
+            cursor: pointer;
+
+            font-size: $widget-button-font-size;
+            font-weight: $widget-button-font-weight;
+
+            color: $widget-button-color;
+            background-color: $widget-button-background-color;
+
+            transition: color ease-in-out $page-timing-hover, 
+                        background-color ease-in-out $page-timing-hover;
+
+            &:hover{
+                color: $widget-button-background-color;
+                background-color: $widget-button-color;
+            }
         }
     
         a{

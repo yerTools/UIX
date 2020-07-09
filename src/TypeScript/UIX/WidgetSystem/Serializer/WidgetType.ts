@@ -4,6 +4,7 @@ namespace UIX.WidgetSystem.Serializer{
         Markdown,
         VerticalDivider,
         Button,
-        List
+        List,
+        SiteContent
     }
 }
