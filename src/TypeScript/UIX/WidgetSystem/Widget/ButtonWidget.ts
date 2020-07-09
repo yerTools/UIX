@@ -13,6 +13,7 @@ namespace UIX.WidgetSystem.Widget{
         private readonly buttonWrapperElement:HTMLElement;
 
         public readonly parent:Definition.IWidget;
+        public readonly id:number;
 
         public get widgetType(){ return Definition.WidgetType.Button; };
         
@@ -48,11 +49,13 @@ namespace UIX.WidgetSystem.Widget{
 
         public constructor(parent:Definition.IWidget, text:string, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
             super();
+            this.id = Definition.Widget.getNextId();
+            
             this.parent = parent;
             this._text = text;
             this._href = href;
             this._onClick = onClick;
-            this.htmlElement = Definition.Widget.createWidget("button");
+            this.htmlElement = Definition.Widget.createWidget(this.id, "button");
             this.buttonWrapperElement = Definition.Widget.createWidgetWrapper();
             this.htmlElement.appendChild(this.buttonWrapperElement);
         }

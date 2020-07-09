@@ -1,0 +1,27 @@
+body{
+    margin: 0;
+    font-size: $page-font-size;
+}
+
+body, input, textarea{
+    font-family: $page-font-family;
+    font-weight: $page-font-weight;
+    color: $page-text-color;
+}
+
+code, .monospace{
+    font-family: $page-font-family-monospace;
+    font-weight: $page-code-font-weight;
+}
+
+a{
+    color: $page-text-color;
+}
+
+b{
+    font-weight: $page-bold-font-weight;
+}
+
+hr{
+    border-width: .125em;
+}

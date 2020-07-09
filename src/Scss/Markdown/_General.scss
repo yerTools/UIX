@@ -1,0 +1,11 @@
+div.uix-markdown{
+    word-wrap: break-word;
+
+    code{
+        color: $markdown-code-text-color;
+        padding: .15em .2em;
+        font-size: .9em;
+        background-color: $markdown-code-background-color;
+        border-radius: .4em;
+    }
+}

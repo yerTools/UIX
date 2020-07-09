@@ -5,6 +5,7 @@
 namespace UIX.WidgetSystem.Widget{
     export class ListWidget extends Definition.ContainerWidget {
         public readonly parent:Definition.IWidget;
+        public readonly id:number;
 
         private changed = true;
         private readonly childChanged:boolean[] = [];
@@ -27,8 +28,10 @@ namespace UIX.WidgetSystem.Widget{
 
         public constructor(parent:Definition.IWidget){
             super();
+            this.id = Definition.Widget.getNextId();
+
             this.parent = parent;
-            this.htmlElement = Definition.Widget.createWidget("list");
+            this.htmlElement = Definition.Widget.createWidget(this.id, "list");
         }
 
         public addChild(child:Definition.Widget, index?:number){

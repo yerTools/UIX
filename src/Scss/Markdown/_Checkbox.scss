@@ -1,0 +1,71 @@
+div.uix-markdown{
+    span.checkbox{
+        height: 1em;
+        width: 1em;
+        border: .12em solid $markdown-checkbox-color;
+        border-radius: .25em;
+        box-sizing: border-box;
+        margin-bottom: -.15em;
+        display: inline-block;
+
+        &::before, &::after{
+            content: "";
+            width: 0;
+            height: 0;
+            border-radius: .1em;
+            position: absolute;
+            background-color: $markdown-checkbox-hook-color;
+        }
+
+        &.checked{
+            background-color: $markdown-checkbox-color;
+
+            &::before{
+                width: .12em;
+                height: .35em;
+                margin-left: .15em;
+                margin-top: .32em;
+                transform: rotate(-50deg);
+            }
+
+            &::after{
+                width: .12em;
+                height: .65em;
+                margin-left: .42em;
+                margin-top: .05em;
+                transform: rotate(-140deg);
+            }
+        }
+
+        &.plus{
+            border-color: $markdown-checkbox-plus-color;
+            background-color: $markdown-checkbox-plus-color;
+
+            &::before{
+                width: .7em;
+                height: .12em;
+                margin-left: .03em;
+                margin-top: .32em;
+            }
+
+            &::after{
+                width: .12em;
+                height: .7em;
+                margin-left: .32em;
+                margin-top: .03em;
+            }
+        }
+
+        &.minus{
+            border-color: $markdown-checkbox-minus-color;
+            background-color: $markdown-checkbox-minus-color;
+
+            &::before{
+                width: .7em;
+                height: .12em;
+                margin-left: .03em;
+                margin-top: .32em;
+            }
+        }
+    }
+}

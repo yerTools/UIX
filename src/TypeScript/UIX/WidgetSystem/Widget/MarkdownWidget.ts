@@ -11,6 +11,7 @@ namespace UIX.WidgetSystem.Widget{
         private readonly markdownWrapper:HTMLElement;
 
         public readonly parent:Definition.IWidget;
+        public readonly id:number;
 
         public get widgetType(){ return Definition.WidgetType.Markdown; };
         
@@ -26,9 +27,11 @@ namespace UIX.WidgetSystem.Widget{
 
         public constructor(parent:Definition.IWidget, markdown = ""){
             super();
+            this.id = Definition.Widget.getNextId();
+            
             this.parent = parent;
             this._markdown = markdown;
-            this.htmlElement = Definition.Widget.createWidget("markdown");
+            this.htmlElement = Definition.Widget.createWidget(this.id, "markdown");
             this.markdownWrapper = Definition.Widget.createWidgetWrapper();
             this.htmlElement.appendChild(this.markdownWrapper);
         }

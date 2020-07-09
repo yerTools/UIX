@@ -1,0 +1,26 @@
+.uix{
+    &.wrapper{
+        position: relative;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    &.widget{
+        //position: absolute;
+        width: 100%;
+        height: 100%;
+
+        &.verticalDivider{
+            
+            &>.wrapper{
+                width: 50%;
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.uix-webpage{
+    width: 100vw;
+    min-height: 100vh;
+}

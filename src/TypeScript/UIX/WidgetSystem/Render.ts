@@ -24,49 +24,59 @@ namespace UIX.WidgetSystem.Render{
     export function test(){
 
         let serializableWidget = <Serializer.SerializableWidget> {
+            settings: "{}",
             widgetType: Serializer.WidgetType.Webpage,
             children: [
                 {
                     widgetType: Serializer.WidgetType.VerticalDivider,
                     children: [
                         {
-                            widgetType: Serializer.WidgetType.Markdown,
-                            data: "# Hello World!\nWelcome to the *first* UIX Webpage! **I really hope *you* like it!**"
+                            widgetType: Serializer.WidgetType.List,
+                            children: [
+                                {
+                                    widgetType: Serializer.WidgetType.Markdown,
+                                    data: "# Hello World!\nWelcome to the *first* UIX Webpage! **I really hope *you* like it!**"
+                                },
+                                {
+                                    widgetType: Serializer.WidgetType.Markdown,
+                                    data: "---\n\nThis site is currently under construction, but this is the `first` demo of it. :)"
+                                },
+                                {
+                                    widgetType: Serializer.WidgetType.Markdown,
+                                    data: "## TODO-List:\n[x] Simple markdown parser  \n[ ] Drag and drop editor"
+                                },
+                                {
+                                    widgetType: Serializer.WidgetType.Button,
+                                    data: JSON.stringify({text: "Go to GitHub", href: "https://github.com/yerTools/UIX"})
+                                }
+                            ]
                         },
                         {
                             widgetType: Serializer.WidgetType.List,
                             children: [
                                 {
                                     widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
+                                    data: "# Current time: **" + new Date().toLocaleTimeString() + "**"
                                 },
                                 {
                                     widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
+                                    data: "## Current time: **" + new Date().toLocaleTimeString() + "**"
                                 },
                                 {
                                     widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
+                                    data: "### Current time: **" + new Date().toLocaleTimeString() + "**"
                                 },
                                 {
                                     widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
+                                    data: "#### Current time: **" + new Date().toLocaleTimeString() + "**"
                                 },
                                 {
                                     widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
+                                    data: "##### Current time: **" + new Date().toLocaleTimeString() + "**"
                                 },
                                 {
                                     widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
-                                },
-                                {
-                                    widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
-                                },
-                                {
-                                    widgetType: Serializer.WidgetType.Markdown,
-                                    data: "Current time: **" + new Date().toLocaleTimeString() + "**"
+                                    data: "###### Current time: **" + new Date().toLocaleTimeString() + "**"
                                 },
                                 {
                                     widgetType: Serializer.WidgetType.Markdown,

@@ -1,0 +1,26 @@
+.uix.widget.button{
+    display: inline-block;
+
+    .wrapper{
+        display: inline-block;
+        user-select: none;
+
+        span{
+            cursor: pointer;
+            font-weight: $widget-button-font-weight;
+            font-size: $widget-button-font-size;
+            background-color: $widget-button-background-color;
+            color: $widget-button-color;
+            display: inline-block;
+            padding: .2em .4em;
+            box-sizing: border-box;
+            border: .15em solid $widget-button-color;
+            border-radius: .2em;
+        }
+    
+        a{
+            text-decoration: none !important;
+            font-weight: bold !important;
+        }
+    }
+}

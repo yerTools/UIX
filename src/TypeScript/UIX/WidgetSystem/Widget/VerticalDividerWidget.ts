@@ -5,7 +5,8 @@
 namespace UIX.WidgetSystem.Widget{
     export class VerticalDividerWidget extends Definition.ContainerWidget {
         public readonly parent:Definition.IWidget;
-
+        public readonly id:number;
+        
         private changed = true;
         private leftChildChanged = false;
         private rightChildChanged = false;
@@ -32,8 +33,10 @@ namespace UIX.WidgetSystem.Widget{
 
         public constructor(parent:Definition.IWidget){
             super();
+            this.id = Definition.Widget.getNextId();
+
             this.parent = parent;
-            this.htmlElement = Definition.Widget.createWidget("verticalDivider");
+            this.htmlElement = Definition.Widget.createWidget(this.id, "verticalDivider");
             this.leftChildWrapper = Definition.Widget.createWidgetWrapper();
             this.rightChildWrapper = Definition.Widget.createWidgetWrapper();
             this.htmlElement.appendChild(this.leftChildWrapper);

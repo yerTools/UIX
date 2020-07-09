@@ -3,6 +3,7 @@
 
 namespace UIX.WidgetSystem.Widget.Definition{
     export interface IWidget extends IRenderable{
+        readonly id:number;
         toSerializableWidget():WidgetSystem.Serializer.SerializableWidget;
         childWidgetChanged(widget:Widget):void;
         hasWidgetChanged():boolean;
