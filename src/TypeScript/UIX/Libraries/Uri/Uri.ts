@@ -129,10 +129,29 @@ namespace UIX.Libraries{
             return Uri.fromRelative(this.completePath, baseUri);
         }
 
+        public getRoot(){
+            return (this.protocol ? this.protocol + "://" : "") +
+            (this.host ? this.host + (this.port !== null ? ":" + this.port : "") : "");
+        }
+
+        public getRelativePath(){
+            let path = this.host ? "/" : "./";
+
+            if(this.path){
+                for(let i = 0; i < this.path.length; i++){
+                    path += i === 0 ? this.path[i] : "/" + this.path[i];
+                }
+            }
+
+            return path;
+        }
+
+        public getFullPath(){
+            return this.getRoot() + this.getRelativePath();
+        }
+
         public withRelative(relativeUri:Uri){
-            let newUrl = 
-                (this.protocol ? this.protocol + "://" : "") +
-                (this.host ? this.host + (this.port !== null ? ":" + this.port : "") : "") + "/";
+            let newUrl = this.getRoot() + "/";
 
             let path:string[];
 
@@ -171,6 +190,30 @@ namespace UIX.Libraries{
                 newUrl += "#" + relativeUri.hash;
             }
             return new Uri(newUrl);
+        }
+
+        public addQuery(key:string, value:string){
+            return this.addQueries([key], [value]);
+        }
+
+        public addQueries(keys:string[], values:string[]){
+            if(keys.length === values.length && keys.length){
+                let query = this.query ? "?" + this.query : "";
+                
+                for(let i = 0; i < keys.length; i++){
+                    query += (query ? "&" : "?") + encodeURIComponent(keys[i]) + "=" + encodeURIComponent(values[i]);
+                }
+
+                return new Uri(this.getFullPath() + query);
+            }
+            return this;
+        }
+
+        public isSameRoot(anotherUri:Uri){
+            return this.isAbsolute && anotherUri.isAbsolute &&
+                this.protocol === anotherUri.protocol &&
+                this.host === anotherUri.host &&
+                this.port === anotherUri.port
         }
 
         public toString(){

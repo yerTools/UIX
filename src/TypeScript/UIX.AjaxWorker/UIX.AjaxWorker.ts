@@ -1,3 +1,4 @@
+/// <reference path="../UIX/Polyfill/Polyfills.ts" />
 /// <reference path="../UIX/Core/Static/SharedData/Informations.ts" />
 /// <reference path="../UIX/Core/WebWorker/Interfaces/IWebWorker.ts" />
 /// <reference path="../UIX/Core/WebWorker/Messages/Request.ts" />
@@ -28,7 +29,6 @@ namespace UIX.AjaxWorker{
             }else{
                 result = Libraries.Ajax.AjaxResult.error();
             }
-
             return Core.WebWorker.Messages.FetchResponse.create(request, result);
         }
     };

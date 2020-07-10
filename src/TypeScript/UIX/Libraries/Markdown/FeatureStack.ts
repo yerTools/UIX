@@ -2,6 +2,7 @@
 /// <reference path="Node/Node.ts" />
 /// <reference path="Node/MarkdownContainer.ts" />
 /// <reference path="Node/FeatureNode.ts" />
+/// <reference path="Node/TokenNode.ts" />
 /// <reference path="Node/FeatureNodeOperation.ts" />
 /// <reference path="Tokenizer/Token.ts" />
 /// <reference path="Tokenizer/TokenType.ts" />

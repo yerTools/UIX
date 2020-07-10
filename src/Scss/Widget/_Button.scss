@@ -1,0 +1,38 @@
+.uix.widget.button{
+    display: inline-block;
+
+    .wrapper{
+        display: inline-block;
+        user-select: none;
+
+        span{
+            display: inline-block;
+            box-sizing: border-box;
+
+            padding: .2em .4em;
+            border: .1em solid $widget-button-background-color;
+            border-radius: .2em;
+
+            cursor: pointer;
+
+            font-size: $widget-button-font-size;
+            font-weight: $widget-button-font-weight;
+
+            color: $widget-button-color;
+            background-color: $widget-button-background-color;
+
+            transition: color ease-in-out $page-timing-hover, 
+                        background-color ease-in-out $page-timing-hover;
+
+            &:hover{
+                color: $widget-button-background-color;
+                background-color: $widget-button-color;
+            }
+        }
+    
+        a{
+            text-decoration: none !important;
+            font-weight: bold !important;
+        }
+    }
+}
