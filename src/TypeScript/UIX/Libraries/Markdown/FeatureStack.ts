@@ -23,13 +23,13 @@ namespace UIX.Libraries.Markdown{
             if(token.type === Tokenizer.TokenType.EndOfMarkdown){
                 this.endOfMarkdown();
             }else{
-                this.processPendignOperations();
+                this.processPendingOperations();
                 if(token.type === Tokenizer.TokenType.EndOfLine && this.featureStack.length){
                     for(let i = this.featureStack.length - 1; i !== -1; --i){
                         if(this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.endsWithNewLine){
                             this.pop(this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.syntaxType);
                         }else{
-                            this.processPendignOperations();
+                            this.processPendingOperations();
                             break;
                         }
                     }
@@ -37,13 +37,13 @@ namespace UIX.Libraries.Markdown{
                 let tokenNode = new Node.TokenNode(token);
                 if(this.featureStack.length === 0){
                     this.pushTokenFeatureDefinition(FeatureStack.defaultTextContainer, token.index);
-                    this.processPendignOperations();
+                    this.processPendingOperations();
                 }
                 this.featureStack[this.featureStack.length - 1].children.push(tokenNode);
             }
         }
 
-        public processPendignOperations(){
+        public processPendingOperations(){
             if(this.pendingOperations.length){
                 let pops = new Set<Syntax.SyntaxType>();
                 let clearPops = () =>{
@@ -62,10 +62,20 @@ namespace UIX.Libraries.Markdown{
                 for(let i = 0; i < this.pendingOperations.length; i++){
                     if(this.pendingOperations[i].push){
                         clearPops();
-                        if(!this.featureStack.length && !(<Node.FeatureNode>this.pendingOperations[i].featureNode).tokenFeatureDefinition.featureDefinition.isContainer){
+                        if(!this.featureStack.length && !(<Node.FeatureNode>this.pendingOperations[i].featureNode).tokenFeatureDefinition.featureDefinition.isContainer && 
+                           (<Node.FeatureNode>this.pendingOperations[i].featureNode).tokenFeatureDefinition.featureDefinition.syntaxDefinition.canBeInContainer){
                             let featureNode = new Node.FeatureNode(FeatureStack.defaultTextContainer, (<Node.FeatureNode>this.pendingOperations[i].featureNode).index);
                             this.markdownContainer.children.push(featureNode);
                             this.featureStack.push(featureNode);
+                        }
+                        if(!(<Node.FeatureNode>this.pendingOperations[i].featureNode).tokenFeatureDefinition.featureDefinition.syntaxDefinition.canBeInContainer){
+                            while(this.featureStack.length){
+                                if(this.featureStack[this.featureStack.length - 1].tokenFeatureDefinition.featureDefinition.isContainer){
+                                    this.featureStack.pop();
+                                }else{
+                                    break;
+                                }
+                            }
                         }
                         if(this.featureStack.length){
                             this.featureStack[this.featureStack.length - 1].children.push(<Node.FeatureNode>this.pendingOperations[i].featureNode);
@@ -131,14 +141,14 @@ namespace UIX.Libraries.Markdown{
         }
 
         public endOfMarkdown(){
-            this.processPendignOperations();
+            this.processPendingOperations();
             if(this.featureStack.length){
                 for(let i = this.featureStack.length - 1; i !== -1; --i){
                     if(!this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.closeTokenRequired){
                         this.pop(this.featureStack[i].tokenFeatureDefinition.featureDefinition.syntaxDefinition.syntaxType);
                     }
                 }
-                this.processPendignOperations();
+                this.processPendingOperations();
                 if(this.featureStack.length){
                     for(let i = 0; i < this.featureStack.length; i++){
                         this.nodeErrors.push(Node.NodeError.wasNeverClosed(this.featureStack[i]));
