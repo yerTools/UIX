@@ -1,0 +1,19 @@
+.uix{
+    &.wrapper{
+        position: relative;
+        width: 100%;
+        vertical-align: top;
+    }
+
+    &.widget{
+        min-width: 100%;
+        min-height: 100%;
+    }
+}
+
+.uix-webpage{
+    position: absolute;
+
+    min-width: 100%;
+    min-height: 100%;
+}

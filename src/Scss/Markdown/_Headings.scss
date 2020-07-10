@@ -1,0 +1,26 @@
+div.uix-markdown{
+    h1{
+        font-size: 2.5em;
+        font-weight: 250;
+    }
+
+    h2{
+        font-size: 1.75em;
+        font-weight: 350;
+    }
+
+    h1, h2{
+        text-decoration: underline;
+        text-decoration-color: $page-underline-color;
+
+        transition: text-decoration-color ease-in-out $page-timing-hover;
+        &:hover{
+            text-decoration-color: $page-underline-hover-color;
+        }
+    }
+
+    h3{
+        font-size: 1.25em;
+        font-weight: 450;
+    }
+}

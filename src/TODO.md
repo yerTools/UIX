@@ -7,12 +7,12 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
 
 - [ ] Markdown parser [Basic Syntax](https://www.markdownguide.org/basic-syntax) 
 ([GitHub Like](https://guides.github.com/features/mastering-markdown/))
-    - [ ] Simple behaviour
+    - [ ] Simple behavior
         - [x] Escaping
             - [x] Escape spaces
         - [x] Line breaks (2 trailing space or \<br>)
         - [x] Headers h1 to h6 (\# to \#\#\#\#\#\#)
-            - [ ] Undeline syntax (\- or \=)
+            - [ ] Underline syntax (\- or \=)
             - [ ] Should be usable for [Bookmarks](https://www.w3schools.com/html/html_links_bookmarks.asp)
         - [x] Emphasis like italic (\* or \_), bold (\*\* or \_\_), bold and italic (\*\*\* or \_\_\_) or strikethrough (\~\~)
         - [ ] Horizontal lines (3 or more (without anything else) of: \-, \* or \_)
@@ -24,7 +24,7 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
         - [x] Inline code (\`)
         - [x] Checkboxes ([ ], [x], [+], [-])
         - [ ] Emojis? (:)
-    - [ ] More complex behaviour
+    - [ ] More complex behavior
         - [ ] Block quotes (\>)
         - [x] Paragraphs (empty line)
         - [ ] Lists
@@ -35,7 +35,26 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
         - [ ] Code block (\`\`\`\` or 4 spaces indent)
             - [ ] Language formatting
         - [ ] Tables
+- [ ] Widget system
+    - [ ] Basic widgets
+        - [ ] Webpage
+            - [ ] Header
+            - [ ] Footer
+        - [x] Markdown
+        - [ ] Divider
+            - [ ] Horizontal
+            - [ ] Vertical
+            - [ ] Grid
+        - [x] List
+    - [ ] Widget styles
+        - [ ] Basic styles
+        - [ ] State system
+    - [x] Render only updated widgets
+    - [x] Serialization
+    - [ ] Drag and drop builder
+        - [ ] Templates
+    - [ ] Mobile optimized pages
 
 ---
 
-##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](LICENSE.md)
+##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)

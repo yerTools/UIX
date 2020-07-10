@@ -1,94 +1,25 @@
-body{
-    margin: 0;
-}
+@import "./Variables/General";
+@import "./Variables/Sizes";
+@import "./Variables/Colors";
+@import "./Variables/Timings";
 
-body, input, textarea{
-    font-family: Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
-    font-size: 16px;
-}
+@import "./Font/SourceSansVariable";
+@import "./Font/SourceCodeVariable";
 
-code, .monospace{
-    font-family: Consolas, Liberation Mono, Menlo, monospace;
-}
+@import "./General/Layout";
+@import "./General/Site";
 
-div.uix-markdown{
-    word-wrap: break-word;
+@import "./Markdown/Variables";
+@import "./Markdown/General";
+@import "./Markdown/Headings";
+@import "./Markdown/Checkbox";
 
-    span.checkbox{
-        height: 1em;
-        width: 1em;
-        border: .12em solid #0e5efb;
-        border-radius: .25em;
-        box-sizing: border-box;
-        margin-bottom: -.15em;
-        display: inline-block;
+@import "./Widget/Variables";
+@import "./Widget/General";
+@import "./Widget/Button";
+@import "./Widget/Markdown";
+@import "./Widget/SiteContent";
+@import "./Widget/VerticalDivider";
 
-        &::before, &::after{
-            content: "";
-            width: 0;
-            height: 0;
-            border-radius: .1em;
-            position: absolute;
-            background-color: #ffffff;
-        }
-
-        &.checked{
-            background-color: #0e5efb;
-
-            &::before{
-                width: .12em;
-                height: .35em;
-                margin-left: .15em;
-                margin-top: .32em;
-                transform: rotate(-50deg);
-            }
-
-            &::after{
-                width: .12em;
-                height: .65em;
-                margin-left: .42em;
-                margin-top: .05em;
-                transform: rotate(-140deg);
-            }
-        }
-
-        &.plus{
-            border-color: #33f10b;
-            background-color: #33f10b;
-
-            &::before{
-                width: .7em;
-                height: .12em;
-                margin-left: .03em;
-                margin-top: .32em;
-            }
-
-            &::after{
-                width: .12em;
-                height: .7em;
-                margin-left: .32em;
-                margin-top: .03em;
-            }
-        }
-
-        &.minus{
-            border-color: #f13248;
-            background-color: #f13248;
-
-            &::before{
-                width: .7em;
-                height: .12em;
-                margin-left: .03em;
-                margin-top: .32em;
-            }
-        }
-    }
-
-    code{
-        color: #0c44c1;
-        padding: .15em .2em;
-        font-size: 88%;
-        background-color: rgba(0,0,0,.08);
-        border-radius: .4em;
-    }
-}
+@import "./Widget/Editor/Variables";
+@import "./Widget/Editor/General";
