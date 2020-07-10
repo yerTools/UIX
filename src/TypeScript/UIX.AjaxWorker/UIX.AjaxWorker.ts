@@ -1,4 +1,4 @@
-/// <reference path="../UIx/Polyfill/Polyfills.ts" />
+/// <reference path="../UIX/Polyfill/Polyfills.ts" />
 /// <reference path="../UIX/Core/Static/SharedData/Informations.ts" />
 /// <reference path="../UIX/Core/WebWorker/Interfaces/IWebWorker.ts" />
 /// <reference path="../UIX/Core/WebWorker/Messages/Request.ts" />
