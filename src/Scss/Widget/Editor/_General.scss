@@ -1,0 +1,21 @@
+body.UIX-Edit-Mode .uix.widget.uix-webpage-editor{
+    position: absolute;
+    
+    background-color: $widget-editor-background-color;
+
+    &>.uix.wrapper.webpage-wrapper{
+        width:  100vw;
+        height: 100vh;
+        margin: auto;
+
+        min-width: 75px;
+        min-height: 75px;
+        max-width: 100vw;
+        max-height: 100vh;
+        resize: both;
+
+        overflow: auto;
+
+        outline: 2px solid $widget-editor-webpage-wrapper-outline-color;
+    }
+}

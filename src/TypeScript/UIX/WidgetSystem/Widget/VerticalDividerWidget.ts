@@ -1,6 +1,5 @@
 /// <reference path="Definition/ContainerWidget.ts" />
 /// <reference path="Definition/ContainerWidgetType.ts" />
-/// <reference path="Style/Dimensions.ts" />
 
 namespace UIX.WidgetSystem.Widget{
     export class VerticalDividerWidget extends Definition.ContainerWidget {
@@ -108,6 +107,8 @@ namespace UIX.WidgetSystem.Widget{
                         this.leftChildWrapper.appendChild(leftChildHTMLElement);
                     }
                     this.leftChildChanged = false;
+                }else if(this.leftChild){
+                    this.leftChild.render();
                 }
 
                 if(this.rightChildChanged){
@@ -125,15 +126,13 @@ namespace UIX.WidgetSystem.Widget{
                         this.rightChildWrapper.appendChild(rightChildHTMLElement);
                     }
                     this.rightChildChanged = false;
+                }else if(this.rightChild){
+                    this.rightChild.render();
                 }
                 
                 this.changed = false;
             }
             return this.htmlElement;
-        }
-
-        public getDimensions(invoker?:Definition.IRenderable):Style.Dimensions|null {
-            throw new Error("Method not implemented.");
         }
     }
 

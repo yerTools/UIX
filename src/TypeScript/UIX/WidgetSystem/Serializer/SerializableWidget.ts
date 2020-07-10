@@ -8,11 +8,43 @@ namespace UIX.WidgetSystem.Serializer{
             SerializableWidget.registeredParser.set(widgetType, tryParseCallback);
         }
 
-        public static tryParse(serializableWidget:SerializableWidget, parent:Widget.Definition.IWidget){
-            let parser = this.registeredParser.get(serializableWidget.widgetType);
-            if(parser){
-                return parser(serializableWidget, parent);
+        public static isSerializableWidget(value:any):value is SerializableWidget{
+            if(value && typeof value === "object"){
+                if(typeof value.widgetType !== "number"){
+                    return false;
+                }
+                if(!(value.widgetType in WidgetType)){
+                    return false;
+                }
+                if(value.settings && typeof value.settings !== "string"){
+                    return false;
+                }
+                if(value.data && typeof value.data !== "string"){
+                    return false;
+                }
+                if(value.children){
+                    if(!Array.isArray(value.children)){
+                        return false;
+                    }
+                    for(let i = 0; i < value.children.length; i++){
+                        if(value.children[i] === null || !SerializableWidget.isSerializableWidget(value.children[i])){
+                            return false;
+                        }
+                    }
+                }
+
+                return true;
             }
+            return false
+        }
+
+        public static tryParse(serializableWidget:SerializableWidget, parent:Widget.Definition.IWidget){
+            try{
+                let parser = this.registeredParser.get(serializableWidget.widgetType);
+                if(parser){
+                    return parser(serializableWidget, parent);
+                }
+            }catch(error){}
             return null;
         }
 

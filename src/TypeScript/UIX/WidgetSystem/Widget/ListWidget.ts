@@ -1,6 +1,5 @@
 /// <reference path="Definition/ContainerWidget.ts" />
 /// <reference path="Definition/ContainerWidgetType.ts" />
-/// <reference path="Style/Dimensions.ts" />
 
 namespace UIX.WidgetSystem.Widget{
     export class ListWidget extends Definition.ContainerWidget {
@@ -156,15 +155,13 @@ namespace UIX.WidgetSystem.Widget{
                             this.childrenWrapperAppended.splice(i, 1);
                             --i;
                         }
+                    }else if(this._children[i]){
+                        (<Definition.Widget>this._children[i]).render();
                     }
                 }
                 this.changed = false;
             }
             return this.htmlElement;
-        }
-
-        public getDimensions(invoker?:Definition.IRenderable):Style.Dimensions|null {
-            throw new Error("Method not implemented.");
         }
     }
 

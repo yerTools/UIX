@@ -106,10 +106,6 @@ namespace UIX.WidgetSystem.Widget{
             }
             return this.htmlElement;
         }
-
-        public getDimensions(invoker?: Definition.IRenderable | undefined): Style.Dimensions | null {
-            throw new Error("Method not implemented.");
-        }
     }
 
     Serializer.SerializableWidget.register(Serializer.WidgetType.Button, (serializableWidget, parent) => {

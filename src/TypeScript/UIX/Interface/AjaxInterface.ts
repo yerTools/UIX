@@ -10,11 +10,13 @@ namespace UIX.AjaxInterface{
     const communication = new Core.WebWorker.Communication(YER_TOOLS_UIX_CONFIGURATION.fileSystem.path.jsRootPath + YER_TOOLS_UIX_CONFIGURATION.fileSystem.fileName.ajaxWorker, "AjaxWorker", AjaxWorker.WorkerInterface);
 
     async function request(ajaxRequest:Libraries.Ajax.AjaxRequest){
-        let response = await communication.sendRequest(Core.WebWorker.Messages.FetchRequest.create(ajaxRequest));
-        let fetchResponse = Core.WebWorker.Messages.FetchResponse.tryParse(response);
-        if(fetchResponse){
-            return fetchResponse.ajaxResult;
-        }
+        try{
+            let response = await communication.sendRequest(Core.WebWorker.Messages.FetchRequest.create(ajaxRequest));
+            let fetchResponse = Core.WebWorker.Messages.FetchResponse.tryParse(response);
+            if(fetchResponse){
+                return fetchResponse.ajaxResult;
+            }
+        }catch(error){}
         return null;
     }
 

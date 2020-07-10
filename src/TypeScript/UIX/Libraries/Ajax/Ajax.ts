@@ -89,8 +89,6 @@ namespace UIX.Libraries.Ajax{
 
             this.xhr = new XMLHttpRequest();
 
-            this.xhr.open(this.usePost ? "POST" : "GET", this.url);
-
             let xhr = this.xhr;
             let _this = this;
             this.xhr.onload = function () {
@@ -106,6 +104,8 @@ namespace UIX.Libraries.Ajax{
                     _this.resolve(null);
                 }
             };
+
+            this.xhr.open(this.usePost ? "POST" : "GET", this.url);
 
             if(this.data === null){
                 this.xhr.send();

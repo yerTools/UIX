@@ -1,12 +1,11 @@
 body{
+    position: relative;
+
+    min-height: 100vh;
     margin: 0;
 
-    font-size: $page-font-size;
 
-    backface-visibility: hidden;
-    perspective: 1000;
-    transform: translate3d(0,0,0);
-    transform: translateZ(0);
+    font-size: $page-font-size;
 }
 
 body, input, textarea{

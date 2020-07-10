@@ -1,6 +1,6 @@
 /// <reference path="Definition/IWidget.ts" />
-/// <reference path="Style/Dimensions.ts" />
 /// <reference path="Style/Theme.ts" />
+/// <reference path="../Serializer/SerializableWidget.ts" />
 
 namespace UIX.WidgetSystem.Widget{
     export class WebpageWidget implements Widget.Definition.IWidget {
@@ -9,13 +9,15 @@ namespace UIX.WidgetSystem.Widget{
                 
                 let theme:Style.Theme|undefined;
 
-                let settings = JSON.parse(serializableWidget.settings);
-                if(settings && typeof settings === "object"){
-                    let parsedTheme = Style.Theme.tryParse(settings.theme);
-                    if(parsedTheme){
-                        theme = parsedTheme;
+                try{
+                    let settings = JSON.parse(serializableWidget.settings);
+                    if(settings && typeof settings === "object"){
+                        let parsedTheme = Style.Theme.tryParse(settings.theme);
+                        if(parsedTheme){
+                            theme = parsedTheme;
+                        }
                     }
-                }
+                }catch(error){}
 
                 let webpageWidget = new WebpageWidget(theme);
                 
@@ -128,10 +130,6 @@ namespace UIX.WidgetSystem.Widget{
                 this.requestedAnimationFrame = null;
             }
             return this.htmlElement;
-        }
-
-        public getDimensions(invoker?:Definition.IRenderable):Style.Dimensions|null {
-            throw new Error("Method not implemented.");
         }
     }
 }

@@ -1,6 +1,5 @@
 /// <reference path="Definition/ContainerWidget.ts" />
 /// <reference path="Definition/ContainerWidgetType.ts" />
-/// <reference path="Style/Dimensions.ts" />
 
 namespace UIX.WidgetSystem.Widget{
     export class SiteContentWidget extends Definition.ContainerWidget {
@@ -22,7 +21,7 @@ namespace UIX.WidgetSystem.Widget{
             }
         }
         
-        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.VerticalDivider; }
+        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.SiteContent; }
 
         public constructor(parent:Definition.IWidget){
             super();
@@ -44,7 +43,7 @@ namespace UIX.WidgetSystem.Widget{
         }
 
         public toSerializableWidget(){
-            return new Serializer.SerializableWidget(Serializer.WidgetType.VerticalDivider, [this.child?.toSerializableWidget() ?? null]);
+            return new Serializer.SerializableWidget(Serializer.WidgetType.SiteContent, [this.child?.toSerializableWidget() ?? null]);
         }
 
         public parentWidgetChanged(widget:Definition.IWidget){
@@ -69,11 +68,9 @@ namespace UIX.WidgetSystem.Widget{
         public render(){
             if(this.changed){
                 if(this.childChanged){
-                    let childHTMLElement:HTMLElement|null;
+                    let childHTMLElement:HTMLElement|undefined;
                     if(this.child){
                         childHTMLElement = this.child.render();
-                    }else{
-                        childHTMLElement = null;
                     }
 
                     if(this.childWrapper.lastChild){
@@ -83,15 +80,13 @@ namespace UIX.WidgetSystem.Widget{
                         this.childWrapper.appendChild(childHTMLElement);
                     }
                     this.childChanged = false;
+                }else if(this.child){
+                    this.child.render();
                 }
                 
                 this.changed = false;
             }
             return this.htmlElement;
-        }
-
-        public getDimensions(invoker?:Definition.IRenderable):Style.Dimensions|null {
-            throw new Error("Method not implemented.");
         }
     }
 

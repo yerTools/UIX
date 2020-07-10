@@ -43,6 +43,5 @@ namespace UIX.WidgetSystem.Widget.Definition{
         public abstract hasWidgetChanged():boolean;
         public abstract isParent(widget:Widget):boolean;
         public abstract render():HTMLElement;
-        public abstract getDimensions(invoker?:IRenderable):Style.Dimensions|null;
     }
 }

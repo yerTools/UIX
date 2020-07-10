@@ -1,6 +1,7 @@
 .uix.widget.siteContent{
     box-sizing: border-box;
     width: 100%;
+    min-width: unset;
     max-width: $page-site-content-max-width;
 
     padding: 6px;

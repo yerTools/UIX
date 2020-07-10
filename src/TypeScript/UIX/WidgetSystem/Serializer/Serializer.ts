@@ -10,17 +10,35 @@ namespace UIX.WidgetSystem.Serializer.Serializer{
     }
 
     function customJSONDeserializer(propertyName:string, propertyValue:any):any{
-        if(propertyName === "widgetType"){
-            return WidgetType[propertyValue];
+        if(propertyName === "widgetType" && typeof propertyValue === "string"){
+            return WidgetType[<any>propertyValue];
         }
         return propertyValue;
     }
 
     export function serialize(webpageWidget:Widget.WebpageWidget){
-        return JSON.stringify(SerializableWidget.removeUndefinedProperties(webpageWidget.toSerializableWidget()), customJSONSerializer);
+        return serializeSerializableWidget(webpageWidget.toSerializableWidget());
+    }
+
+    export function serializeSerializableWidget(serializableWidget:SerializableWidget){
+        return JSON.stringify(SerializableWidget.removeUndefinedProperties(serializableWidget), customJSONSerializer);
+    }
+
+    export function deserializeToSerializableWidget(json:string){
+        try{
+            let parsed = JSON.parse(json,customJSONDeserializer);
+            if(SerializableWidget.isSerializableWidget(parsed)){
+                return parsed;
+            }
+        }catch(error){}
+        return null;
     }
 
     export function deserialize(json:string){
-        return Widget.WebpageWidget.tryParse(JSON.parse(json,customJSONDeserializer));
+        let serializableWidget = deserializeToSerializableWidget(json);
+        if(serializableWidget){
+            return Widget.WebpageWidget.tryParse(serializableWidget);
+        }
+        return null;
     }
 }
