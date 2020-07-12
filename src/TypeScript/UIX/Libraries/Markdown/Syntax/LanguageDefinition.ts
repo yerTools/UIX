@@ -16,7 +16,7 @@ namespace UIX.Libraries.Markdown.Syntax.LanguageDefinition{
 
     export const specialDefinitions = [
         SyntaxDefinition.createSpecial(SyntaxType.InlineLineBreak, "<br/>", ["  \n", "<br>"]),
-        SyntaxDefinition.createSpecial(SyntaxType.InlineLineBreak, "<hr/>", ["---\n", "<hr>"]),
+        SyntaxDefinition.createSpecial(SyntaxType.InlineLineBreak, "<hr/>", ["---\n", "<hr>"], false),
         SyntaxDefinition.createSpecial(SyntaxType.CopyrightSign, "©", ["(c)", "(C)"]),
         SyntaxDefinition.createSpecial(SyntaxType.RegisteredSign, "®", ["(r)", "(R)"]),
         SyntaxDefinition.createSpecial(SyntaxType.TrademarkSign, "™", ["(tm)", "(TM)"]),

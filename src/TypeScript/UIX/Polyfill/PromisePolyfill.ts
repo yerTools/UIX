@@ -1,4 +1,4 @@
-const _this = this;
+const __PROMISE_POLYFILL_THIS__ = this;
 namespace UIX.Polyfill{
     declare var window:any;
 
@@ -277,5 +277,5 @@ namespace UIX.Polyfill{
     
             global.Promise = <any>PromisePolyfill;
         }
-    })(typeof window !== "undefined" ? window : _this);
+    })(typeof window !== "undefined" ? window : __PROMISE_POLYFILL_THIS__);
 }
