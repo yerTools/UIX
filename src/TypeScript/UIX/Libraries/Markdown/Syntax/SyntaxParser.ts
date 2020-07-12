@@ -28,7 +28,7 @@ namespace UIX.Libraries.Markdown.Syntax{
                 }
             }
 
-            featureStack.processPendignOperations();
+            featureStack.processPendingOperations();
             return featureStack;
         }
 
@@ -38,12 +38,12 @@ namespace UIX.Libraries.Markdown.Syntax{
             let length = 0;
             for(let x = this.position; x < this.tokens.length; x++){
                 length++;
-                let mathes = LanguageFeatures.tokenFeatureDefinitionMap.matchStart(isContainer, this.tokens, this.position, length);
-                if(mathes.length === 0){
+                let matches = LanguageFeatures.tokenFeatureDefinitionMap.matchStart(isContainer, this.tokens, this.position, length);
+                if(matches.length === 0){
                     length--;
                     break;
                 }
-                lastMatches = mathes;
+                lastMatches = matches;
             }
 
             for(let i = 0; i < lastMatches.length; i++){
