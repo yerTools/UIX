@@ -1,10 +1,6 @@
 name: Build Buildtools and UIX
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+on: [push, pull_request]
 
 jobs:
   build:

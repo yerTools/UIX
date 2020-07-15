@@ -1,0 +1,50 @@
+body{
+    position: relative;
+
+    min-height: 100vh;
+    margin: 0;
+
+
+    font-size: $page-font-size;
+}
+
+body, input, textarea{
+    font-family: $page-font-family;
+    font-weight: $page-font-weight;
+    color: $page-text-color;
+}
+
+code, .monospace{
+    font-family: $page-font-family-monospace;
+    font-weight: $page-code-font-weight;
+}
+
+a{
+    color: $page-text-color;
+}
+
+b{
+    font-weight: $page-bold-font-weight;
+}
+
+hr{
+    height: .2em;
+    border: none;
+    
+    background-color: $page-underline-color;
+    opacity: .33;
+
+    transition: background-color ease-in-out $page-timing-hover;
+    &:hover{
+        background-color: $page-underline-hover-color;
+    }
+}
+
+u{
+    text-decoration-color: $page-underline-color;
+
+    transition: text-decoration-color ease-in-out $page-timing-hover;
+    &:hover{
+        text-decoration-color: $page-underline-hover-color;
+    }
+}

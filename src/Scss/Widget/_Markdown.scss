@@ -1,0 +1,19 @@
+.uix.widget.markdown .uix-markdown{
+    span.checkbox{
+        transition: transform ease-in-out $page-timing-hover;
+
+        &:hover{
+            transform: scale(1.2);
+        }
+    }
+
+    code{
+        transition: background-color ease-in-out $page-timing-hover;
+
+        &:hover{
+            padding: 0 .05em;
+            border: .15em solid $markdown-code-background-color;
+            background-color: transparent;
+        }
+    }
+}
