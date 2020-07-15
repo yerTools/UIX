@@ -86,4 +86,22 @@ Just go into the [`src`](/src/) directory, there is another [README](/src/README
 
 ---
 
+## License
+
+This project is licensed under the well known MIT-License **but** it makes use of the `Commons Clause`.
+This means that you can **not** sell it or sell `a product or service whose value derives, entirely or substantially, from the functionality of the Software.`  
+([Please read the license file for detailed information.](/LICENSE.md))
+
+> This leads to the result, that the software is **not** open source even though the full source code is provided.
+
+#### Why did I use this restricted license?
+My goal with this project is to start a small business by leveraging my work time and providing a cheap service to other small businesses or startups.
+
+I generally don't mind if non-profit organizations or small social clubs use it for their webpage and probably even provide free of charge support.
+But I don't want that any uninvolved third parties sell my work without supporting this project.
+
+If you are unsure, want/need a license or have any other questions, just send me an E-Mail. ([FelixM@yer.tools](mailto:FelixM@yer.tools)) :)
+
+---
+
 ##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)
