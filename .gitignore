@@ -3,6 +3,7 @@ build
 src/Buildtools.exe.lnk
 
 src/TypeScript/.tsconfig
+src/TypeScript/UIX.Configuration.ts
 src/TypeScript/UIX/tsconfig.json
 src/TypeScript/UIX.AjaxWorker/tsconfig.json
 src/TypeScript/UIX.ServiceWorker/tsconfig.json

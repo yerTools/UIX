@@ -68,6 +68,7 @@ namespace Buildtools.Configuration
         public class WebServerFileStructure
         {
             public string SoureMapDirectory { get; set; } = "/sourceMap/";
+            public string JavaScriptRootPath { get; set; } = "/js/";
         }
 
         public TSConfig GenerateTSConfig(string outFile, TSConfig.BuildTarget buildTarget, ESVersion? targetVersion = null, string includePath = null)
