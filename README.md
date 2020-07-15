@@ -7,7 +7,6 @@
 [![Issues](https://img.shields.io/github/issues-raw/yerTools/UIX)](https://github.com/yerTools/UIX/issues)
 [![Pull requests](https://img.shields.io/github/issues-pr/yerTools/UIX)](https://github.com/yerTools/UIX/pulls)
 [![Licence](https://img.shields.io/badge/license-MIT%20with%20Commons%20Clause-blue)](/LICENSE.md)
-[![Code size](https://img.shields.io/github/languages/code-size/yerTools/UIX)](https://github.com/yerTools/UIX/tree/master/src)
 
 ---
 
