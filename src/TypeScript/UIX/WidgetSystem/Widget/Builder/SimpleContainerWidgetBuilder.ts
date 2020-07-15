@@ -7,14 +7,16 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
         private children?:WidgetBuilder;
         private _href?:string;
+        private _blankTarget?:boolean;
         private _onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void);
 
-        public constructor(factory:WidgetFactory, child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+        public constructor(factory:WidgetFactory, child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
             super(factory);
             if(child){
                 this.child(child);
             }
             this._href = href;
+            this._blankTarget = blankTarget;
             this._onClick = onClick;
         }
 
@@ -23,14 +25,20 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return this;
         }
 
-        public set(href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+        public set(href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
             this._href = href;
+            this._blankTarget = blankTarget;
             this._onClick = onClick;
             return this;
         }
 
         public href(href?:string){
             this._href = href;
+            return this;
+        }
+
+        public blankTarget(blankTarget?:boolean){
+            this._blankTarget = blankTarget;
             return this;
         }
 
@@ -49,13 +57,13 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return <MarkdownWidgetBuilder>this.children;
         }
 
-        public button(text?:string, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
-            this.children = this.factory.button(text, href, onClick);
+        public button(text?:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
+            this.children = this.factory.button(text, href, blankTarget, onClick);
             return <ButtonWidgetBuilder>this.children;
         }
 
-        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
-            this.children = this.factory.simpleContainer(child, href, onClick);
+        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+            this.children = this.factory.simpleContainer(child, href, blankTarget, onClick);
             return <SimpleContainerWidgetBuilder>this.children;
         }
 
@@ -64,7 +72,7 @@ namespace UIX.WidgetSystem.Widget.Builder{
         }
 
         public toWidget(parent:Definition.IWidget){
-            let simpleContainerWidget = new SimpleContainerWidget(parent, this._href, this._onClick);
+            let simpleContainerWidget = new SimpleContainerWidget(parent, this._href, this._blankTarget, this._onClick);
 
             if(this.children){
                 simpleContainerWidget.setChild(this.children.toWidget(simpleContainerWidget));

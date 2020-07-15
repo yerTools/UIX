@@ -1,6 +1,7 @@
 /// <reference path="IWidget.ts" />
 /// <reference path="WidgetType.ts" />
 /// <reference path="../../Serializer/SerializableWidget.ts" />
+/// <reference path="../../../Libraries/Uri/Uri.ts" />
 
 namespace UIX.WidgetSystem.Widget.Definition{
     export abstract class Widget implements IWidget{
@@ -32,13 +33,13 @@ namespace UIX.WidgetSystem.Widget.Definition{
             return div;
         }
 
-        public static createAnchor(name?:string, blankTarget = true, href?:string){
+        public static createAnchor(name?:string, blankTarget?:boolean, href?:string){
             let anchor = document.createElement("a");
             
             if(name){
                 anchor.className = name;
             }
-            if(blankTarget){
+            if(blankTarget || href && blankTarget === undefined && !new Libraries.Uri(href).makeAbsolute().isSameRoot(Libraries.Uri.current)){
                 anchor.target = "_blank";
                 anchor.rel = "noopener";
             }

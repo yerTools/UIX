@@ -29,13 +29,13 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return <MarkdownWidgetBuilder>this.children;
         }
 
-        public button(text?:string, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
-            this.children = this.factory.button(text, href, onClick);
+        public button(text?:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
+            this.children = this.factory.button(text, href, blankTarget, onClick);
             return <ButtonWidgetBuilder>this.children;
         }
 
-        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
-            this.children = this.factory.simpleContainer(child, href, onClick);
+        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+            this.children = this.factory.simpleContainer(child, href, blankTarget, onClick);
             return <SimpleContainerWidgetBuilder>this.children;
         }
 

@@ -6,9 +6,12 @@
 namespace UIX.WidgetSystem.Widget{
     export class ButtonWidget extends Definition.Widget {
         private changed = true;
+
         private _text:string;
         private _href:string|undefined;
+        private _blankTarget?:boolean;
         private _onClick:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)|undefined;
+        
         private readonly htmlElement:HTMLElement;
         private readonly buttonWrapperElement:HTMLElement;
 
@@ -37,6 +40,16 @@ namespace UIX.WidgetSystem.Widget{
             this.parent.childWidgetChanged(this);
         }
 
+        public get blankTarget(){
+            return this._blankTarget;
+        }
+
+        public set blankTarget(value:boolean|undefined){
+            this._blankTarget = value;
+            this.changed = true;
+            this.parent.childWidgetChanged(this);
+        }
+
         public get onClick(){
             return this._onClick;
         }
@@ -47,13 +60,14 @@ namespace UIX.WidgetSystem.Widget{
             this.parent.childWidgetChanged(this);
         }
 
-        public constructor(parent:Definition.IWidget, text:string, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
+        public constructor(parent:Definition.IWidget, text:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
             super();
             this.id = Definition.Widget.getNextId();
             
             this.parent = parent;
             this._text = text;
             this._href = href;
+            this._blankTarget = blankTarget;
             this._onClick = onClick;
             this.htmlElement = Definition.Widget.createWidget(this.id, "button");
             this.buttonWrapperElement = Definition.Widget.createWidgetWrapper();
@@ -87,7 +101,7 @@ namespace UIX.WidgetSystem.Widget{
                 }
                 let wrapper = this.buttonWrapperElement;
                 if(this._href){
-                    let link = Definition.Widget.createAnchor(undefined, true, this._href);
+                    let link = Definition.Widget.createAnchor(undefined, this._blankTarget, this._href);
                     wrapper.appendChild(link);
                     wrapper = link;
                 }

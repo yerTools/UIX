@@ -25,12 +25,12 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return new MarkdownWidgetBuilder(this, markdown);
         }
 
-        public button(text?:string, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
-            return new ButtonWidgetBuilder(this, text, href, onClick);
+        public button(text?:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
+            return new ButtonWidgetBuilder(this, text, href, blankTarget, onClick);
         }
 
-        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
-            return new SimpleContainerWidgetBuilder(this, child, href, onClick);
+        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+            return new SimpleContainerWidgetBuilder(this, child, href, blankTarget, onClick);
         }
 
         public template(){

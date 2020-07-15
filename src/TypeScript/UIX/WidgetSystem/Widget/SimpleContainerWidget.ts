@@ -9,11 +9,14 @@ namespace UIX.WidgetSystem.Widget{
         private changed = true;
         private childChanged = false;
         private hrefChanged = true;
+
         private child:Definition.Widget|null = null;
+
         private _href:string|undefined;
+        private _blankTarget?:boolean;
         private _onClick:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)|undefined;
+
         private readonly htmlElement:HTMLElement;
-        private readonly anchorContainer:HTMLAnchorElement;
         private readonly childWrapper:HTMLElement;
 
 
@@ -38,6 +41,17 @@ namespace UIX.WidgetSystem.Widget{
             this.parent.childWidgetChanged(this);
         }
 
+        public get blankTarget(){
+            return this._blankTarget;
+        }
+
+        public set blankTarget(value:boolean|undefined){
+            this._blankTarget = value;
+            this.changed = true;
+            this.hrefChanged = true;
+            this.parent.childWidgetChanged(this);
+        }
+
         public get onClick(){
             return this._onClick;
         }
@@ -48,17 +62,17 @@ namespace UIX.WidgetSystem.Widget{
             this.parent.childWidgetChanged(this);
         }
 
-        public constructor(parent:Definition.IWidget, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+        public constructor(parent:Definition.IWidget, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
             super();
             this.id = Definition.Widget.getNextId();
 
             this.parent = parent;
             this._href = href;
+            this._blankTarget = blankTarget;
             this._onClick = onClick;
 
             this.htmlElement = Definition.Widget.createWidget(this.id, "simpleContainer");
             this.childWrapper = Definition.Widget.createWidgetWrapper();
-            this.anchorContainer = Definition.Widget.createAnchor();
         }
 
         public setChild(child:Definition.Widget|null){
@@ -118,14 +132,10 @@ namespace UIX.WidgetSystem.Widget{
                         this.htmlElement.removeChild(this.htmlElement.lastChild);
                     }
 
-                    if(this.anchorContainer.lastChild){
-                        this.anchorContainer.removeChild(this.anchorContainer.lastChild);
-                    }
-
                     if(this._href){
-                        this.anchorContainer.href = this._href;
-                        this.anchorContainer.appendChild(this.childWrapper);
-                        this.htmlElement.appendChild(this.anchorContainer);
+                        let anchor = Definition.Widget.createAnchor(undefined, this._blankTarget, this._href);
+                        anchor.appendChild(this.childWrapper);
+                        this.htmlElement.appendChild(anchor);
                     }else{
                         this.htmlElement.appendChild(this.childWrapper);
                     }
