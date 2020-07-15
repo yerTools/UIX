@@ -32,6 +32,23 @@ namespace UIX.WidgetSystem.Widget.Definition{
             return div;
         }
 
+        public static createAnchor(name?:string, blankTarget = true, href?:string){
+            let anchor = document.createElement("a");
+            
+            if(name){
+                anchor.className = name;
+            }
+            if(blankTarget){
+                anchor.target = "_blank";
+                anchor.rel = "noopener";
+            }
+            if(href){
+                anchor.href = href;
+            }
+
+            return anchor;
+        }
+
         public abstract readonly parent:IWidget;
         public abstract readonly id:number;
 

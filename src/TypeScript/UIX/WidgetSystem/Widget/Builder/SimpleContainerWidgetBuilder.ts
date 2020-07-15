@@ -1,21 +1,41 @@
 /// <reference path="WidgetBuilder.ts" />
 /// <reference path="IWidgetFactory.ts" />
-/// <reference path="../SiteContentWidget.ts" />
+/// <reference path="../SimpleContainerWidget.ts" />
 
 namespace UIX.WidgetSystem.Widget.Builder{
-    export class SiteContentWidgetBuilder extends WidgetBuilder implements IWidgetFactory{
+    export class SimpleContainerWidgetBuilder extends WidgetBuilder implements IWidgetFactory{
 
         private children?:WidgetBuilder;
+        private _href?:string;
+        private _onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void);
 
-        public constructor(factory:WidgetFactory, child?:((this:SiteContentWidgetBuilder, factory:WidgetFactory, currentBuilder:SiteContentWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+        public constructor(factory:WidgetFactory, child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
             super(factory);
             if(child){
                 this.child(child);
             }
+            this._href = href;
+            this._onClick = onClick;
         }
 
-        public child(child:((this:SiteContentWidgetBuilder, factory:WidgetFactory, currentBuilder:SiteContentWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+        public child(child:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
             this.children = WidgetBuilder.addOne(this, child);
+            return this;
+        }
+
+        public set(href?:string, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+            this._href = href;
+            this._onClick = onClick;
+            return this;
+        }
+
+        public href(href?:string){
+            this._href = href;
+            return this;
+        }
+
+        public onClick(onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+            this._onClick = onClick;
             return this;
         }
 
@@ -44,13 +64,13 @@ namespace UIX.WidgetSystem.Widget.Builder{
         }
 
         public toWidget(parent:Definition.IWidget){
-            let siteContentWidget = new SiteContentWidget(parent);
+            let simpleContainerWidget = new SimpleContainerWidget(parent, this._href, this._onClick);
 
             if(this.children){
-                siteContentWidget.setChild(this.children.toWidget(siteContentWidget));
+                simpleContainerWidget.setChild(this.children.toWidget(simpleContainerWidget));
             }
 
-            return siteContentWidget;
+            return simpleContainerWidget;
         }
     }    
 }

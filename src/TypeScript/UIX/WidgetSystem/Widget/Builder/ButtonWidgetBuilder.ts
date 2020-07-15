@@ -12,6 +12,9 @@ namespace UIX.WidgetSystem.Widget.Builder{
             super(factory);
             if(text){
                 this.set(text, href, onClick);
+            }else{
+                this._href = href;
+                this._onClick = onClick;
             }
         }
 

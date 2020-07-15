@@ -1,6 +1,5 @@
 /// <reference path="Widget/Builder/WidgetFactory.ts" />
 /// <reference path="Widget/WebpageWidgetEditorWidget.ts" />
-/// <reference path="Widget/VerticalDividerWidget.ts" />
 /// <reference path="Serializer/Serializer.ts" />
 /// <reference path="../Libraries/Ajax/AjaxResult.ts" />
 /// <reference path="../Libraries/Uri/Uri.ts" />
@@ -86,9 +85,11 @@ namespace UIX.WidgetSystem.Render{
                 factory.markdown("---\n\nThis site is *currently* **under construction**, but this is the `first` demo of it. :)"),
                 factory.markdown("## TODO-List:\n[x] Simple markdown parser  \n[ ] Drag and drop editor  \n[+] Optimized for speed  \n[-] No PHP or ASP.NET required\n# *Sounds* **interest**ing?"),
                 factory.button("Edit this site", "?UIX-Edit-Mode=true"),
-                factory.markdown("If you want to try it for **free** you can check out ~lima-city.de~ trough my ref-link:"),
-                factory.button("Check out Lima-City.de", "https://www.lima-city.de/?cref=353333"),
-                factory.markdown("There you can create a web hosting account with `PHP` and `SSL` support. **~Completely free!~**\n---\n"),
+                factory.simpleContainer(factory.list([
+                    factory.markdown("If you want to try it for **free** you can check out ~lima-city.de~ trough my ref-link:"),
+                    factory.button("Check out Lima-City.de", "https://www.lima-city.de/?cref=353333"),
+                    factory.markdown("There you can create a web hosting account with `PHP` and `SSL` support. **~Completely free!~**\n---\n")
+                ]), "https://www.lima-city.de/?cref=353333"),
                 factory.button("Go to GitHub", "https://github.com/yerTools/UIX")
             ]);
         });

@@ -87,8 +87,7 @@ namespace UIX.WidgetSystem.Widget{
                 }
                 let wrapper = this.buttonWrapperElement;
                 if(this._href){
-                    let link = document.createElement("a");
-                    link.href = this._href;
+                    let link = Definition.Widget.createAnchor(undefined, true, this._href);
                     wrapper.appendChild(link);
                     wrapper = link;
                 }
