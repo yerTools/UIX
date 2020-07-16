@@ -2,6 +2,7 @@
 /// <reference path="Definition/WidgetType.ts" />
 /// <reference path="Definition/ContainerWidgetType.ts" />
 /// <reference path="../../Libraries/Markdown/Node/Node.ts" />
+/// <reference path="../../Core/Tools/EscapeTextForHTML.ts" />
 
 namespace UIX.WidgetSystem.Widget{
     export class ButtonWidget extends Definition.Widget {
@@ -108,7 +109,7 @@ namespace UIX.WidgetSystem.Widget{
                     wrapper = link;
                 }
                 let span = document.createElement("span");
-                span.innerHTML = Libraries.Markdown.Node.Node.escapeTextForHTML(this._text);
+                span.innerHTML = Core.Tools.escapeTextForHTML(this._text);
                 wrapper.appendChild(span);
                 if(this._onClick){
                     wrapper.onclick = event => {

@@ -9,6 +9,8 @@
     &::-webkit-scrollbar-track {
         background: $scrollbar-background-color;
 
+        border-radius: 6px;
+        
         transition: background ease-in-out $page-timing-hover;
         &:hover{
             background: $scrollbar-hover-background-color;

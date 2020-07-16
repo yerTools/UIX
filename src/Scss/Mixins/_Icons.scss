@@ -1,0 +1,48 @@
+@mixin icon($size: 16px) {
+    display: inline-block;
+
+    width: $size;
+    height: $size;
+}
+
+@mixin icon-x($size: 16px){
+    @include icon($size);
+
+    &::before, &::after{
+        content: "";
+
+        position: absolute;
+        display: inline-block;
+
+        left: $size * .5 - $size * .1;
+        top: - $size * .05;
+
+        height: $size * 1.2;
+        width: $size * .2;
+        border-radius: $size * .2;
+
+        background-color: $icon-x-color;
+
+        transition: background-color ease-in-out $page-timing-hover, transform ease-in-out $page-timing-hover;
+    }
+    
+    &:hover::before, &:hover::after{
+        background-color: $icon-x-hover-color;
+    }
+
+    &::before{
+        transform: rotate(45deg);
+    }
+
+    &::after{
+        transform: rotate(-45deg);
+    }
+
+    &:hover::before{
+        transform: rotate(-45deg);
+    }
+
+    &:hover::after{
+        transform: rotate(45deg);
+    }
+}

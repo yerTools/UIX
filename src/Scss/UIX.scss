@@ -3,6 +3,8 @@
 @import "./Variables/Colors";
 @import "./Variables/Timings";
 
+@import "./Mixins/Icons";
+
 @import "./Font/SourceSansVariable";
 @import "./Font/SourceCodeVariable";
 
@@ -21,6 +23,7 @@
 @import "./Widget/SiteContent";
 @import "./Widget/VerticalDivider";
 @import "./Widget/SimpleContainer";
+@import "./Widget/Popup";
 
 @import "./Widget/Editor/Variables";
 @import "./Widget/Editor/General";

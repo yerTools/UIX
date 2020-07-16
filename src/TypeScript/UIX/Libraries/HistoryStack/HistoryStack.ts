@@ -23,6 +23,14 @@ namespace UIX.Libraries.HistoryStack{
             return null;
         }
 
+        public clear(){
+            if(this.history.length){
+                this.history.splice(0, this.history.length);
+            }
+            this.nextIndex = 0;
+            this.lastPush = 0;
+        }
+
         public push(state:string){
             if(this.current() !== state){
                 let now = new Date().getTime();

@@ -3,8 +3,11 @@
 
 /// <reference path="Polyfill/Polyfills.ts" />
 /// <reference path="Core/Static/Initialization.ts" />
+/// <reference path="Localization/Index.ts" />
+
 /// <reference path="Interface/AjaxInterface.ts" />
 /// <reference path="Interface/ServiceWorkerInterface.ts" />
+
 /// <reference path="WidgetSystem/Render.ts" />
 
 namespace UIX{
@@ -14,9 +17,11 @@ namespace UIX{
         WidgetSystem.Render.fallback();
     }else{
         let success = false;
-        let localStoredWebsite = localStorage.getItem("webpage");
-        if(localStoredWebsite){
-            success = WidgetSystem.Render.fromJson(localStoredWebsite);
+        {
+            let localStoredWebsite = localStorage.getItem("webpage");
+            if(localStoredWebsite){
+                success = WidgetSystem.Render.fromJson(localStoredWebsite);
+            }
         }
         if(!success){
             AjaxInterface.get("/Webpage.uix.json").then(response => {

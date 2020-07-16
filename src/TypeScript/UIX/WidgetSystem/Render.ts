@@ -79,7 +79,7 @@ namespace UIX.WidgetSystem.Render{
     }
 
     export function fallback(){
-        let webpage = Widget.Builder.WidgetFactory.buildWebpage(siteContent => {
+        appendWebpageWidget(Widget.Builder.WidgetFactory.buildWebpage(siteContent => {
             siteContent.list(factory => [
                 factory.markdown("# Hello World!\nWelcome to the *first* UIX Webpage! **I really hope *you* like it!**"),
                 factory.markdown("---\n\nThis site is *currently* **under construction**, but this is the `first` demo of it. :)"),
@@ -92,10 +92,6 @@ namespace UIX.WidgetSystem.Render{
                 ]), "https://www.lima-city.de/?cref=353333"),
                 factory.button("Go to GitHub", "https://github.com/yerTools/UIX")
             ]);
-        });
-
-        console.log(Serializer.Serializer.serializeSerializableWidget(webpage.toSerializableWidget()));
-
-        appendWebpageWidget(webpage);
+        }));
     }
 }
