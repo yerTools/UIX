@@ -6,8 +6,8 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
         private readonly children:WidgetBuilder[] = [];
 
-        public constructor(factory:WidgetFactory, children?:((this:ListWidgetBuilder, factory:WidgetFactory, currentBuilder:ListWidgetBuilder) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
-            super(factory);
+        public constructor(children?:((this:ListWidgetBuilder, factory:WidgetFactory, currentBuilder:ListWidgetBuilder) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
+            super();
             if(children){
                 this.add(children);
             }
@@ -32,5 +32,22 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
             return listWidget;
         }
-    }    
+    }
+
+    WidgetBuilder.register(Serializer.WidgetType.List, widget => {
+        return new ListWidgetBuilder(() =>{
+            let children:WidgetBuilder[] = [];
+
+            let widgets = (<ListWidget>widget).children;
+
+            for(let i = 0; i < widgets.length; i++){
+                let parsed = WidgetBuilder.tryParse(widgets[i]);
+                if(parsed){
+                    children.push(parsed);
+                }
+            }
+
+            return children;
+        });
+    });
 }

@@ -4,10 +4,10 @@
 
 namespace UIX.WidgetSystem.Widget.Builder{
     export class WidgetFactory implements IWidgetFactory{
-        
+        public static readonly factory = new WidgetFactory();
 
         public static buildWebpage(siteContent:((this:SiteContentWidgetBuilder, siteContentWidgetBuilder:SiteContentWidgetBuilder) => void), theme?:Style.Theme){
-            let siteContentWidgetBuilder = new SiteContentWidgetBuilder(new WidgetFactory());
+            let siteContentWidgetBuilder = new SiteContentWidgetBuilder();
             
             siteContent.call(siteContentWidgetBuilder, siteContentWidgetBuilder);
 
@@ -18,23 +18,23 @@ namespace UIX.WidgetSystem.Widget.Builder{
         }
 
         public list(children?:((this:ListWidgetBuilder, factory:WidgetFactory, currentBuilder:ListWidgetBuilder) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
-            return new ListWidgetBuilder(this, children);
+            return new ListWidgetBuilder(children);
         }
 
         public markdown(markdown?:string){
-            return new MarkdownWidgetBuilder(this, markdown);
+            return new MarkdownWidgetBuilder(markdown);
         }
 
         public button(text?:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
-            return new ButtonWidgetBuilder(this, text, href, blankTarget, onClick);
+            return new ButtonWidgetBuilder(text, href, blankTarget, onClick);
         }
 
         public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
-            return new SimpleContainerWidgetBuilder(this, child, href, blankTarget, onClick);
+            return new SimpleContainerWidgetBuilder(child, href, blankTarget, onClick);
         }
 
         public template(){
-            return new TemplateFactory(this);
+            return TemplateFactory.template;
         }
     }
 }

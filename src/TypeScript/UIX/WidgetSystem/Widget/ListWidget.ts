@@ -23,11 +23,12 @@ namespace UIX.WidgetSystem.Widget{
             return children;
         }
         
-        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.List; }
+        public get containerWidgetType(){ return Definition.ContainerWidgetType.List; }
+        public get serializableWidgetType(){ return  Serializer.WidgetType.List; }
 
         public constructor(parent:Definition.IWidget){
             super();
-            this.id = Definition.Widget.getNextId();
+            this.id = Definition.Widget.getNextId(this);
 
             this.parent = parent;
             this.htmlElement = Definition.Widget.createWidget(this.id, "list");

@@ -17,5 +17,30 @@ body.UIX-Edit-Mode .uix.widget.uix-webpage-editor{
         overflow: auto;
 
         outline: 2px solid $widget-editor-webpage-wrapper-outline-color;
+
+        .uix.widget.uix-webpage{
+            .uix.widget{
+                cursor: pointer;
+    
+                &.hover-highlight{
+                    outline: 2px solid $widget-editor-widget-hover-outline-color;
+
+                    &::before{
+                        content: "";
+
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+
+                        width: 100%;
+                        height: 100%;
+                        
+                        opacity: .25;
+                        background-color: $widget-editor-widget-hover-background-color;
+                    }
+                }
+            }
+        }
+        
     }
 }

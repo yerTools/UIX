@@ -28,8 +28,9 @@ namespace UIX.WidgetSystem.Widget{
             }
         }
         
-        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.SimpleContainer; }
-
+        public get containerWidgetType(){ return Definition.ContainerWidgetType.SimpleContainer; }
+        public get serializableWidgetType(){ return  Serializer.WidgetType.SimpleContainer; }
+        
         public get href(){
             return this._href;
         }
@@ -64,14 +65,14 @@ namespace UIX.WidgetSystem.Widget{
 
         public constructor(parent:Definition.IWidget, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
             super();
-            this.id = Definition.Widget.getNextId();
+            this.id = Definition.Widget.getNextId(this);
 
             this.parent = parent;
             this._href = href;
             this._blankTarget = blankTarget;
             this._onClick = onClick;
 
-            this.htmlElement = Definition.Widget.createWidget(this.id, "simpleContainer");
+            this.htmlElement = Definition.Widget.createWidget(this.id, "simple-container");
             this.childWrapper = Definition.Widget.createWidgetWrapper();
         }
 
@@ -82,6 +83,10 @@ namespace UIX.WidgetSystem.Widget{
                 this.changed = true;
                 this.parent.childWidgetChanged(this);
             }
+        }
+
+        public getChild(){
+            return this.child;
         }
 
         public toSerializableWidget(){

@@ -8,8 +8,9 @@ namespace UIX.WidgetSystem.Widget.Builder{
         private leftChildren?:WidgetBuilder;
         private rightChildren?:WidgetBuilder;
 
-        public constructor(factory:WidgetFactory, leftChild?:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, rightChild?:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
-            super(factory);
+        public constructor(leftChild?:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, rightChild?:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+            super();
+
             if(leftChild){
                 this.leftChild(leftChild);
             }
@@ -41,5 +42,22 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
             return verticalDividerWidget;
         }
-    }    
+    }
+
+    WidgetBuilder.register(Serializer.WidgetType.VerticalDivider, widget => {
+        let leftChild:WidgetBuilder|undefined;
+        let rightChild:WidgetBuilder|undefined;
+
+        let child = (<VerticalDividerWidget>widget).getLeftChild();
+        if(child){
+            leftChild = WidgetBuilder.tryParse(child) ?? undefined;
+        }
+
+        child = (<VerticalDividerWidget>widget).getRightChild();
+        if(child){
+            rightChild = WidgetBuilder.tryParse(child) ?? undefined;
+        }
+
+        return new VerticalDividerWidgetBuilder(leftChild, rightChild);
+    });
 }

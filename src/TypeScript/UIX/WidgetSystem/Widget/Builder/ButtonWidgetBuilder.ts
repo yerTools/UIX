@@ -9,8 +9,9 @@ namespace UIX.WidgetSystem.Widget.Builder{
         private _blankTarget?:boolean;
         private _onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void);
 
-        public constructor(factory:WidgetFactory, text?:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
-            super(factory);
+        public constructor(text?:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
+            super();
+
             if(text){
                 this.set(text, href, blankTarget, onClick);
             }else{
@@ -50,5 +51,9 @@ namespace UIX.WidgetSystem.Widget.Builder{
         public toWidget(parent:Definition.IWidget){
             return new ButtonWidget(parent, this._text, this._href, this._blankTarget, this._onClick);
         }
-    }    
+    }
+
+    WidgetBuilder.register(Serializer.WidgetType.Button, widget => {
+        return new ButtonWidgetBuilder((<ButtonWidget>widget).text, (<ButtonWidget>widget).href, (<ButtonWidget>widget).blankTarget, (<ButtonWidget>widget).onClick);
+    });
 }

@@ -6,8 +6,8 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
         private markdown = "";
 
-        public constructor(factory:WidgetFactory, markdown?:string){
-            super(factory);
+        public constructor(markdown?:string){
+            super();
             if(markdown){
                 this.markdown = markdown;
             }
@@ -34,5 +34,9 @@ namespace UIX.WidgetSystem.Widget.Builder{
         public toWidget(parent:Definition.IWidget){
             return new MarkdownWidget(parent, this.markdown);
         }
-    }    
+    }
+
+    WidgetBuilder.register(Serializer.WidgetType.Markdown, widget => {
+        return new MarkdownWidgetBuilder((<MarkdownWidget>widget).markdown);
+    });
 }

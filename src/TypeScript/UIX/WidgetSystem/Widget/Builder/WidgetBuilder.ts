@@ -4,10 +4,26 @@
 namespace UIX.WidgetSystem.Widget.Builder{
     export abstract class WidgetBuilder{
 
+        private static registeredParser = new Map<Serializer.WidgetType, (widget:Definition.Widget)=>null|WidgetBuilder>();
+
+        public static register(widgetType:Serializer.WidgetType,tryParseCallback:(widget:Definition.Widget)=>null|WidgetBuilder){
+            WidgetBuilder.registeredParser.set(widgetType, tryParseCallback);
+        }
+
+        public static tryParse(widget:Definition.Widget){
+            try{
+                let parser = this.registeredParser.get(widget.serializableWidgetType);
+                if(parser){
+                    return parser(widget);
+                }
+            }catch(error){}
+            return null;
+        }
+
         protected static addMany<T extends WidgetBuilder>(currentWidgetBuilder:T, children:((this:T, factory:WidgetFactory, currentBuilder:T) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
 
             if(typeof children === "function"){
-                children = children.call(currentWidgetBuilder, currentWidgetBuilder.factory, currentWidgetBuilder);
+                children = children.call(currentWidgetBuilder, WidgetFactory.factory, currentWidgetBuilder);
             }
             if(children){
                 if(!Array.isArray(children)){
@@ -22,15 +38,9 @@ namespace UIX.WidgetSystem.Widget.Builder{
         protected static addOne<T extends WidgetBuilder>(currentWidgetBuilder:T, children:((this:T, factory:WidgetFactory, currentBuilder:T) => WidgetBuilder)|WidgetBuilder){
 
             if(typeof children === "function"){
-                children = children.call(currentWidgetBuilder, currentWidgetBuilder.factory, currentWidgetBuilder);
+                children = children.call(currentWidgetBuilder, WidgetFactory.factory, currentWidgetBuilder);
             }
             return children;
-        }
-
-        protected readonly factory:WidgetFactory;
-
-        public constructor(factory:WidgetFactory){
-            this.factory = factory;
         }
 
         public abstract toWidget(parent:Definition.IWidget):Definition.Widget;

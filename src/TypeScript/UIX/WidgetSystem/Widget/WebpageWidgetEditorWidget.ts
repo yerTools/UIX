@@ -18,9 +18,59 @@ namespace UIX.WidgetSystem.Widget{
 
             this.htmlElement = Definition.Widget.createWidget(this.id, "uix-webpage-editor");
             this.webpageWrapper = Definition.Widget.createWidgetWrapper("webpage-wrapper");
+
+            this.webpageWrapper.addEventListener("mousemove", event => this.mouseMoved(event), { passive: true });
+            this.webpageWrapper.addEventListener("mouseleave", event => this.mouseMoved(), { passive: true });
+            this.webpageWrapper.addEventListener("click", event => this.clicked(event));
+
             this.htmlElement.appendChild(this.webpageWrapper);
 
             this.update();
+        }
+
+        private clicked(mouseEvent:MouseEvent){
+            let clickedElement = this.mouseMoved(mouseEvent);
+            if(clickedElement){
+                mouseEvent.preventDefault();
+
+                let idString = clickedElement.id;
+                if(idString){
+                    let widget = Definition.Widget.getById(parseInt(idString.substring(idString.indexOf("-") + 1)));
+                    if(widget){
+                        console.log(Builder.WidgetBuilder.tryParse(widget));
+                    }
+                }
+
+            }
+        }
+
+        private mouseMoved(mouseEvent?:MouseEvent){
+            let currentHighlighted = this.webpageWrapper.querySelector(".uix.widget.hover-highlight");
+            let highlightElement:Element|undefined;
+            if(mouseEvent){
+                let currentElement = <Element|null>mouseEvent.target; 
+                while(currentElement){
+                    if(currentElement.classList.contains("uix") && currentElement.classList.contains("widget")){
+                        if(!currentElement.classList.contains("uix-webpage-editor") && !currentElement.classList.contains("uix-webpage")){
+                            highlightElement = currentElement;
+                        }
+                        break;
+                    }
+                    currentElement = currentElement.parentElement;
+                }
+            }
+
+            if(currentHighlighted){
+                if(currentHighlighted !== highlightElement){
+                    currentHighlighted.classList.remove("hover-highlight");
+                    if(highlightElement){
+                        highlightElement.classList.add("hover-highlight");
+                    }
+                }
+            }else if(highlightElement){
+                highlightElement.classList.add("hover-highlight");
+            }
+            return highlightElement;
         }
 
         public setWebpageWidget(webpageWidget:WebpageWidget|null){

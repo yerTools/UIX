@@ -28,14 +28,15 @@ namespace UIX.WidgetSystem.Widget{
             }
         }
         
-        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.VerticalDivider; }
+        public get containerWidgetType(){ return Definition.ContainerWidgetType.VerticalDivider; }
+        public get serializableWidgetType(){ return  Serializer.WidgetType.VerticalDivider; }
 
         public constructor(parent:Definition.IWidget){
             super();
-            this.id = Definition.Widget.getNextId();
+            this.id = Definition.Widget.getNextId(this);
 
             this.parent = parent;
-            this.htmlElement = Definition.Widget.createWidget(this.id, "verticalDivider");
+            this.htmlElement = Definition.Widget.createWidget(this.id, "vertical-divider");
             this.leftChildWrapper = Definition.Widget.createWidgetWrapper();
             this.rightChildWrapper = Definition.Widget.createWidgetWrapper();
             this.htmlElement.appendChild(this.leftChildWrapper);
@@ -51,6 +52,10 @@ namespace UIX.WidgetSystem.Widget{
             }
         }
 
+        public getLeftChild(){
+            return this.leftChild;
+        }
+
         public setRightChild(rightChild:Definition.Widget|null){
             if(this.rightChild !== rightChild && (!rightChild || !this.isParent(rightChild))){
                 this.rightChild = rightChild;
@@ -58,6 +63,10 @@ namespace UIX.WidgetSystem.Widget{
                 this.rightChildChanged = true;
                 this.parent.childWidgetChanged(this);
             }
+        }
+
+        public getRightChild(){
+            return this.rightChild;
         }
 
         public toSerializableWidget(){

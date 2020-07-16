@@ -5,6 +5,7 @@
 
 namespace UIX.WidgetSystem.Widget{
     export class ButtonWidget extends Definition.Widget {
+        
         private changed = true;
 
         private _text:string;
@@ -19,7 +20,8 @@ namespace UIX.WidgetSystem.Widget{
         public readonly id:number;
 
         public get widgetType(){ return Definition.WidgetType.Button; };
-        
+        public get serializableWidgetType(){ return  Serializer.WidgetType.Button; }
+
         public get text(){
             return this._text;
         }
@@ -62,7 +64,7 @@ namespace UIX.WidgetSystem.Widget{
 
         public constructor(parent:Definition.IWidget, text:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)){
             super();
-            this.id = Definition.Widget.getNextId();
+            this.id = Definition.Widget.getNextId(this);
             
             this.parent = parent;
             this._text = text;

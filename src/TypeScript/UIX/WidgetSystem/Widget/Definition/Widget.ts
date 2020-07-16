@@ -5,9 +5,21 @@
 
 namespace UIX.WidgetSystem.Widget.Definition{
     export abstract class Widget implements IWidget{
+
         private static currentId = 0;
-        public static getNextId(){
+        private static readonly createdWidgets = new Map<number,Widget>();
+
+        public static getNextId(widget?:Widget){
+            if(widget && Render.isInEditMode){
+                let id = ++this.currentId;
+                this.createdWidgets.set(id, widget);                
+                return id;
+            }
             return ++this.currentId;
+        }
+
+        public static getById(id:number){
+            return this.createdWidgets.get(id);
         }
 
         public static getHTMLElementId(id:number){
@@ -17,6 +29,11 @@ namespace UIX.WidgetSystem.Widget.Definition{
         public static createWidget(id:number, name?:string){
             let div = document.createElement("div");
             div.id = this.getHTMLElementId(id);
+
+            if(Render.isInEditMode){
+                div.dataset.id = id.toString();
+            }
+
             div.className = "uix widget";
             if(name){
                 div.classList.add(name);
@@ -54,8 +71,9 @@ namespace UIX.WidgetSystem.Widget.Definition{
         public abstract readonly id:number;
 
         public abstract get widgetType():WidgetType;
-        
-        public abstract toSerializableWidget():WidgetSystem.Serializer.SerializableWidget;
+        public abstract get serializableWidgetType():Serializer.WidgetType;
+
+        public abstract toSerializableWidget():Serializer.SerializableWidget;
         public abstract parentWidgetChanged(widget:IWidget):void;
         public abstract childWidgetChanged(widget:Widget):void;
         public abstract hasWidgetChanged():boolean;
