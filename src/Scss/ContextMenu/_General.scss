@@ -1,0 +1,59 @@
+.uix.context-menu.wrapper{
+    font-size: 16px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+    height: 100%;
+
+    user-select: none;
+
+    .uix.context-menu.container{
+        $padding: 6px;
+
+        position: fixed;
+        overflow: auto;
+
+        padding: $padding 0;
+        box-sizing: border-box;
+
+        color: $context-menu-text-color;
+
+        border: 1px solid $context-menu-border-color;
+        border-radius: 3px;
+
+        box-shadow: 0 0 5px 0 $context-menu-border-color;
+        background-color: $context-menu-background-color;
+
+        table{
+            border-collapse: collapse;
+
+            margin: 0;
+            tr{
+                $tr-element: #{&};
+
+                cursor: pointer;
+                vertical-align: middle;
+
+                transition: background-color ease-in-out $page-timing-hover-fast;
+
+                &:hover{
+                    background-color: $header-footer-hover-background-color;
+                }
+
+                td.uix.context-menu.item-name{
+                    padding: 0 $padding;
+                }
+
+                td.uix.context-menu.item-more{
+                    position: relative;
+
+                    @include icon-arrow-right(20px, $tr-element);
+                }
+            }
+        }
+    }
+}

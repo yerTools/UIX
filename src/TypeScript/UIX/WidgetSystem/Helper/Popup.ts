@@ -1,4 +1,5 @@
 /// <reference path="../../Core/Tools/EscapeTextForHTML.ts" />
+/// <reference path="../../Libraries/Animation/Animation.ts" />
 
 namespace UIX.WidgetSystem.Helper{
     export class Popup{
@@ -26,13 +27,21 @@ namespace UIX.WidgetSystem.Helper{
         public readonly blocker:HTMLDivElement;
         public readonly container:HTMLDivElement;
 
+        private closed = false;
+
         private constructor(title:string|undefined, hasCloseButton:boolean){
             this.title = title;
             this.hasCloseButton = hasCloseButton;
 
             this.blocker = document.createElement("div");
-            this.blocker.className = "uix popup blocker";
+            this.blocker.className = "uix popup blocker fading";
             this.blocker.addEventListener("click", event => {
+                event.cancelBubble = true;
+                event.preventDefault();
+                this.close(Popup.closedByBlocker);
+            });
+
+            this.blocker.addEventListener("contextmenu", event => {
                 event.cancelBubble = true;
                 event.preventDefault();
                 this.close(Popup.closedByBlocker);
@@ -40,9 +49,8 @@ namespace UIX.WidgetSystem.Helper{
 
             let wrapper = document.createElement("div");
             wrapper.className = "uix popup wrapper";
-            wrapper.addEventListener("click", event => {
-                event.cancelBubble = true;
-            });
+            wrapper.addEventListener("click", event => event.cancelBubble = true);
+            wrapper.addEventListener("contextmenu", event => event.cancelBubble = true);
 
             {
                 let headline = document.createElement("div");
@@ -74,12 +82,21 @@ namespace UIX.WidgetSystem.Helper{
 
             this.blocker.appendChild(wrapper);
             document.body.appendChild(this.blocker);
+            Libraries.Animation.fadeIn(this.blocker);
         }
 
         public close(result?:any){
-            if(this.blocker.parentElement){
-                this.blocker.parentElement.removeChild(this.blocker);
+            if(!this.closed){
+                this.closed = true;
+                this.blocker.style.pointerEvents = "none";
+
+                Libraries.Animation.fadeOut(this.blocker, undefined, () => {
+                    if(this.blocker.parentElement){
+                        this.blocker.parentElement.removeChild(this.blocker);
+                    }
+                });
             }
+            
         }
     }
 } 

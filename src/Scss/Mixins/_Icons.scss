@@ -1,33 +1,73 @@
+@function private-icon-hover-path($animate-on-parent-hover){
+    @if($animate-on-parent-hover){
+        $current-element: #{&};
+        @if(string.length($animate-on-parent-hover) + 1 < string.length($current-element)){
+            @return #{#{$animate-on-parent-hover} + ":hover " + string.slice($current-element, string.length($animate-on-parent-hover) + 1)};
+        }
+    }
+    @return null;
+}
+
+@mixin private-icon-before-after($size){
+    content: "";
+
+    position: absolute;
+    display: inline-block;
+
+    transform-origin: center center;
+}
+
+@mixin private-icon-two-lines($size, $line-width, $line-height, $hover-path: null, $background-color: null, $hover-background-color: null){
+    @include icon($size);
+
+    &::before, &::after{
+        @include private-icon-before-after($size);
+
+        $width: $size * $line-width;
+        $height: $size * $line-height;
+        
+        left: .5 * ($size  - $width);
+        top: .5 * ($size - $height);
+
+        width: $width;
+        height: $height;
+        border-radius: min($line-width, $line-height) * $size * .5;
+
+        background-color: $background-color;
+    }
+
+    &:hover::before, &:hover::after{
+        background-color: $hover-background-color;
+    }
+
+    @if($hover-path){
+        @at-root #{$hover-path}{
+            &::before, &::after{
+                background-color: $hover-background-color;
+            }
+        }
+    }
+}
+
 @mixin icon($size: 16px) {
     display: inline-block;
+    box-sizing: border-box;
+
+    overflow: hidden;
 
     width: $size;
     height: $size;
 }
 
-@mixin icon-x($size: 16px){
+
+@mixin icon-x($size: 16px, $animate-on-parent-hover: null, $background-color: $icon-red-color, $hover-background-color: $icon-red-hover-color){
+    $hover-path: private-icon-hover-path($animate-on-parent-hover);
+
     @include icon($size);
+    @include private-icon-two-lines($size, .2, 1.3, $hover-path, $background-color, $hover-background-color);
 
     &::before, &::after{
-        content: "";
-
-        position: absolute;
-        display: inline-block;
-
-        left: $size * .5 - $size * .1;
-        top: - $size * .05;
-
-        height: $size * 1.2;
-        width: $size * .2;
-        border-radius: $size * .2;
-
-        background-color: $icon-x-color;
-
         transition: background-color ease-in-out $page-timing-hover, transform ease-in-out $page-timing-hover;
-    }
-    
-    &:hover::before, &:hover::after{
-        background-color: $icon-x-hover-color;
     }
 
     &::before{
@@ -45,4 +85,65 @@
     &:hover::after{
         transform: rotate(45deg);
     }
+
+    @if($hover-path){
+        @at-root #{$hover-path}{
+            &::before{
+                transform: rotate(-45deg);
+            }
+            
+            &::after{
+                transform: rotate(45deg);
+            }
+        }
+    }
+}
+
+@mixin icon-arrow-right($size: 16px, $animate-on-parent-hover: null, $background-color: $icon-light-color, $hover-background-color: $icon-light-hover-color){
+    $hover-path: private-icon-hover-path($animate-on-parent-hover);
+    
+    $line-width: .1;
+    $line-height: .6;
+    $corner-radius:  $size * min($line-width, $line-height) * math.sqrt(2) / 2;
+
+    @include icon($size);
+    @include private-icon-two-lines($size, $line-width, $line-height, $hover-path, $background-color, $hover-background-color);
+
+    &::before, &::after{
+        transform-origin: top center;
+
+        left: ($size + math.sin(45) * max($line-width, $line-height) ) / 2 + $corner-radius * .75;
+
+        transition: background-color ease-in-out $page-timing-hover, left ease-in-out $page-timing-hover;
+    }
+
+    &::before{
+        top: ($size + $corner-radius) / 2;
+
+        transform: rotate(135deg);
+    }
+
+    &::after{
+        top: ($size - $corner-radius) / 2;
+
+        transform: rotate(45deg);
+    }
+
+    &:hover::before, &:hover::after{
+        left: $size - $corner-radius * 2;
+    }
+
+    @if($hover-path){
+        @at-root #{$hover-path}{
+            &::before, &::after{
+                left: $size - $corner-radius * 2;
+            }
+        }
+    }
+}
+
+@mixin icon-arrow-left($size: 16px, $animate-on-parent-hover: null, $background-color: $icon-light-color, $hover-background-color: $icon-light-hover-color){
+    @include icon-arrow-right($size, $animate-on-parent-hover, $background-color, $hover-background-color);
+
+    transform: scaleX(-1);
 }

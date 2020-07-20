@@ -1,6 +1,8 @@
 /// <reference path="Definition/IWidget.ts" />
 /// <reference path="../Helper/Popup.ts" />
 /// <reference path="../../Libraries/HistoryStack/HistoryStack.ts" />
+/// <reference path="../../Libraries/ContextMenu/ContextMenu.ts" />
+
 
 namespace UIX.WidgetSystem.Widget{
     export class WebpageWidgetEditorWidget implements Widget.Definition.IWidget {
@@ -22,11 +24,13 @@ namespace UIX.WidgetSystem.Widget{
             this.webpageWrapper = Definition.Widget.createWidgetWrapper("webpage-wrapper");
 
             this.webpageWrapper.addEventListener("mousemove", event => this.mouseMoved(event), { passive: true });
-            this.webpageWrapper.addEventListener("mouseleave", event => this.mouseMoved(), { passive: true });
+            this.webpageWrapper.addEventListener("mouseleave", () => this.mouseMoved(), { passive: true });
             this.webpageWrapper.addEventListener("click", event => this.clicked(event));
             document.addEventListener("keydown", event => this.keyDown(event));
 
             this.htmlElement.appendChild(this.webpageWrapper);
+
+            Libraries.ContextMenu.ContextMenu.test().appendTo(this.htmlElement);
 
             this.update();
         }
@@ -105,7 +109,7 @@ namespace UIX.WidgetSystem.Widget{
 
         private showWidgetEditorPopup(widget:Definition.Widget, widgetBuilder:Builder.WidgetBuilder){
             let popup = Helper.Popup.createSimple("You can't edit this widget yet. :(");
-            popup.container.appendChild(widgetBuilder.toWidget(new WidgetParent()).render());
+            popup.container.appendChild(widgetBuilder.toWidget(new WidgetParent()).render());            
             Helper.Popup.createMessage(Serializer.Serializer.serializeSerializableWidget(widget.toSerializableWidget()), "Current Widget JSON");
         }
 
