@@ -1,4 +1,5 @@
 namespace UIX.Libraries.ContextMenu{
+    export type BuilderSyncCallback = ((this:ContextMenuBuilder, builder:ContextMenuBuilder) => ContextItem|ContextItem[])|ContextItem|ContextItem[];
     export type BuilderCallback = ((this:ContextMenuBuilder, builder:ContextMenuBuilder) => ContextItem|ContextItem[]|AsyncContextItems<any>)|ContextItem|ContextItem[]|AsyncContextItems<any>;
 
     export class ContextMenuBuilder{
@@ -20,6 +21,19 @@ namespace UIX.Libraries.ContextMenu{
             return [];
         }
 
+        public static getSync(children:BuilderSyncCallback){
+            if(typeof children === "function"){
+                children = children.call(this.builder, this.builder);
+            }
+            if(children){
+                if(!Array.isArray(children)){
+                    children = [children];
+                }
+                return children;
+            }
+            return [];
+        }
+
         public item(name:string, onClick:OnItemClickCallback, greyedOut = false){
             return ContextItem.create(name, onClick, greyedOut);
         }
@@ -28,12 +42,12 @@ namespace UIX.Libraries.ContextMenu{
             return ContextItem.createGreyedOut(name);
         }
 
-        public placeholder(name?:string, onClick?:OnItemClickCallback){
-            return ContextItem.createPlaceholder(name, onClick);
+        public placeholder(name?:string){
+            return ContextItem.createPlaceholder(name);
         }
 
-        public group(children:BuilderCallback){
-            return ContextItem.createGroup(ContextMenuBuilder.get(children));
+        public group(children:BuilderSyncCallback){
+            return ContextItem.createGroup(ContextMenuBuilder.getSync(children));
         }
 
         public subMenu(name:string, children:BuilderCallback, greyedOut = false){

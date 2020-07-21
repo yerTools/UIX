@@ -8,6 +8,7 @@
 @import "./Variables/Timings";
 
 @import "./Mixins/Icons";
+@import "./Mixins/LoadingAnimations";
 
 @import "./Font/SourceSansVariable";
 @import "./Font/SourceCodeVariable";
@@ -16,6 +17,7 @@
 @import "./General/Site";
 
 @import "./Animation/FadeInOut";
+@import "./Animation/LoadingBackground";
 
 @import "./ContextMenu/Variables";
 @import "./ContextMenu/General";

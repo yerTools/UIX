@@ -11,11 +11,11 @@ namespace UIX.Libraries.ContextMenu{
             return new ContextItem(true, name, undefined, undefined);
         }
 
-        public static createPlaceholder(name?:string, onClick?:OnItemClickCallback){
-            return new ContextItem(false, name, undefined, onClick);
+        public static createPlaceholder(name?:string){
+            return new ContextItem(false, name, undefined, undefined);
         }
 
-        public static createGroup(items:ContextItem[]|AsyncContextItems<any>){
+        public static createGroup(items:ContextItem[]){
             return new ContextItem(false, undefined, items);
         }
 
@@ -29,18 +29,30 @@ namespace UIX.Libraries.ContextMenu{
         public readonly greyedOut:boolean;
 
         public get isGroup(){
-            return !!this.children && !this.name;
+            return !this.name && this.hasChildren;
+        }
+
+        public get isPlaceholder(){
+            return !this.onClick && !this.hasChildren && !this.greyedOut;
         }
 
         public get hasChildren(){
-            return !!this.children;
+            return !!this.children && !this.greyedOut;
+        }
+
+        public get isSubMenu(){
+            return !!this.name && this.hasChildren;
         }
         
         private constructor(greyedOut:boolean, name?:string, children?:ContextItem[]|AsyncContextItems<any>, onClick?:OnItemClickCallback){
             this.greyedOut = greyedOut;
             this.name = name;
-            if(children && (!Array.isArray(children) || children.length)){
-                this.children = children;
+            if(children){
+                if(!Array.isArray(children) || children.length || !name){
+                    this.children = children;
+                }else{
+                    this.greyedOut = true;
+                }
             }
             this.onClick = onClick;
         }

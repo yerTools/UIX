@@ -30,8 +30,6 @@ namespace UIX.WidgetSystem.Widget{
 
             this.htmlElement.appendChild(this.webpageWrapper);
 
-            Libraries.ContextMenu.ContextMenu.test().appendTo(this.htmlElement);
-
             this.update();
         }
 

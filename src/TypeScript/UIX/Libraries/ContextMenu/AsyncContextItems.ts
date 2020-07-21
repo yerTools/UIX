@@ -1,5 +1,5 @@
 namespace UIX.Libraries.ContextMenu{
-    export type AsyncContextItemsCallback<T> = (this:ContextMenu, parent:ContextItem|undefined, mouseEvent:MouseEvent, state?:T) => ContextItem|ContextItem[];
+    export type AsyncContextItemsCallback<T> = (this:ContextMenu, parent:ContextItem|undefined, mouseEvent:MouseEvent, state?:T) => ContextItem|ContextItem[]|Promise<ContextItem[]>;
 
     export class AsyncContextItems<T>{
         public readonly callback:AsyncContextItemsCallback<T>;
@@ -13,7 +13,10 @@ namespace UIX.Libraries.ContextMenu{
         public invoke(contextMenu:ContextMenu, parent:ContextItem|undefined, mouseEvent:MouseEvent){
             let result = this.callback.call(contextMenu, parent, mouseEvent, this.state);
             if(!Array.isArray(result)){
-                return [result];
+                if(result instanceof ContextItem){
+                    return [result];
+                }
+                return result;
             }
             return result;
         }

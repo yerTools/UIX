@@ -9,140 +9,10 @@ namespace UIX.Libraries.ContextMenu{
             return new ContextMenu(ContextMenuBuilder.get(children));
         }
 
-        public static test(){
-            return ContextMenu.create(builder => [
-                builder.placeholder("Hello World!"),
-                builder.item("Hello Back!", (event, menu, item) => console.log(event, menu, item)),
-                builder.group([
-                    builder.item("Test 1", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("Test 2", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("Test 3", (event, menu, item) => console.log(event, menu, item)),
-                ]),
-                builder.placeholder(),
-                builder.group(builder.placeholder("Distance please!")),
-                builder.subMenu("More", [
-                    builder.item("More 1", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 2", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 3", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 4", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 5", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 6", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 7", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 8", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 9", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("More 10", (event, menu, item) => console.log(event, menu, item)),
-                    builder.group(
-                        builder.subMenu("Even more", [
-                            builder.item("Even more 1", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 2", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 3", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 4", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 5", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 6", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 7", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 8", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 9", (event, menu, item) => console.log(event, menu, item)),
-                            builder.item("Even more 10", (event, menu, item) => console.log(event, menu, item)),
-                            builder.group(
-                                builder.subMenu("Even even more", [
-                                    builder.item("Even even more 1", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 2", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 3", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 4", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 5", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 6", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 7", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 8", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 9", (event, menu, item) => console.log(event, menu, item)),
-                                    builder.item("Even even more 10", (event, menu, item) => console.log(event, menu, item))
-                                ])
-                            )
-                        ])
-                    )
-                ]),
-                builder.group([
-                    builder.greyedOutItem("Greyed Out Item"),
-                    builder.group([]),
-                    builder.item("Item", (event, menu, item) => console.log(event, menu, item)),
-                    builder.item("Item", (event, menu, item) => console.log(event, menu, item), true),
-                    builder.placeholder(),
-                    builder.placeholder("Placeholder"),
-                    builder.placeholder(undefined, (event, menu, item) => console.log(event, menu, item)),
-                    builder.placeholder("Placeholder", (event, menu, item) => console.log(event, menu, item)),
-                    builder.subMenu("Sub Menu", []),
-                    builder.subMenu("Sub Menu", [], true)
-                ]),
-                builder.group([
-                    builder.group([
-                        builder.group([
-                            builder.group([
-                                builder.group([
-                                    builder.group([
-                                        builder.group([
-                                            builder.group([
-                                                builder.group([
-                                                    builder.group([
-                                                        builder.group([
-                                                            builder.group([
-                                                                builder.group([
-                                                                    builder.group([
-                                                                        builder.group([
-                                                                            builder.group([
-                                                                                builder.item("Das", (event, menu, item) => console.log(event, menu, item))
-                                                                            ])
-                                                                        ])
-                                                                    ]),
-                                                                    builder.item("Ist", (event, menu, item) => console.log(event, menu, item))
-                                                                ])
-                                                            ])
-                                                        ]),
-                                                        builder.item("Ein", (event, menu, item) => console.log(event, menu, item))
-                                                    ])
-                                                ])
-                                            ])
-                                        ])
-                                    ])
-                                ])
-                            ])
-                        ])
-                    ]),
-                    builder.item("Test", (event, menu, item) => console.log(event, menu, item))
-                ]),
-                builder.group(() => {
-
-                    let runRecursive = (currentLayer:number, itemsPerLayer:number) =>{
-                        let result:ContextItem[] = [];
-
-                        for(let i = Math.round(itemsPerLayer / currentLayer); i !== 0; --i){
-                            if(currentLayer === 1){
-                                result.push(builder.greyedOutItem("Overflow!"));
-                            }else{
-                                result.push(builder.subMenu("Overflow . . .", runRecursive(currentLayer - 1, itemsPerLayer)));
-                            }
-                        }
-
-                        return result;
-                    };
-
-                    return runRecursive(6, 35);
-                }),
-                builder.group(builder.subMenu("To Infinity And Beyond", () => {
-                    let asyncItems = (level:number) => new AsyncContextItems<number>((parent, mouseEvent, state) => {
-                            console.log(parent, mouseEvent, state);
-                            let children:ContextItem[] = [];
-                            for(let i = 0; i < 50; i++){
-                                children.push(builder.subMenu(state + ". To Infinity And Beyond", asyncItems((state ?? 0) + 1)));
-                            }
-                            return children;
-                        }, level);
-                    return asyncItems(1);
-                }))
-            ]);
-        }
-
         public readonly items:ContextItem[]|AsyncContextItems<any>;
 
         private wrapper?:HTMLElement;
+        private pendingPromise?:Promise<ContextItem[]>;
 
         public constructor(items:ContextItem[]|AsyncContextItems<any>){
             this.items = items;
@@ -158,9 +28,13 @@ namespace UIX.Libraries.ContextMenu{
                 this.wrapper.parentElement.removeChild(this.wrapper);
                 this.wrapper = undefined;
             }
+
+            this.pendingPromise = undefined;
         }
 
         private createWrapper(){
+            this.removeWrapper();
+
             this.wrapper = document.createElement("div");
             this.wrapper.className = "uix context-menu wrapper";
 
@@ -172,7 +46,48 @@ namespace UIX.Libraries.ContextMenu{
             document.body.appendChild(this.wrapper);
         }
 
-        private createContextMenu(mouseEvent:MouseEvent, items:ContextItem[], currentItem?:ContextItem){
+        private createContextTableRow(currentLayer:number, className:string, currentItem?:ContextItem){
+            let tr = document.createElement("tr");
+            tr.className = className;
+
+            if(currentItem){
+                tr.addEventListener("mouseenter", mouseEvent => {
+                    if(this.wrapper){
+                        for(let i = this.wrapper.children.length - 1; i > currentLayer; --i){
+                            this.wrapper.removeChild(<ChildNode>this.wrapper.lastChild);
+                        }
+
+                        this.pendingPromise = undefined;
+                        let loadingRows = this.wrapper.querySelectorAll("tr.loading");
+                        for(let i = 0; i < loadingRows.length; i++){
+                            loadingRows[i].classList.remove("loading");
+                        }
+
+                        if(currentItem.isSubMenu){
+                            let children = currentItem.getChildren(this, mouseEvent);
+                            if(children){
+                                let boundingClientRect = tr.getBoundingClientRect();
+                                if(Array.isArray(children)){
+                                    this.createContextMenu(mouseEvent, children, currentLayer + 1, boundingClientRect.right, boundingClientRect.top, boundingClientRect.width);
+                                }else{
+                                    this.pendingPromise = children;
+                                    tr.classList.add("loading");
+                                    children.then(promisedChildren => {
+                                        tr.classList.remove("loading");
+                                        if(this.pendingPromise === children){
+                                            this.createContextMenu(mouseEvent, promisedChildren, currentLayer + 1, boundingClientRect.right, boundingClientRect.top, boundingClientRect.width);
+                                        }
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }, { passive: true });
+            }
+            return tr;
+        }
+
+        private createContextMenu(mouseEvent:MouseEvent, items:ContextItem[], currentLayer:number, targetX?:number, targetY?:number, offsetLeftIfNoSpace = 0){
             if(this.wrapper){
                 let contextMenu = document.createElement("div");
                 contextMenu.className = "uix context-menu container";
@@ -184,35 +99,82 @@ namespace UIX.Libraries.ContextMenu{
                 let contextTable = document.createElement("table");
                 contextTable.className = "uix context-menu table";
 
+                let addGroupSpacer = false;
+                let firstItemAdded = false;
+
                 let appendItems = (items:ContextItem[]) => {
                     for(let i = 0; i < items.length; i++){
                         
                         if(items[i].isGroup){
                             let childrens = items[i].getChildren(this, mouseEvent);
-                            if(childrens){
-                                appendItems(childrens)
+                            if(childrens && Array.isArray(childrens)){
+                                addGroupSpacer = true;
+                                appendItems(childrens);
+                                addGroupSpacer = true;
                             }
                         }else{
-                            let itemRow = document.createElement("tr");
+                            if(addGroupSpacer){
+                                if(firstItemAdded){
+                                    let groupSpacer = this.createContextTableRow(currentLayer, "group-spacer");
+                                    
+                                    let td = document.createElement("td");
+                                    td.colSpan = 3;
+                                    
+                                    groupSpacer.appendChild(td);
+                                    contextTable.appendChild(groupSpacer);
+                                }
+                                addGroupSpacer = false;
+                            }
 
+                            let itemRow = this.createContextTableRow(currentLayer, "item-row", items[i]);
+                            
+                            //icon
+                            {
+                                let iconColumn = document.createElement("td");
+                                iconColumn.className = "uix context-menu empty-icon";
+                                itemRow.appendChild(iconColumn);
+                            }
+
+                            //item name
                             {
                                 let nameColumn = document.createElement("td");
-                                nameColumn.className = "uix context-menu item-name";
                                 if(items[i].name){
+                                    if(items[i].greyedOut){
+                                        itemRow.classList.add("greyed-out");
+                                    }else if(items[i].isPlaceholder){
+                                        itemRow.classList.add("placeholder");
+                                    }else{
+                                        itemRow.classList.add("clickable");
+                                        let currentItem = items[i];
+
+                                        if(!items[i].hasChildren && currentItem.onClick){
+                                            itemRow.addEventListener("click", mouseEvent => {
+                                                (<OnItemClickCallback>currentItem.onClick).call(currentItem, mouseEvent, this, currentItem);
+                                                this.removeWrapper();
+                                            }, { passive: true, once: true });
+                                        }
+                                    }
+                                    nameColumn.className = "uix context-menu item-name";
                                     nameColumn.innerHTML = Core.Tools.escapeTextForHTML(<string>items[i].name);
+                                }else{
+                                    nameColumn.className = "uix context-menu item-empty";
                                 }
                                 itemRow.appendChild(nameColumn);
                             }
 
+                            //more icon
                             {
                                 let moreColumn = document.createElement("td");
                                 if(items[i].hasChildren){
                                     moreColumn.className = "uix context-menu item-more";
+                                }else{
+                                    moreColumn.className = "uix context-menu empty-icon";
                                 }
                                 itemRow.appendChild(moreColumn);
                             }
 
                             contextTable.appendChild(itemRow);
+                            firstItemAdded = true;
                         }
                     }
                 };
@@ -221,40 +183,49 @@ namespace UIX.Libraries.ContextMenu{
                 contextMenu.appendChild(contextTable);
                 this.wrapper.appendChild(contextMenu);
 
-                let margin = 15;
+                //move context menu to the right location
+                {
+                    let margin = 15;
+                    let distanceX = targetX === undefined ? 5 : 0;
 
-                let boundingClientRect = contextMenu.getBoundingClientRect();
-                let windowWidth = window.innerWidth;
+                    let boundingClientRect = contextMenu.getBoundingClientRect();
+                    let windowWidth = window.innerWidth;
 
-                let targetX = mouseEvent.clientX;
-                if(targetX < margin){
-                    targetX = margin;
-                }
-                if(targetX + margin + boundingClientRect.width > windowWidth){
-                    targetX -= boundingClientRect.width;
+                    if(targetX === undefined){
+                        targetX = mouseEvent.clientX + distanceX;
+                    }
                     if(targetX < margin){
                         targetX = margin;
-                        contextMenu.style.maxWidth = (windowWidth - 2 * margin) + "px";
-                        boundingClientRect = contextMenu.getBoundingClientRect();
                     }
-                }
+                    if(targetX + margin + boundingClientRect.width > windowWidth){
+                        targetX -= boundingClientRect.width + 2 * distanceX + offsetLeftIfNoSpace;
+                        if(targetX < margin){
+                            targetX = margin;
+                            contextMenu.style.maxWidth = (windowWidth - 2 * margin) + "px";
+                            boundingClientRect = contextMenu.getBoundingClientRect();
+                        }
+                    }
 
-                let windowHeight = window.innerHeight;
+                    let windowHeight = window.innerHeight;
 
-                let targetY = mouseEvent.clientY;
-                if(targetY < margin){
-                    targetY = margin;
-                }
-                if(targetY + margin + boundingClientRect.height > windowHeight){
-                    targetY = windowHeight - margin - boundingClientRect.height;
+                    if(targetY === undefined){
+                        targetY = mouseEvent.clientY;
+                    }
                     if(targetY < margin){
                         targetY = margin;
-                        contextMenu.style.maxHeight = (windowHeight - 2 * margin) + "px";
                     }
-                }
+                    if(targetY + margin + boundingClientRect.height > windowHeight){
+                        targetY = windowHeight - margin - boundingClientRect.height;
+                        if(targetY < margin){
+                            targetY = margin;
+                            contextMenu.style.maxHeight = (windowHeight - 2 * margin) + "px";
+                            boundingClientRect = contextMenu.getBoundingClientRect();
+                        }
+                    }
 
-                contextMenu.style.left = targetX + "px";
-                contextMenu.style.top = targetY + "px";
+                    contextMenu.style.left = targetX + "px";
+                    contextMenu.style.top = targetY + "px";
+                }
             }
         }
 
@@ -264,7 +235,18 @@ namespace UIX.Libraries.ContextMenu{
                 mouseEvent.cancelBubble = true;
 
                 this.createWrapper();
-                this.createContextMenu(mouseEvent, Array.isArray(this.items) ? this.items : this.items.invoke(this, undefined, mouseEvent));
+
+                let items = Array.isArray(this.items) ? this.items : this.items.invoke(this, undefined, mouseEvent);
+                if(Array.isArray(items)){
+                    this.createContextMenu(mouseEvent, items, 0);
+                }else{
+                    this.pendingPromise = items; 
+                    items.then(promisedItems => {
+                        if(this.pendingPromise === items){
+                            this.createContextMenu(mouseEvent, promisedItems, 0);
+                        }
+                    });
+                }
             });
         }
     }
