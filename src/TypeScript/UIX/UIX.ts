@@ -11,7 +11,7 @@
 /// <reference path="WidgetSystem/Render.ts" />
 
 namespace UIX{
-    const UIX_DEVELOPMENT_MODE = true;
+    const UIX_DEVELOPMENT_MODE = false;
 
     if(UIX_DEVELOPMENT_MODE){
         WidgetSystem.Render.fallback();

@@ -54,7 +54,17 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
     - [ ] Drag and drop builder
         - [ ] Templates
     - [ ] Mobile optimized pages
-
+- [ ] Context menu
+    - [x] Builder for easy creation
+    - [x] Callback for menu items
+        -   [x] Promise support for dynamic asynchronous loading of content
+    - [x] Groupings for better visibility
+    - [x] Placeholder
+        - [x] Can be empty
+    - [x] Greyed out entries
+    - [x] Sub menus
+    - [ ] Icons support
+    - [ ] Keyboard shortcut text
 ---
 
 ##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)
