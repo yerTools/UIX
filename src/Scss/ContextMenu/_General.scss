@@ -1,0 +1,104 @@
+.uix.context-menu.wrapper{
+    font-size: 16px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 1000;
+
+    width: 100%;
+    height: 100%;
+
+    user-select: none;
+
+    .uix.context-menu.container{
+        $padding: 6px;
+        $icon-size: 20px;
+
+        position: fixed;
+        overflow: auto;
+
+        padding: $padding 0;
+        box-sizing: border-box;
+
+        color: $context-menu-text-color;
+
+        border: 1px solid $context-menu-border-color;
+        border-radius: 3px;
+
+        box-shadow: 0 0 5px 0 $context-menu-border-color;
+        background-color: $context-menu-background-color;
+
+        table{
+            width: 100%;
+            margin: 0;
+
+            border-collapse: collapse;
+
+            tr{
+                &.item-row{
+                    vertical-align: middle;
+
+                    &.clickable{
+                        $tr-element: #{&};
+    
+                        cursor: pointer;
+    
+                        &:hover{
+                            background-color: $header-footer-hover-background-color;
+                        }
+    
+                        td{
+                            &.uix.context-menu.item-more{
+                                position: relative;
+            
+                                @include icon-arrow-right($icon-size, $tr-element);
+                            }
+                        }
+                    }
+    
+                    &.placeholder{
+                        text-align: center;
+                        text-decoration: underline;
+                    }
+    
+                    &.greyed-out{
+                        cursor: not-allowed;
+                        color: $context-menu-greyed-out-text-color;
+                    }
+    
+                    td{
+                        &.uix.context-menu.item-name{
+                            padding: $padding/2 $padding;
+                        }
+    
+                        &.uix.context-menu.item-empty{
+                            padding: ($icon-size+$padding)/2 0;
+                        }
+    
+                        &.uix.context-menu.empty-icon{
+                            position: relative;
+        
+                            @include icon($icon-size);
+                        }
+                    }
+                }
+
+                &.group-spacer{
+                    td{
+                        padding-top: 1px;
+                        background-color: $context-menu-group-spacer-color;
+                    }
+                }
+
+                &.loading{
+                    @include loading-animation-background();
+                }
+            }
+        }
+
+        &:not(:last-child):not(:hover){
+            opacity: .8;
+        }
+    }
+}

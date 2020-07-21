@@ -21,14 +21,15 @@ namespace UIX.WidgetSystem.Widget{
             }
         }
         
-        public get containerWidgetType(): Definition.ContainerWidgetType { return Definition.ContainerWidgetType.SiteContent; }
+        public get containerWidgetType(){ return Definition.ContainerWidgetType.SiteContent; }
+        public get serializableWidgetType(){ return  Serializer.WidgetType.SiteContent; }
 
         public constructor(parent:Definition.IWidget){
             super();
-            this.id = Definition.Widget.getNextId();
+            this.id = Definition.Widget.getNextId(this);
 
             this.parent = parent;
-            this.htmlElement = Definition.Widget.createWidget(this.id, "siteContent");
+            this.htmlElement = Definition.Widget.createWidget(this.id, "site-content");
             this.childWrapper = Definition.Widget.createWidgetWrapper();
             this.htmlElement.appendChild(this.childWrapper);
         }
@@ -40,6 +41,10 @@ namespace UIX.WidgetSystem.Widget{
                 this.changed = true;
                 this.parent.childWidgetChanged(this);
             }
+        }
+
+        public getChild(){
+            return this.child;
         }
 
         public toSerializableWidget(){

@@ -1,0 +1,5 @@
+$context-menu-background-color: $header-footer-background-color;
+$context-menu-border-color: #000000;
+$context-menu-text-color: $page-text-light-color;
+$context-menu-greyed-out-text-color: lighten($header-footer-background-color, 25%);
+$context-menu-group-spacer-color: lighten($header-footer-background-color, 10%);

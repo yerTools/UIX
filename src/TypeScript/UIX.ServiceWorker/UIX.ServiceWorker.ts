@@ -16,8 +16,8 @@ namespace UIX.ServiceWorker{
     const MAX_REQUEST_LOADING_TIME = 250;
     const MAX_CACHE_AGE = 1000 * 60 * 60 * 24;
 
-    export const currentUri = new Libraries.Uri(location.href);
     export const webCacheTimestamp = new Helper.LocalStorage(WEB_CACHE_TIMESTAMP_NAME);
+    export const dataCache = new Helper.LocalStorage(DATA_CACHE_NAME);
 
     function canBeCached(request:Request){
         return true;
@@ -27,7 +27,7 @@ namespace UIX.ServiceWorker{
         return new Promise<Response>(async (resolve, reject) => {
             let requestUri = new Libraries.Uri(request.url);
 
-            if(currentUri.isSameRoot(requestUri)){
+            if(Libraries.Uri.current.isSameRoot(requestUri)){
                 let now = new Date();
                 let lastCacheTime:Date|undefined;
                 {

@@ -2,14 +2,19 @@ namespace UIX.Libraries{
     export class Uri{
         private static protocolRegex = new RegExp("^[A-Za-z0-9+\\.-]+$");
 
+        public static current = new Uri(location.href);
+
         public static fromRelative(relativeUrl:string, baseUri?:Uri){
             if(!baseUri){
-                baseUri = new Uri(location.href);
+                baseUri = Uri.current;
             }
             return baseUri.withRelative(new Uri(relativeUrl));
         }
 
         public readonly isAbsolute:boolean;
+
+        public readonly relativePath:boolean;
+        public readonly isFile:boolean;
 
         public readonly protocol:string|null;
         public readonly host:string|null;
@@ -62,6 +67,8 @@ namespace UIX.Libraries{
             let slashIndex = url.indexOf("/");
             if(slashIndex === -1){
                 this.path = null; 
+                this.relativePath = true;
+                this.isFile = true;
             }else{
                 while(slashIndex > 0){
                     if(url[slashIndex - 1] === "."){
@@ -71,6 +78,9 @@ namespace UIX.Libraries{
                     }
                 }
                 let path = url.substring(slashIndex).split('/');
+
+                this.relativePath = path.length > 0 && path[0].length !== 0;
+                this.isFile = path.length > 0 && path[path.length - 1].length !== 0;
 
                 for(let i = 0; i < path.length; i++){
                     let part = path[i].trim();
@@ -119,7 +129,7 @@ namespace UIX.Libraries{
                 this.host = null;
             }
 
-            this.isAbsolute = this.protocol !== null && this.host !== null || this.path !== null && this.completePath[0] === "/";
+            this.isAbsolute = this.host !== null;
         }
 
         public makeAbsolute(baseUri?:Uri){
@@ -155,12 +165,12 @@ namespace UIX.Libraries{
 
             let path:string[];
 
-            if(relativeUri.isAbsolute){
+            if(relativeUri.isAbsolute || relativeUri.path && !relativeUri.relativePath){
                 path = relativeUri.path ?? [];
             }else{
                 path = this.path ?? [];
 
-                if(path.length){
+                if(path.length && this.isFile){
                     path.pop();
                 }
 

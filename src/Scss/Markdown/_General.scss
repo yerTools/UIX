@@ -3,7 +3,8 @@ div.uix-markdown{
 
     code{
         font-size: .9em;
-        padding: .15em .2em;
+        padding: .05em .1em;
+        border: .1em solid $markdown-code-background-color;
 
         border-radius: .4em;
 

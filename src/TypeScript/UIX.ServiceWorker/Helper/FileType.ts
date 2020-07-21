@@ -92,7 +92,7 @@ namespace UIX.ServiceWorker.Helper.FileType{
             }
 
         }else{
-            if(ServiceWorker.currentUri.isSameRoot(uri) && (uri.path === null || uri.path.length === 0)){
+            if(Libraries.Uri.current.isSameRoot(uri) && (uri.path === null || uri.path.length === 0)){
                 return FileType.StartPage;
             }
         }
