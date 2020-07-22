@@ -38,8 +38,10 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
 - [ ] Widget system
     - [ ] Basic widgets
         - [ ] Webpage
+            - [x] Site content
             - [ ] Header
             - [ ] Footer
+            - [ ] Navigation
         - [x] Markdown
         - [ ] Divider
             - [ ] Horizontal
@@ -65,6 +67,8 @@ Tasks will be added, Tasks will be removed`...`I think that's how it works. :)
     - [x] Sub menus
     - [ ] Icons support
     - [ ] Keyboard shortcut text
+- [ ] Parallax backgrounds
+
 ---
 
 ##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)

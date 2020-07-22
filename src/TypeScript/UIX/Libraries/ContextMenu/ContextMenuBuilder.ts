@@ -34,24 +34,24 @@ namespace UIX.Libraries.ContextMenu{
             return [];
         }
 
-        public item(name:string, onClick:OnItemClickCallback, greyedOut = false){
-            return ContextItem.create(name, onClick, greyedOut);
+        public item(name:string, onClick:OnItemInteractionCallback, onHover?:OnItemInteractionCallback, greyedOut = false){
+            return ContextItem.create(name, onClick, onHover, greyedOut);
         }
 
-        public greyedOutItem(name:string){
-            return ContextItem.createGreyedOut(name);
+        public greyedOutItem(name:string, onHover?:OnItemInteractionCallback){
+            return ContextItem.createGreyedOut(name, onHover);
         }
 
-        public placeholder(name?:string){
-            return ContextItem.createPlaceholder(name);
+        public placeholder(name?:string, onHover?:OnItemInteractionCallback){
+            return ContextItem.createPlaceholder(name, onHover);
         }
 
         public group(children:BuilderSyncCallback){
             return ContextItem.createGroup(ContextMenuBuilder.getSync(children));
         }
 
-        public subMenu(name:string, children:BuilderCallback, greyedOut = false){
-            return ContextItem.createSubMenu(name, ContextMenuBuilder.get(children), greyedOut);
+        public subMenu(name:string, children:BuilderCallback, onHover?:OnItemInteractionCallback, greyedOut = false){
+            return ContextItem.createSubMenu(name, ContextMenuBuilder.get(children), onHover, greyedOut);
         }
     }
 }

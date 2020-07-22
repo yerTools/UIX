@@ -4,18 +4,27 @@
 /// <reference path="AsyncContextItems.ts" />
 
 namespace UIX.Libraries.ContextMenu{
+    export type OnMenuInteractionCallback = (this:ContextMenu, contextMenu:ContextMenu, mouseEvent?:MouseEvent, htmlElement?:HTMLElement)=>void;
+    export type OnItemHoverCallback = (this:ContextMenu, mouseEvent:MouseEvent, contextItem:ContextItem, contextMenu:ContextMenu, htmlElement:HTMLElement)=>void;
+
     export class ContextMenu{
-        public static create(children:BuilderCallback){
-            return new ContextMenu(ContextMenuBuilder.get(children));
+        public static create(children:BuilderCallback, onOpen?:OnMenuInteractionCallback, onClose?:OnMenuInteractionCallback, onItemHover?:OnItemHoverCallback){
+            return new ContextMenu(ContextMenuBuilder.get(children), onOpen, onClose, onItemHover);
         }
 
         public readonly items:ContextItem[]|AsyncContextItems<any>;
+        public onOpen?:OnMenuInteractionCallback;
+        public onClose?:OnMenuInteractionCallback;
+        public onItemHover?:OnItemHoverCallback;
 
         private wrapper?:HTMLElement;
         private pendingPromise?:Promise<ContextItem[]>;
 
-        public constructor(items:ContextItem[]|AsyncContextItems<any>){
+        public constructor(items:ContextItem[]|AsyncContextItems<any>, onOpen?:OnMenuInteractionCallback, onClose?:OnMenuInteractionCallback, onItemHover?:OnItemHoverCallback){
             this.items = items;
+            this.onOpen = onOpen;
+            this.onClose = onClose;
+            this.onItemHover = onItemHover;
         }
 
         private removeWrapper(event?:Event){
@@ -24,12 +33,16 @@ namespace UIX.Libraries.ContextMenu{
                 event.cancelBubble = true;
             }
 
+            this.pendingPromise = undefined;
+
             if(this.wrapper && this.wrapper.parentElement){
                 this.wrapper.parentElement.removeChild(this.wrapper);
                 this.wrapper = undefined;
-            }
 
-            this.pendingPromise = undefined;
+                if(this.onClose){
+                    this.onClose.call(this, this, undefined, undefined);
+                }
+            }
         }
 
         private createWrapper(){
@@ -81,6 +94,12 @@ namespace UIX.Libraries.ContextMenu{
                                 }
                             }
                         }
+                    }
+                    if(currentItem.onHover){
+                        currentItem.onHover.call(currentItem, mouseEvent, this, currentItem, tr);
+                    }
+                    if(this.onItemHover){
+                        this.onItemHover.call(this, mouseEvent, currentItem, this, tr);
                     }
                 }, { passive: true });
             }
@@ -149,7 +168,7 @@ namespace UIX.Libraries.ContextMenu{
 
                                         if(!items[i].hasChildren && currentItem.onClick){
                                             itemRow.addEventListener("click", mouseEvent => {
-                                                (<OnItemClickCallback>currentItem.onClick).call(currentItem, mouseEvent, this, currentItem);
+                                                (<OnItemInteractionCallback>currentItem.onClick).call(currentItem, mouseEvent, this, currentItem, itemRow);
                                                 this.removeWrapper();
                                             }, { passive: true, once: true });
                                         }
@@ -234,20 +253,27 @@ namespace UIX.Libraries.ContextMenu{
                 mouseEvent.preventDefault();
                 mouseEvent.cancelBubble = true;
 
-                this.createWrapper();
-
-                let items = Array.isArray(this.items) ? this.items : this.items.invoke(this, undefined, mouseEvent);
-                if(Array.isArray(items)){
-                    this.createContextMenu(mouseEvent, items, 0);
-                }else{
-                    this.pendingPromise = items; 
-                    items.then(promisedItems => {
-                        if(this.pendingPromise === items){
-                            this.createContextMenu(mouseEvent, promisedItems, 0);
-                        }
-                    });
+                this.show(mouseEvent);
+                if(this.onOpen){
+                    this.onOpen.call(this, this, mouseEvent, this.wrapper);
                 }
             });
+        }
+
+        public show(mouseEvent:MouseEvent){
+            this.createWrapper();
+
+            let items = Array.isArray(this.items) ? this.items : this.items.invoke(this, undefined, mouseEvent);
+            if(Array.isArray(items)){
+                this.createContextMenu(mouseEvent, items, 0);
+            }else{
+                this.pendingPromise = items; 
+                items.then(promisedItems => {
+                    if(this.pendingPromise === items){
+                        this.createContextMenu(mouseEvent, promisedItems, 0);
+                    }
+                });
+            }
         }
     }
 }
