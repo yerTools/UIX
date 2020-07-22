@@ -63,7 +63,7 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
     - [x] Learning and using GitHub actions
     - [x] Automated tests on push
     - [x] Automated build on push
-    
+
 ## Additional goals:
 - [ ] Plugin support
 - [ ] Shareable user content
@@ -71,6 +71,8 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
     - [ ] Scripts
     - [ ] Templates
     - [ ] Plugins
+
+## [TODO list](/src/TODO.md)
 
 ---
 
