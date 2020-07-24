@@ -102,9 +102,12 @@ namespace UIX.ServiceWorker{
                             fetchUrlsSet.add("/")
                             fetchUrls.push("/");
                         }
-                    }else if(!fetchUrlsSet.has(requests[i].url)){
-                        fetchUrlsSet.add(requests[i].url)
-                        fetchUrls.push(requests[i].url);
+                    }else{
+                        let url = new Libraries.Uri(requests[i].url).getFullPath();
+                        if(!fetchUrlsSet.has(url)){
+                            fetchUrlsSet.add(url)
+                            fetchUrls.push(url);
+                        }
                     }
                 }
             }
@@ -114,11 +117,14 @@ namespace UIX.ServiceWorker{
             }
 
             await caches.delete(WEB_CACHE_NAME);
-            webCache = await caches.open(WEB_CACHE_NAME);
-
             await webCacheTimestamp.clear();
 
-            await webCache.addAll(fetchUrls);
+            let promises:Promise<Response|undefined>[] = [];
+            for(let i = 0; i < fetchUrls.length; i++){
+                promises.push(fetchAndCache(new Request(fetchUrls[i]), undefined));
+            }
+
+            await Promise.all(promises);
 
             self.skipWaiting();
             resolve();

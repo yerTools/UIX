@@ -11,9 +11,8 @@ namespace UIX.WidgetSystem.Render{
 
     function checkIfInEditMode(){
         if(Core.Static.SharedData.Informations.isInBrowserContext){
-            let uri = new Libraries.Uri(location.href);
-            if(uri.query){
-                let parts = uri.query.split('&');
+            if(Libraries.Uri.current.query){
+                let parts = Libraries.Uri.current.query.split('&');
                 for(let i = 0; i < parts.length; i++){
                     if(parts[i] === "UIX-Edit-Mode=true"){
                         document.body.classList.add("UIX-Edit-Mode");
@@ -72,7 +71,7 @@ namespace UIX.WidgetSystem.Render{
 
     export function redirectToEditMode(){
         if(!isInEditMode){
-            location.href = new Libraries.Uri(location.href).addQuery("UIX-Edit-Mode", "true").toString();
+            location.href = Libraries.Uri.current.addQuery("UIX-Edit-Mode", "true").toString();
             return true;
         }
         return false;
@@ -87,10 +86,20 @@ namespace UIX.WidgetSystem.Render{
                 factory.button("Edit this site", "?UIX-Edit-Mode=true"),
                 factory.simpleContainer(factory.list([
                     factory.markdown("If you want to try it for **free** you can check out ~lima-city.de~ trough my ref-link:"),
-                    factory.button("Check out Lima-City.de", "https://www.lima-city.de/?cref=353333"),
+                    factory.button("Check out Lima-City.de", "https://www.lima-city.de/?cref=407236"),
                     factory.markdown("There you can create a web hosting account with `PHP` and `SSL` support. **~Completely free!~**\n---\n")
-                ]), "https://www.lima-city.de/?cref=353333"),
-                factory.button("Go to GitHub", "https://github.com/yerTools/UIX")
+                ]), "https://www.lima-city.de/?cref=407236"),
+                factory.button("Go to GitHub", "https://github.com/yerTools/UIX"),
+                factory.markdown("## Clear cache\nAre you not sure if this is the current version of the site?"),
+                factory.button("Clear site cache", "?UIX-Clear-Cache=true")
+            ]);
+        }));
+    }
+
+    export function clearingCacheMessage(){
+        appendWebpageWidget(Widget.Builder.WidgetFactory.buildWebpage(siteContent => {
+            siteContent.list(factory => [
+                factory.markdown("#Clearing Cache\nUIX is currently clearing your cache ... please wait ...")
             ]);
         }));
     }
