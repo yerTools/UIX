@@ -70,7 +70,7 @@ namespace UIX.WidgetSystem.Widget{
         }
 
         public toSerializableWidget(){
-            return new Serializer.SerializableWidget(Serializer.WidgetType.VerticalDivider, 
+            return new Serializer.SerializableWidget(this.serializableWidgetType, 
                 [
                     this.leftChild?.toSerializableWidget() ?? null,
                     this.rightChild?.toSerializableWidget() ?? null,

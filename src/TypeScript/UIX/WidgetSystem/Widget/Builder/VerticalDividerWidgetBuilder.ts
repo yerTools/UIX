@@ -8,7 +8,7 @@ namespace UIX.WidgetSystem.Widget.Builder{
         private leftChildren?:WidgetBuilder;
         private rightChildren?:WidgetBuilder;
 
-        public constructor(leftChild?:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, rightChild?:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+        public constructor(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>){
             super();
 
             if(leftChild){
@@ -19,12 +19,12 @@ namespace UIX.WidgetSystem.Widget.Builder{
             }
         }
 
-        public leftChild(child:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+        public leftChild(child:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>){
             this.leftChildren = WidgetBuilder.addOne(this, child);
             return this;
         }
 
-        public rightChild(child:((this:VerticalDividerWidgetBuilder, factory:WidgetFactory, currentBuilder:VerticalDividerWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+        public rightChild(child:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>){
             this.rightChildren = WidgetBuilder.addOne(this, child);
             return this;
         }

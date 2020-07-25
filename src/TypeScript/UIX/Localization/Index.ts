@@ -4,6 +4,6 @@
 
 namespace UIX.Localization{
     if(typeof navigator === "object"){
-        console.log(changeDefaultLanguage(navigator.language));
+        changeDefaultLanguage(navigator.language);
     }
 }

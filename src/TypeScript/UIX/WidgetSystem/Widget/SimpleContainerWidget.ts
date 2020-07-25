@@ -90,7 +90,7 @@ namespace UIX.WidgetSystem.Widget{
         }
 
         public toSerializableWidget(){
-            return new Serializer.SerializableWidget(Serializer.WidgetType.SimpleContainer, [this.child?.toSerializableWidget() ?? null], undefined, this._href);
+            return new Serializer.SerializableWidget(this.serializableWidgetType, [this.child?.toSerializableWidget() ?? null], undefined, this._href);
         }
 
         public parentWidgetChanged(widget:Definition.IWidget){
