@@ -102,8 +102,6 @@
 @mixin icon-arrow-right($size: 16px, $animate-on-parent-hover: null, $background-color: $icon-light-color, $hover-background-color: $icon-light-hover-color){
     $hover-path: private-icon-hover-path($animate-on-parent-hover);
     
-    @debug #{$hover-path};
-
     $line-width: .1;
     $line-height: .6;
     $corner-radius:  $size * min($line-width, $line-height) * math.sqrt(2) / 2;

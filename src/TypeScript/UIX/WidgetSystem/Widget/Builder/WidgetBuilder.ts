@@ -2,6 +2,9 @@
 /// <reference path="../Definition/IWidget.ts" />
 
 namespace UIX.WidgetSystem.Widget.Builder{
+    export type MultiWidgetBuilderCallback<T extends WidgetBuilder> = ((this:T, factory:WidgetFactory, currentBuilder:T) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[];
+    export type SingleWidgetBuilderCallback<T extends WidgetBuilder> = ((this:T, factory:WidgetFactory, currentBuilder:T) => WidgetBuilder)|WidgetBuilder;
+
     export abstract class WidgetBuilder{
 
         private static registeredParser = new Map<Serializer.WidgetType, (widget:Definition.Widget)=>null|WidgetBuilder>();
@@ -20,7 +23,7 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return null;
         }
 
-        protected static addMany<T extends WidgetBuilder>(currentWidgetBuilder:T, children:((this:T, factory:WidgetFactory, currentBuilder:T) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
+        protected static addMany<T extends WidgetBuilder>(currentWidgetBuilder:T, children:MultiWidgetBuilderCallback<T>){
 
             if(typeof children === "function"){
                 children = children.call(currentWidgetBuilder, WidgetFactory.factory, currentWidgetBuilder);
@@ -35,7 +38,7 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return [];
         }
 
-        protected static addOne<T extends WidgetBuilder>(currentWidgetBuilder:T, children:((this:T, factory:WidgetFactory, currentBuilder:T) => WidgetBuilder)|WidgetBuilder){
+        protected static addOne<T extends WidgetBuilder>(currentWidgetBuilder:T, children:SingleWidgetBuilderCallback<T>){
 
             if(typeof children === "function"){
                 children = children.call(currentWidgetBuilder, WidgetFactory.factory, currentWidgetBuilder);

@@ -1,0 +1,19 @@
+.uix.widget.navigation{
+    &>.uix.wrapper{
+        width: unset;
+        display: inline-block;
+
+        &.left-aligned{
+            float: left;
+        }
+
+        &.right-aligned{
+           float: right;
+        }
+
+        &>.uix.widget{
+            min-width: unset;
+            min-height: unset;
+        }
+    }
+}

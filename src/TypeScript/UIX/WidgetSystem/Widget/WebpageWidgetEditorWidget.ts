@@ -1,16 +1,20 @@
 /// <reference path="Definition/IWidget.ts" />
+/// <reference path="Builder/WidgetFactory.ts" />
 /// <reference path="../Helper/Popup.ts" />
 /// <reference path="../../Libraries/HistoryStack/HistoryStack.ts" />
 /// <reference path="../../Libraries/ContextMenu/ContextMenu.ts" />
+/// <reference path="../../Libraries/Uri/Uri.ts" />
 
 
 namespace UIX.WidgetSystem.Widget{
     export class WebpageWidgetEditorWidget implements Widget.Definition.IWidget {
         
+        private readonly navigationWidget:NavigationWidget;
         private webpageWidget:WebpageWidget|null = null;
         private changed = true;
         private webpageWidgetChanged = false;
         private requestedAnimationFrame:number|null = null;
+
         private readonly htmlElement:HTMLElement;
         private readonly webpageWrapper:HTMLElement;
         private readonly webpageWidgetHistoryStack = new Libraries.HistoryStack.HistoryStack();
@@ -21,6 +25,17 @@ namespace UIX.WidgetSystem.Widget{
             this.id = Definition.Widget.getNextId();
 
             this.htmlElement = Definition.Widget.createWidget(this.id, "uix-webpage-editor");
+
+            this.navigationWidget = Builder.WidgetFactory.factory.navigation(factory => [
+                factory.button("Test"),
+                factory.button("Test 2"),
+                factory.button("Test 3")
+            ], factory => [
+                factory.button("GitHub", "https://github.com/yerTools/UIX"),
+                factory.button("Exit edit mode", Libraries.Uri.current.getFullPath())
+            ]).toWidget(this);
+            this.htmlElement.appendChild(this.navigationWidget.render());
+
             this.webpageWrapper = Definition.Widget.createWidgetWrapper("webpage-wrapper");
 
             this.webpageWrapper.addEventListener("mousemove", event => this.mouseMoved(event), { passive: true });
@@ -29,6 +44,7 @@ namespace UIX.WidgetSystem.Widget{
             document.addEventListener("keydown", event => this.keyDown(event));
 
             this.htmlElement.appendChild(this.webpageWrapper);
+
 
             this.update();
         }
@@ -143,6 +159,8 @@ namespace UIX.WidgetSystem.Widget{
 
         public render():HTMLElement {
             if(this.changed){
+
+                this.navigationWidget.render();
 
                 if(this.webpageWidget){
                     if(this.webpageWidgetHistoryStack.push(Serializer.Serializer.serialize(this.webpageWidget))){
