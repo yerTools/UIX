@@ -18,15 +18,44 @@ namespace UIX.ServiceWorker{
 
     export const webCacheTimestamp = new Helper.LocalStorage(WEB_CACHE_TIMESTAMP_NAME);
     export const dataCache = new Helper.LocalStorage(DATA_CACHE_NAME);
+    export const serviceWorkerUri = Libraries.Uri.current.withRelative(new Libraries.Uri("/" + YER_TOOLS_UIX_CONFIGURATION.fileSystem.fileName.serviceWorker)); 
 
-    function canBeCached(request:Request){
+    function clearCache(){
+        caches.delete(WEB_CACHE_NAME);
+        caches.delete(WEB_CACHE_TIMESTAMP_NAME);
+        caches.delete(DATA_CACHE_NAME);
+    }
+
+    function respondWithSpecial(requestUri:Libraries.Uri):Promise<Response>|null{
+        if(requestUri.query){
+            let containsKeyword = false;
+
+            let parts = requestUri.query.split('&');
+            for(let i = 0; i < parts.length; i++){
+                if(parts[i] === "UIX-Clear-Cache=true"){
+                    clearCache();
+                    break;
+                }else if(parts[i] === "UIX-Service-Worker=true"){
+                    containsKeyword = true;
+                    break;
+                }
+            }
+
+            if(containsKeyword && requestUri.getFullPath() === serviceWorkerUri.getFullPath()){
+                
+            }
+        }
+        return null;
+
+    }
+
+    function canBeCached(uri:Libraries.Uri){
+        
         return true;
     } 
 
-    function fetchRequest(request:Request){
+    function fetchRequest(request:Request, requestUri:Libraries.Uri){
         return new Promise<Response>(async (resolve, reject) => {
-            let requestUri = new Libraries.Uri(request.url);
-
             if(Libraries.Uri.current.isSameRoot(requestUri)){
                 let now = new Date();
                 let lastCacheTime:Date|undefined;
@@ -44,14 +73,14 @@ namespace UIX.ServiceWorker{
 
                 let createNoCacheRequest = !lastCacheTime || (now.getTime() - lastCacheTime.getTime() > MAX_CACHE_AGE); 
                 if(!createNoCacheRequest){
-                    let fileType = Helper.FileType.get(request);
+                    let fileType = Helper.FileType.get(requestUri);
                     if(fileType === Helper.FileType.FileType.UIXWebpage){
                         createNoCacheRequest = true;
                     }
                 }
 
                 if(createNoCacheRequest){
-                    let noCacheUri = requestUri.addQuery("uix-no-cache", new Date().getTime().toString());
+                    let noCacheUri = requestUri.addQuery("UIX-No-Cache", new Date().getTime().toString());
                     request = new Request(noCacheUri.toString());
                     webCacheTimestamp.set(requestUri.toString(), new Date().toISOString());
                 }
@@ -63,9 +92,9 @@ namespace UIX.ServiceWorker{
         });
     }
 
-    async function fetchAndCache(request:Request, lastCachedResponse:Response|undefined){
+    async function fetchAndCache(request:Request, requestUri:Libraries.Uri, lastCachedResponse:Response|undefined){
         try{
-            let response = await fetchRequest(request);
+            let response = await fetchRequest(request, requestUri);
 
             let cache = await caches.open(WEB_CACHE_NAME);
 
@@ -86,27 +115,34 @@ namespace UIX.ServiceWorker{
     }
 
     function onInstall(event:InstallEvent){
+        self.skipWaiting();
+
         event.waitUntil(new Promise(async resolve =>{
             let webCache = await caches.open(WEB_CACHE_NAME);
 
             let requests = await webCache.keys();
             
             let fetchUrls:string[] = [];
+            let fetchUris:Libraries.Uri[] = [];
             let fetchUrlsSet = new Set<string>();
 
             for(let i = 0; i < requests.length; i++){
-                let fileType = Helper.FileType.get(requests[i]);
+                let uri = new Libraries.Uri(requests[i].url);
+                let fileType = Helper.FileType.get(uri);
+
                 if(Helper.FileType.isPartOfUIX(fileType)){
                     if(fileType === Helper.FileType.FileType.StartPage){
                         if(!fetchUrlsSet.has("/")){
                             fetchUrlsSet.add("/")
                             fetchUrls.push("/");
+                            fetchUris.push(uri);
                         }
                     }else{
-                        let url = new Libraries.Uri(requests[i].url).getFullPath();
-                        if(!fetchUrlsSet.has(url)){
-                            fetchUrlsSet.add(url)
-                            fetchUrls.push(url);
+                        let fullPath = uri.getFullPath();
+                        if(!fetchUrlsSet.has(fullPath)){
+                            fetchUrlsSet.add(fullPath)
+                            fetchUrls.push(fullPath);
+                            fetchUris.push(uri)
                         }
                     }
                 }
@@ -114,6 +150,7 @@ namespace UIX.ServiceWorker{
 
             if(!fetchUrlsSet.has("/")){
                 fetchUrls.push("/");
+                fetchUris.push(Libraries.Uri.current.withRelative(new Libraries.Uri("/")));
             }
 
             await caches.delete(WEB_CACHE_NAME);
@@ -121,21 +158,25 @@ namespace UIX.ServiceWorker{
 
             let promises:Promise<Response|undefined>[] = [];
             for(let i = 0; i < fetchUrls.length; i++){
-                promises.push(fetchAndCache(new Request(fetchUrls[i]), undefined));
+                promises.push(fetchAndCache(new Request(fetchUrls[i]), fetchUris[i], undefined));
             }
 
             await Promise.all(promises);
 
-            self.skipWaiting();
             resolve();
         }));
     }
 
     function onFetch(event:FetchEvent){
-        if(canBeCached(event.request)){
+        let uri = new Libraries.Uri(event.request.url);
+
+        let shouldRespondWithSpecial = respondWithSpecial(uri);
+        if(shouldRespondWithSpecial){
+            event.respondWith(shouldRespondWithSpecial);
+        }else if(canBeCached(uri)){
             event.respondWith(new Promise(async resolve => {
                 let cachedResponse = await caches.open(WEB_CACHE_NAME).then(cache => cache.match(event.request, {ignoreSearch: false}));
-                let fetchPromise = fetchAndCache(event.request, cachedResponse?.clone());
+                let fetchPromise = fetchAndCache(event.request, uri, cachedResponse?.clone());
                 let timeoutHandle:number|null = null;
                 if(cachedResponse){
                     timeoutHandle = setTimeout(()=>{
@@ -149,17 +190,36 @@ namespace UIX.ServiceWorker{
                 resolve(fetchedResult || cachedResponse);
             }));
         }else{
-            event.respondWith(fetchRequest(event.request));
+            event.respondWith(fetchRequest(event.request, uri));
         }
     }
 
     function onActivate(event:ActivateEvent){
-        event.waitUntil(self.clients.claim());
+        self.skipWaiting();
+
+        event.waitUntil(
+            caches.keys().then((keys) => {
+              return Promise.all(keys.map((key) => {
+                if (key !== WEB_CACHE_NAME && key !== WEB_CACHE_TIMESTAMP_NAME && key !== DATA_CACHE_NAME) {
+                  return caches.delete(key);
+                }
+                return null;
+              })).then(async () => {
+                    if((<any>self).serviceWorker.state === "activating"){
+                        try{
+                            await self.clients.claim();
+                        }catch(error){}
+                    }
+                    return null;
+                });
+            })
+        );
     }
     
     if(!Core.Static.SharedData.Informations.isInBrowserContext){
         self.addEventListener("install", (event:any) => onInstall(event));
         self.addEventListener("fetch", (event:any) => onFetch(event));
         self.addEventListener("activate", (event:any) => onActivate(event));
+        self.addEventListener("message", (event) => console.log(event));
     }
 }

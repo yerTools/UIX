@@ -1,11 +1,16 @@
 /// <reference path="../Core/Static/SharedData/Informations.ts" />
+/// <reference path="../Libraries/Uri/Uri.ts" />
 
 namespace UIX.ServiceWorkerInterface{
+    export const serviceWorkerUri = Libraries.Uri.current.withRelative(new Libraries.Uri("/" + YER_TOOLS_UIX_CONFIGURATION.fileSystem.fileName.serviceWorker)); 
+
     if(Core.Static.SharedData.Informations.features.serviceWorker){
-        navigator.serviceWorker.register("/" + YER_TOOLS_UIX_CONFIGURATION.fileSystem.fileName.serviceWorker, {
+        navigator.serviceWorker.register(serviceWorkerUri.completePath, {
             scope: "/"
         }).then(function(registration) {
-            console.log('Service Worker Registered');
+            if(registration.active){
+                registration.update();
+            }
         });
 
         navigator.serviceWorker.ready.then(function(registration) {

@@ -7,18 +7,31 @@ namespace UIX.Core.Tools.ClearCache{
 
     export function clearCacheIfRequired(){
         if(shouldClearCache){
-            if(sessionStorage.getItem("UIX-Clear-Cache") === "true"){
-                sessionStorage.clear();
-                location.href = "/";
-            }else{
-
+            let lastClearCountText = sessionStorage.getItem("UIX-Clear-Cache");
+            let lastClearCount:number|undefined;
+            if(lastClearCountText){
+                lastClearCount = parseInt(lastClearCountText);
+                if(isNaN(lastClearCount)){
+                    lastClearCount = undefined;
+                }
+            }
+            if(lastClearCount === undefined){
+                lastClearCount = 0;
+            }
+            if(lastClearCount < 3){
                 localStorage.clear();
                 sessionStorage.clear();
 
-                sessionStorage.setItem("UIX-Clear-Cache", "true");
-                ServiceWorkerInterface.uninstallServiceWorkers().then(() => location.reload(true));
+                sessionStorage.setItem("UIX-Clear-Cache", (lastClearCount + 1).toString());
+                ServiceWorkerInterface.uninstallServiceWorkers().then(() => setTimeout(() => location.reload(true), 1500));
+            }else{
+                location.href = "/";
             }
+        }else if(sessionStorage.getItem("UIX-Clear-Cache")){
+            sessionStorage.clear();
+            setTimeout(() => location.reload(true), 1500);
         }
+            
         return shouldClearCache;
     }
 
