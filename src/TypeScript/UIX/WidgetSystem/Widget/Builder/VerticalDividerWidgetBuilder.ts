@@ -7,8 +7,12 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
         private leftChildren?:WidgetBuilder;
         private rightChildren?:WidgetBuilder;
+        private width?:number;
+        private widthAbsolute?:boolean;
+        private widthFromLeft?:boolean;
+        private resizable?:boolean
 
-        public constructor(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>){
+        public constructor(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, width?:number, widthAbsolute?:boolean, widthFromLeft?:boolean, resizable?:boolean){
             super();
 
             if(leftChild){
@@ -17,6 +21,11 @@ namespace UIX.WidgetSystem.Widget.Builder{
             if(rightChild){
                 this.rightChild(rightChild);
             }
+
+            this.width = width;
+            this.widthAbsolute = widthAbsolute;
+            this.widthFromLeft = widthFromLeft;
+            this.resizable = resizable;
         }
 
         public leftChild(child:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>){
@@ -29,8 +38,17 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return this;
         }
 
+        public size(width?:number, widthAbsolute?:boolean, widthFromLeft?:boolean, resizable?:boolean){
+            this.width = width;
+            this.widthAbsolute = widthAbsolute;
+            this.widthFromLeft = widthFromLeft;
+            this.resizable = resizable;
+
+            return this;
+        }
+
         public toWidget(parent:Definition.IWidget){
-            let verticalDividerWidget = new VerticalDividerWidget(parent);
+            let verticalDividerWidget = new VerticalDividerWidget(parent, this.width, this.widthAbsolute, this.widthFromLeft, this.resizable);
 
             if(this.leftChildren){
                 verticalDividerWidget.setLeftChild(this.leftChildren.toWidget(verticalDividerWidget));

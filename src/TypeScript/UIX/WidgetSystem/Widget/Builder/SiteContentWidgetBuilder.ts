@@ -45,8 +45,8 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return <SimpleContainerWidgetBuilder>this.children;
         }
         
-        public verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>){
-            this.children = WidgetFactory.factory.verticalDivider(leftChild, rightChild);
+        public verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, width?:number, widthAbsolute?:boolean, widthFromLeft?:boolean, resizable?:boolean){
+            this.children = WidgetFactory.factory.verticalDivider(leftChild, rightChild, width, widthAbsolute, widthFromLeft, resizable);
             return <VerticalDividerWidgetBuilder>this.children;
         }
 

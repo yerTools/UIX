@@ -13,7 +13,7 @@ namespace UIX.WidgetSystem.Widget.Builder{
         button(text?:string, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:ButtonWidget)=>void)):ButtonWidgetBuilder;
         navigation(leftAlignedChildren?:MultiWidgetBuilderCallback<NavigationWidgetBuilder>, rightAlignedChildren?:MultiWidgetBuilderCallback<NavigationWidgetBuilder>):NavigationWidgetBuilder;
         simpleContainer(child?:SingleWidgetBuilderCallback<SimpleContainerWidgetBuilder>, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)):SimpleContainerWidgetBuilder;
-        verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>):VerticalDividerWidgetBuilder;
+        verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, width?:number, widthAbsolute?:boolean, widthFromLeft?:boolean, resizable?:boolean):VerticalDividerWidgetBuilder;
         template():TemplateFactory;
     }
 }

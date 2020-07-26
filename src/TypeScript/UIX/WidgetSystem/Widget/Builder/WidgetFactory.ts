@@ -37,8 +37,8 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return new SimpleContainerWidgetBuilder(child, href, blankTarget, onClick);
         }
 
-        public verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>){
-            return new VerticalDividerWidgetBuilder(leftChild, rightChild);
+        public verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, width?:number, widthAbsolute?:boolean, widthFromLeft?:boolean, resizable?:boolean){
+            return new VerticalDividerWidgetBuilder(leftChild, rightChild, width, widthAbsolute, widthFromLeft, resizable);
         }
 
         public template(){

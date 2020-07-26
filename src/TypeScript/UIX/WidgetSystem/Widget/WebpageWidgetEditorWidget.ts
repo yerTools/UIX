@@ -44,8 +44,8 @@ namespace UIX.WidgetSystem.Widget{
                     factory => factory.list(() => [
                         factory.button("GitHub", "https://github.com/yerTools/UIX"),
                         factory.button("Exit edit mode", Libraries.Uri.current.getFullPath())
-                    ])
-                ).toWidget(this);
+                    ]),
+                undefined, 200, true , true, true).toWidget(this);
 
                 this.webpageWrapperShadowWidget = new ShadowWidget(this.verticalDividerWidget, this.webpageWrapper);
                 this.verticalDividerWidget.setRightChild(this.webpageWrapperShadowWidget);
