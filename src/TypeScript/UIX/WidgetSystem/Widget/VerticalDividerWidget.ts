@@ -173,7 +173,7 @@ namespace UIX.WidgetSystem.Widget{
 
         private createResizer(){
             const defaultOffset = 2;
-            const resizeOffset = 200;
+            const resizeOffset = 500;
 
             let resizer = document.createElement("div");
             resizer.className = "uix vertical-divider resizer";

@@ -13,7 +13,7 @@
 
 namespace UIX{
     if(!Core.Tools.ClearCache.clearCacheIfRequired()){
-        const UIX_DEVELOPMENT_MODE = true;
+        const UIX_DEVELOPMENT_MODE = false;
 
         if(UIX_DEVELOPMENT_MODE){
             WidgetSystem.Render.fallback();

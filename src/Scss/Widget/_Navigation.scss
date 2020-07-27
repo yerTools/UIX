@@ -1,4 +1,7 @@
 .uix.widget.navigation{
+    position: sticky;
+    top: 0;
+
     &>.uix.wrapper{
         width: unset;
         display: inline-block;
