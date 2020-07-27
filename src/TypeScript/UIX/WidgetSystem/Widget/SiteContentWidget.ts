@@ -48,7 +48,7 @@ namespace UIX.WidgetSystem.Widget{
         }
 
         public toSerializableWidget(){
-            return new Serializer.SerializableWidget(Serializer.WidgetType.SiteContent, [this.child?.toSerializableWidget() ?? null]);
+            return new Serializer.SerializableWidget(this.serializableWidgetType, [this.child?.toSerializableWidget() ?? null]);
         }
 
         public parentWidgetChanged(widget:Definition.IWidget){

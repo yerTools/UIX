@@ -27,8 +27,7 @@ namespace UIX.ServiceWorker.Helper.FileType{
         return false;
     }
 
-    export function get(request:Request){
-        let uri = new Libraries.Uri(request.url);
+    export function get(uri:Libraries.Uri){
 
         if(uri.path && uri.path.length){
             let fileName = uri.path[uri.path.length - 1].toLowerCase();

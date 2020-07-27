@@ -1,7 +1,29 @@
 .uix.widget.vertical-divider{
     &>.wrapper{
+        min-width: 2px;
+        max-width: calc(100% - 2px);
         display: inline-block;
+    }
 
-        width: 50%;
+    &>.uix.vertical-divider.resizer{
+        cursor: ew-resize;
+
+        position: absolute;
+        top: 0;
+
+        z-index: 5;
+
+        height: 100%;
+        width: 4px;
+    }
+
+    &.resizing{
+        &>.wrapper{
+            pointer-events: none;
+            user-select: none;
+        }
+        &>.uix.vertical-divider.resizer{
+            cursor: col-resize;
+        }
     }
 }

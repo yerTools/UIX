@@ -67,6 +67,13 @@ namespace UIX.WidgetSystem.Widget.Definition{
             return anchor;
         }
 
+        public static isWidget(widget:IWidget):widget is Widget{
+            let test = <Widget>widget;
+            return typeof test.parent === "object" && test.parent &&
+                typeof test.widgetType === "number" &&  typeof test.serializableWidgetType === "number" &&
+                typeof test.toSerializableWidget === "function" && typeof test.parentWidgetChanged === "function";
+        }
+
         public abstract readonly parent:IWidget;
         public abstract readonly id:number;
 

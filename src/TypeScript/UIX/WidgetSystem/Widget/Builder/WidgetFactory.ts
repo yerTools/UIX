@@ -17,7 +17,7 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return webpageWidget;
         }
 
-        public list(children?:((this:ListWidgetBuilder, factory:WidgetFactory, currentBuilder:ListWidgetBuilder) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
+        public list(children?:MultiWidgetBuilderCallback<ListWidgetBuilder>){
             return new ListWidgetBuilder(children);
         }
 
@@ -29,8 +29,16 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return new ButtonWidgetBuilder(text, href, blankTarget, onClick);
         }
 
-        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+        public navigation(leftAlignedChildren?:MultiWidgetBuilderCallback<NavigationWidgetBuilder>, rightAlignedChildren?:MultiWidgetBuilderCallback<NavigationWidgetBuilder>){
+            return new NavigationWidgetBuilder(leftAlignedChildren, rightAlignedChildren);
+        }
+
+        public simpleContainer(child?:SingleWidgetBuilderCallback<SimpleContainerWidgetBuilder>, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
             return new SimpleContainerWidgetBuilder(child, href, blankTarget, onClick);
+        }
+
+        public verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, width?:number, widthAbsolute?:boolean, widthFromLeft?:boolean, resizable?:boolean){
+            return new VerticalDividerWidgetBuilder(leftChild, rightChild, width, widthAbsolute, widthFromLeft, resizable);
         }
 
         public template(){

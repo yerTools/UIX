@@ -38,7 +38,7 @@ namespace UIX.WidgetSystem.Widget{
         }
 
         public toSerializableWidget(){
-            return new Serializer.SerializableWidget(Serializer.WidgetType.Markdown, undefined, undefined, this.markdown);
+            return new Serializer.SerializableWidget(this.serializableWidgetType, undefined, undefined, this.markdown);
         }
 
         public parentWidgetChanged(widget:Definition.IWidget){ }

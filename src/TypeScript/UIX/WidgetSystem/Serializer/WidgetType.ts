@@ -5,6 +5,8 @@ namespace UIX.WidgetSystem.Serializer{
         VerticalDivider,
         Button,
         List,
+        Shadow,
+        Navigation,
         SiteContent,
         SimpleContainer
     }

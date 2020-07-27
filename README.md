@@ -37,14 +37,25 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
     - [x] File watcher to move source maps and declarations to different folders
     - [ ] Compiling sass stylesheets with autoprefixer
     - [x] Arguments to control the behavior
+- [x] Polyfills for older browsers
+    - [x] Promise-API
+    - [x] Divers string functions
+- [x] Localization system
+    - [x] Automatic browser language detection
+    - [x] Completely available in english
+    - [x] Completely available in german
+    - [x] Easily expandable for other languages
 - [ ] A basic but solid framework
-    - [x] A concept for implementing easy Web Worker communication with fallbacks
+    - [x] Implementation of an easy to use Web Worker communication with fallbacks
     - [ ] Libraries for basic tasks
         - [x] Promise based ajax interface
         - [x] URI parser
         - [ ] Data serializer
-    - [ ] Service Worker
-        - [ ] Offline capabilities
+        - [ ] Animations
+        - [ ] Data views
+        - [ ] Form generation
+    - [x] Service Worker
+        - [x] Offline capabilities
 - [ ] HTML rendering engine
     - [ ] Markdown parser
         - [ ] Features/Possibilities from GitHub
@@ -60,10 +71,12 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
     - [ ] Site templates
 - [ ] Simple graphical and asynchron scripting language
 - [x] GitHub integration
-    - [x] Learning and using GitHub actions
     - [x] Automated tests on push
     - [x] Automated build on push
-    
+    - [x] Making use of the projects page
+    - [x] Issue templates
+    - [ ] Wiki
+
 ## Additional goals:
 - [ ] Plugin support
 - [ ] Shareable user content
@@ -72,11 +85,17 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
     - [ ] Templates
     - [ ] Plugins
 
+## GitHub Projects Page
+There are many more goals and things to do.
+If you want an up to date overview of all the things planned to do/done you can check out the [main projects page](https://github.com/yerTools/UIX/projects/2).
+
+A complete overview of everything related can be found [here](https://github.com/yerTools/UIX/projects).
+
 ---
 
 ## Any suggestions?
 
-You can write me an E-Mail: [FelixM@yer.tools](mailto:FelixM@yer.tools), get in touch via Twitter: [@yerTools](https://twitter.com/yerTools) or here on [GitHub](https://github.com/yerTools).
+You can write me an E-Mail: [FelixM@yer.tools](mailto:FelixM@yer.tools), get in touch via Twitter: [@yerTools](https://twitter.com/yerTools) or here on [GitHub](https://github.com/yerTools/UIX/issues).
 
 ---
 

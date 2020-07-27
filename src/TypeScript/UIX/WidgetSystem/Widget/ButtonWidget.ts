@@ -82,7 +82,7 @@ namespace UIX.WidgetSystem.Widget{
             if(this._href){
                 data.href = this._href;
             }
-            return new Serializer.SerializableWidget(Serializer.WidgetType.Button, undefined, undefined, JSON.stringify(data));
+            return new Serializer.SerializableWidget(this.serializableWidgetType, undefined, undefined, JSON.stringify(data));
         }
 
         public parentWidgetChanged(widget:Definition.IWidget){ }

@@ -7,7 +7,7 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
         private children?:WidgetBuilder;
 
-        public constructor(child?:((this:SiteContentWidgetBuilder, factory:WidgetFactory, currentBuilder:SiteContentWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+        public constructor(child?:SingleWidgetBuilderCallback<SiteContentWidgetBuilder>){
             super();
 
             if(child){
@@ -15,12 +15,12 @@ namespace UIX.WidgetSystem.Widget.Builder{
             }
         }
 
-        public child(child:((this:SiteContentWidgetBuilder, factory:WidgetFactory, currentBuilder:SiteContentWidgetBuilder) => WidgetBuilder)|WidgetBuilder){
+        public child(child:SingleWidgetBuilderCallback<SiteContentWidgetBuilder>){
             this.children = WidgetBuilder.addOne(this, child);
             return this;
         }
 
-        public list(children?:((this:ListWidgetBuilder, factory:WidgetFactory, currentBuilder:ListWidgetBuilder) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
+        public list(children?:MultiWidgetBuilderCallback<ListWidgetBuilder>){
             this.children = WidgetFactory.factory.list(children);
             return <ListWidgetBuilder>this.children;
         }
@@ -35,9 +35,19 @@ namespace UIX.WidgetSystem.Widget.Builder{
             return <ButtonWidgetBuilder>this.children;
         }
 
-        public simpleContainer(child?:((this:SimpleContainerWidgetBuilder, factory:WidgetFactory, currentBuilder:SimpleContainerWidgetBuilder) => WidgetBuilder)|WidgetBuilder, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
+        public navigation(leftAlignedChildren?:MultiWidgetBuilderCallback<NavigationWidgetBuilder>, rightAlignedChildren?:MultiWidgetBuilderCallback<NavigationWidgetBuilder>){
+            this.children = WidgetFactory.factory.navigation(leftAlignedChildren, rightAlignedChildren);
+            return <NavigationWidgetBuilder>this.children;
+        }
+
+        public simpleContainer(child?:SingleWidgetBuilderCallback<SimpleContainerWidgetBuilder>, href?:string, blankTarget?:boolean, onClick?:((mouseEvent:MouseEvent, buttonWidget:SimpleContainerWidget)=>void)){
             this.children = WidgetFactory.factory.simpleContainer(child, href, blankTarget, onClick);
             return <SimpleContainerWidgetBuilder>this.children;
+        }
+        
+        public verticalDivider(leftChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, rightChild?:SingleWidgetBuilderCallback<VerticalDividerWidgetBuilder>, width?:number, widthAbsolute?:boolean, widthFromLeft?:boolean, resizable?:boolean){
+            this.children = WidgetFactory.factory.verticalDivider(leftChild, rightChild, width, widthAbsolute, widthFromLeft, resizable);
+            return <VerticalDividerWidgetBuilder>this.children;
         }
 
         public template(){

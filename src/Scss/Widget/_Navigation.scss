@@ -1,0 +1,18 @@
+.uix.widget.navigation{
+    position: sticky;
+    top: 0;
+
+    &>.uix.wrapper{
+        width: unset;
+        display: inline-block;
+        
+        &.right-aligned{
+           float: right;
+        }
+
+        &>.uix.widget{
+            min-width: unset;
+            min-height: unset;
+        }
+    }
+}

@@ -34,8 +34,8 @@ namespace UIX.WidgetSystem.Widget.Style{
         public textColor:Core.Tools.Color|undefined;
         public lightTextColor:Core.Tools.Color|undefined;
 
-        public underlineHyperlinks = true;
-        public boldHyperlinks = true;
+        public underlineHyperlinks?:boolean;
+        public boldHyperlinks?:boolean;
 
         public asCSS(parentCssSelector:string){
             let style = parentCssSelector + "{background-color:" + this.backgroundColor.rgb + ";";
@@ -51,8 +51,13 @@ namespace UIX.WidgetSystem.Widget.Style{
             style += parentCssSelector +  " .accentColor{color:" + this.accentColor.rgb + ";}";
 
             {
-                style += parentCssSelector +  " a{text-decoration:" + (this.underlineHyperlinks ? "underline" : "none") + ";" +
-                    "font-weight:" + (this.boldHyperlinks ? "bold" : "normal") + ";";
+                style += parentCssSelector +  " a{";
+                if(this.underlineHyperlinks !== undefined){
+                    style += "text-decoration:" + (this.underlineHyperlinks ? "underline" : "none") + ";";
+                }
+                if(this.boldHyperlinks !== undefined){
+                    style += "font-weight:" + (this.boldHyperlinks ? "bold" : "normal") + ";";
+                }
                 if(this.textColor){
                     style += "color:" + this.textColor.rgb + ";";
                 }

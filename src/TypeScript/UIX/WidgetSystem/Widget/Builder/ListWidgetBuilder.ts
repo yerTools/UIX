@@ -6,20 +6,18 @@ namespace UIX.WidgetSystem.Widget.Builder{
 
         private readonly children:WidgetBuilder[] = [];
 
-        public constructor(children?:((this:ListWidgetBuilder, factory:WidgetFactory, currentBuilder:ListWidgetBuilder) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
+        public constructor(children?:MultiWidgetBuilderCallback<ListWidgetBuilder>){
             super();
             if(children){
                 this.add(children);
             }
         }
 
-        public add(children:((this:ListWidgetBuilder, factory:WidgetFactory, currentBuilder:ListWidgetBuilder) => WidgetBuilder|WidgetBuilder[])|WidgetBuilder|WidgetBuilder[]){
-
+        public add(children:MultiWidgetBuilderCallback<ListWidgetBuilder>){
             children = WidgetBuilder.addMany(this, children);
             for(let i = 0; i < children.length; i++){
                 this.children.push(children[i]);
             }
-
             return this;
         }
 
