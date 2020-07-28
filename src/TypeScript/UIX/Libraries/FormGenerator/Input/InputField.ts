@@ -13,32 +13,35 @@ namespace UIX.Libraries.FormGenerator.Input{
                 + (this.isReadOnly ? " read-only" : "")
                 + (this.isRequired ? " required" : "");
 
-            {
+            let wrapper = document.createElement("div");
+            wrapper.className = "input-wrapper";
+
+            if(this.displayName){
                 let displayName = document.createElement("span");
                 displayName.className = "display-name";
-                if(this.displayName){
-                    displayName.innerHTML = Core.Tools.escapeTextForHTML(this.displayName);
-                }
-                container.appendChild(displayName);
+                displayName.innerHTML = Core.Tools.escapeTextForHTML(this.displayName);
+                wrapper.appendChild(displayName);
             }
 
             if(this.description){
                 let description = document.createElement("div");
                 description.className = "description";
                 description.innerHTML = Core.Tools.escapeTextForHTML(this.description);
-                container.appendChild(description);
+                wrapper.appendChild(description);
             }
 
             let inputFieldWrapper = document.createElement("div");
             inputFieldWrapper.className = "input-field-wrapper";
             inputFieldWrapper.appendChild(filedElement);
-            container.appendChild(inputFieldWrapper);
+            wrapper.appendChild(inputFieldWrapper);
 
+            container.appendChild(wrapper);
             return container;
         }
 
         protected createInput<TagName extends keyof IHTMLInputElementTagName>(tagName:TagName, setDefaultValue:boolean, namePrefix?:string):IHTMLInputElementTagName[TagName]{
             let input = document.createElement(tagName);
+            input.className = "form-input";
 
             input.readOnly = this.isReadOnly;
             input.required = this.isRequired;

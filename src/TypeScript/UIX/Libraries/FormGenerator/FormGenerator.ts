@@ -50,17 +50,23 @@ namespace UIX.Libraries.FormGenerator{
                 container.appendChild(description);
             }
 
+            let childrenContainer = document.createElement("div");
+            childrenContainer.className = "children-container";
+
             this.sortChildren();
+
             for(let i = 0; i < this.children.length; i++){
-                container.appendChild(this.children[i].getHTMLElement(namePrefix ? (this.namePrefix ? namePrefix + this.namePrefix : namePrefix) : this.namePrefix));
+                childrenContainer.appendChild(this.children[i].getHTMLElement(namePrefix ? (this.namePrefix ? namePrefix + this.namePrefix : namePrefix) : this.namePrefix));
             }
 
+
+            container.appendChild(childrenContainer);
             return container;
         }
 
         public getFormElement(namePrefix?:string){
             let form = document.createElement("form");
-            form.className = "uix form";
+            form.className = "uix form-generator";
 
             form.appendChild(this.getHTMLElement(namePrefix));
 

@@ -19,26 +19,80 @@ namespace UIX{
 
         if(UIX_DEVELOPMENT_MODE){
 
+            let randomFormChildren = (count:number, maxCountPerLayer = 30, isFormGeneratorProbability = 0.1, maxLayers = 3, currentLayer = 1) => {
+                let words = "the be to of and a in that have I it for not on with he as you do at this but his by from they we say her she or an will my one all would there their what so up out if about who get which go me when make can like time no just him know take people into year your good some could them see other than then now look only come its over think also back after use two how our work first well way even new want because any these give day most us".split(" ");
+
+                let randomString = (capitalize = true, length = 1) => {
+                
+                    let word = words[Math.floor(Math.random() * words.length)];
+                    if(capitalize){
+                        word = word.substring(0,1).toUpperCase() + word.substring(1);
+                    }
+                    if(length > 1){
+                        word += " " + randomString(false, length - 1);
+                    }
+                    return word;
+                };
+
+                let randomStringOrUndefined = (capitalize = true, length = 1, undefinedProbability = 0.3, addDot = false) => {
+                    if(Math.random() < undefinedProbability){
+                        return undefined;
+                    }
+                    return randomString(capitalize, length) + (addDot ? "." : "");
+                };
+
+                let children:Libraries.FormGenerator.Helper.IFormChild[] = [];
+
+                for(let i = 0; i < count; i++){
+                    if(Math.random() < isFormGeneratorProbability && currentLayer < maxLayers){
+                        let formGenerator = new Libraries.FormGenerator.FormGenerator(
+                            randomStringOrUndefined(true, Math.round(Math.random() * 10 + 1)),
+                            randomStringOrUndefined(true, Math.round(Math.random() * 30 + 2), 0.75, true),
+                            undefined,
+                            i+"-");
+                        formGenerator.addChildren(randomFormChildren(Math.floor(Math.random() * maxCountPerLayer + 1), maxCountPerLayer, isFormGeneratorProbability, maxLayers, currentLayer + 1));
+                        children.push(formGenerator);
+                    }else{
+                        children.push(new Libraries.FormGenerator.Input.TextInput(
+                            i+"",
+                            Math.random() < 0.15,
+                            randomStringOrUndefined(true, Math.round(Math.random() * 14 + 1), 0.6, true),
+                            randomStringOrUndefined(true, Math.round(Math.random() * 6 + 1), 0.15),
+                            randomStringOrUndefined(true, Math.round(Math.random() * 20 + 2), 0.8, true),
+                            Math.random() < 0.4,
+                            Math.random() < 0.2,
+                            randomStringOrUndefined(true, Math.round(Math.random() * 18 + 1), 0.9)
+                        ));
+                    }
+                }
+
+                return children;
+            };
+
             let formGenerator = Libraries.FormGenerator.FormFactory.factory.form(factory => [
 
                 factory.form(() => [
-                    factory.textInput("firstName", false, undefined, "First Name"),
-                    factory.textInput("lastName", false, undefined, "Last Name"),
-                    factory.textInput("email", false, undefined, "E-Mail")
-                ], "Personal Data"),
-
-                factory.form(() => [
-                    factory.textInput("displayName", false, undefined, "Display Name", "This is the name on your profile."),
-                    factory.textInput("password", false, "Choose your password", "Password"),
-                    factory.textInput("passwordConfirmation", false, "Confirm your password", "Password Confirmation")
-                ], "Account Information"),
-
-                factory.textInput("message", true, "Your message here", "Message")
+                    factory.form(() => [
+                        factory.textInput("firstName", false, undefined, "First Name"),
+                        factory.textInput("lastName", false, undefined, "Last Name"),
+                        factory.textInput("email", false, undefined, "E-Mail")
+                    ], "Personal Data", "This are all your personal data, we need from you."),
+    
+                    factory.form(() => [
+                        factory.textInput("displayName", false, undefined, "Display Name", "This is the name on your profile."),
+                        factory.textInput("password", false, "Choose your password", "Password"),
+                        factory.textInput("passwordConfirmation", false, "Confirm your password", "Password Confirmation")
+                    ], "Account Information", "The information you input here will be visible for everyone.\n(Yes, also your password!)"),
+    
+                    factory.textInput("message", true, "Your message here", "Message")
+                ], "Demo Form", "This is a simple demo form. :)")
 
             ]).toFormGenerator();
 
+            formGenerator.addChildren(randomFormChildren(100));
+
             document.body.appendChild(formGenerator.getFormElement());
-            
+
             //WidgetSystem.Render.fallback();
         }else{
             let success = false;
