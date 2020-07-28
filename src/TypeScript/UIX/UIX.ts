@@ -11,12 +11,35 @@
 /// <reference path="Core/Tools/ClearCache.ts" />
 /// <reference path="WidgetSystem/Render.ts" />
 
+/// <reference path="Libraries/FormGenerator/FormFactory.ts" />
+
 namespace UIX{
     if(!Core.Tools.ClearCache.clearCacheIfRequired()){
-        const UIX_DEVELOPMENT_MODE = false;
+        const UIX_DEVELOPMENT_MODE = true;
 
         if(UIX_DEVELOPMENT_MODE){
-            WidgetSystem.Render.fallback();
+
+            let formGenerator = Libraries.FormGenerator.FormFactory.factory.form(factory => [
+
+                factory.form(() => [
+                    factory.textInput("firstName", false, undefined, "First Name"),
+                    factory.textInput("lastName", false, undefined, "Last Name"),
+                    factory.textInput("email", false, undefined, "E-Mail")
+                ], "Personal Data"),
+
+                factory.form(() => [
+                    factory.textInput("displayName", false, undefined, "Display Name", "This is the name on your profile."),
+                    factory.textInput("password", false, "Choose your password", "Password"),
+                    factory.textInput("passwordConfirmation", false, "Confirm your password", "Password Confirmation")
+                ], "Account Information"),
+
+                factory.textInput("message", true, "Your message here", "Message")
+
+            ]).toFormGenerator();
+
+            document.body.appendChild(formGenerator.getFormElement());
+            
+            //WidgetSystem.Render.fallback();
         }else{
             let success = false;
             {
