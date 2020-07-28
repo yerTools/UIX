@@ -1,0 +1,21 @@
+$form-generator-form-background-color: $page-background-color;
+$form-generator-form-container-background-color: rgba(0,0,0,.05);
+
+$form-generator-text-color: $page-text-color;
+$form-generator-description-text-color: lighten($page-text-color, 35%);
+
+
+$form-generator-input-container-hover-background-color: lighten($form-generator-form-background-color, 5%);
+
+$form-generator-input-background-color: #fff;
+
+$form-generator-input-border-color: #999;
+$form-generator-input-hover-border-color: #666;
+$form-generator-input-required-border-color: #333;
+
+
+//Timings
+$form-generator-timing-hover: $page-timing-hover;
+
+//Layout
+$form-generator-input-target-width: 250px;
