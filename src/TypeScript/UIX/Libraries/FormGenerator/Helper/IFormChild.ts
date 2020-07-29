@@ -8,5 +8,8 @@ namespace UIX.Libraries.FormGenerator.Helper{
         
         getFormChildType():FormChildType;
         getHTMLElement(namePrefix?:string):HTMLElement;
+
+        hasError():boolean;
+        isReady():boolean;
     }
 }

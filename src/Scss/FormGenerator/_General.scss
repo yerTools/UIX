@@ -1,17 +1,53 @@
 form.uix.form-generator{
-
     padding: 5px;
+    //padding-left: 1.5em;
+
     box-sizing: border-box;
 
     background-color: $form-generator-form-background-color;
 
     .form-container{
-        overflow: hidden;
-        margin: 2px 0;
+        position: relative;
+        padding-left: 1em;
 
-        border-radius: 3px;
+        &::before, &::after{
+            content: "";
+            top: .4em;
 
-        background-color: $form-generator-form-container-background-color;
+            box-sizing: border-box;
+            position: absolute;
+        }
+
+        &::before{
+            //left: -.8em;
+            left: calc(.4em - 1px);
+
+            height: calc(100% - .4em);
+            width: 2px;
+
+            background-color: #000000;
+        }
+
+        &::after{
+            //left: -1.2em;
+            left: 0;
+
+            width: .8em;
+            height: .8em;
+
+            border-radius: .8em;
+
+            background-color: #ffffff;
+            border: 1px solid #000000;
+        }
+
+        &.is-ready::after{
+            background-color: #00ff00;
+        }
+
+        &.has-error::after{
+            background-color: #ff0000;
+        }
 
         .display-name, .description{
             display: block;
@@ -97,6 +133,12 @@ form.uix.form-generator{
 
             &.required{
                 .input-wrapper{
+                    .display-name::after{
+                        content: "*";
+                        margin-left: 2px;
+                        color: #ff0000;
+                    }
+
                     .input-field-wrapper{
                         &>.form-input{
                             border-color: $form-generator-input-required-border-color;
@@ -126,6 +168,16 @@ form.uix.form-generator{
 
             &>.form-container{
                 flex-basis: 100%;
+
+                margin: 20px 0;
+
+                &:first-child, &+.form-container{
+                    margin-top: 0;
+                }
+
+                &:last-child{
+                    margin-bottom: 0;
+                }
             }
         }
     }

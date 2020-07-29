@@ -75,16 +75,25 @@ namespace UIX{
                     factory.form(() => [
                         factory.textInput("firstName", false, undefined, "First Name"),
                         factory.textInput("lastName", false, undefined, "Last Name"),
-                        factory.textInput("email", false, undefined, "E-Mail")
+                        factory.textInput("email", false, undefined, "E-Mail", undefined, false)
                     ], "Personal Data", "This are all your personal data, we need from you."),
     
                     factory.form(() => [
                         factory.textInput("displayName", false, undefined, "Display Name", "This is the name on your profile."),
-                        factory.textInput("password", false, "Choose your password", "Password"),
-                        factory.textInput("passwordConfirmation", false, "Confirm your password", "Password Confirmation")
+                        factory.textInput("password", false, "Choose your password", "Password", undefined, false),
+                        factory.textInput("passwordConfirmation", false, "Confirm your password", "Password Confirmation", undefined, false)
                     ], "Account Information", "The information you input here will be visible for everyone.\n(Yes, also your password!)"),
     
-                    factory.textInput("message", true, "Your message here", "Message")
+                    factory.textInput("message", true, "Your message here", "Message"),
+
+                    factory.form(() => [
+                        factory.textInput("address", false, undefined, "Address"),
+                        factory.textInput("city", false, undefined, "City"),
+                        factory.textInput("state", false, undefined, "State"),
+                        factory.textInput("zip-code", false, undefined, "Zip Code"),
+                        factory.textInput("phone", false, undefined, "Phone", undefined, false)
+                    ], "Shipping Information", "We will send you a small gift.")
+
                 ], "Demo Form", "This is a simple demo form. :)")
 
             ]).toFormGenerator();

@@ -44,5 +44,13 @@ namespace UIX.Libraries.FormGenerator.Input{
         public clone(){
             return new TextInput(this.name, this.multiline, this.placeholder, this.displayName, this.description, this.isRequired, this.isReadOnly, this.defaultValue, this.sortingPriority);
         }
+
+        public hasError(){
+            return false;
+        }
+
+        public isReady(){
+            return true;
+        }
     }
 }

@@ -91,5 +91,8 @@ namespace UIX.Libraries.FormGenerator.Input{
         public abstract reset():boolean;
         public abstract getHTMLElement(namePrefix?:string):HTMLContainerType;
         public abstract clone():InputFieldType;
+
+        public abstract hasError():boolean;
+        public abstract isReady():boolean;
     }
 }

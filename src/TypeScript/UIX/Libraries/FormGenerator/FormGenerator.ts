@@ -59,8 +59,16 @@ namespace UIX.Libraries.FormGenerator{
                 childrenContainer.appendChild(this.children[i].getHTMLElement(namePrefix ? (this.namePrefix ? namePrefix + this.namePrefix : namePrefix) : this.namePrefix));
             }
 
-
             container.appendChild(childrenContainer);
+
+            if(this.isReady()){
+                container.classList.add("is-ready");
+            }
+            
+            if(this.hasError()){
+                container.classList.add("has-error");
+            }
+
             return container;
         }
 
@@ -71,6 +79,24 @@ namespace UIX.Libraries.FormGenerator{
             form.appendChild(this.getHTMLElement(namePrefix));
 
             return form;
+        }
+
+        public hasError(){
+            for(let i = 0; i < this.children.length; i++){
+                if(this.children[i].hasError()){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public isReady(){
+            for(let i = 0; i < this.children.length; i++){
+                if(!this.children[i].isReady()){
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
