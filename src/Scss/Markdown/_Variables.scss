@@ -1,7 +1,24 @@
-$markdown-checkbox-color: #0e5efb;
-$markdown-checkbox-hook-color: #ffffff;
-$markdown-checkbox-plus-color: #33f10b;
-$markdown-checkbox-minus-color: #f13248;
+$markdown-checkbox-color: $page-info-color;
+$markdown-checkbox-color-hover: $page-info-color-hover;
+$markdown-checkbox-hook-color: $page-white-color;
+$markdown-checkbox-hook-color-hover: $page-white-color-hover;
 
-$markdown-code-text-color: #0c44c1;
+$markdown-checkbox-plus-background-color: $page-ready-color;
+$markdown-checkbox-plus-background-color-hover: $page-ready-color-hover;
+$markdown-checkbox-plus-color: $page-white-color;
+$markdown-checkbox-plus-color-hover: $page-white-color-hover;
+
+$markdown-checkbox-minus-background-color: $page-error-color;
+$markdown-checkbox-minus-background-color-hover: $page-error-color-hover;
+$markdown-checkbox-minus-color: $page-white-color;
+$markdown-checkbox-minus-color-hover: $page-white-color-hover;
+
+
+$markdown-code-text-color: $page-code-color;
+$markdown-code-text-color-hover: $page-code-color-hover;
 $markdown-code-background-color: rgba(0,0,0,.08);
+
+$markdown-underline-color: $page-gray-color;
+$markdown-underline-color-hover: $page-gray-color-hover;
+
+$markdown-timing-hover: $page-timing-hover;

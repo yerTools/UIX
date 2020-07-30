@@ -21,8 +21,8 @@
             color: $widget-button-color;
             background-color: $widget-button-background-color;
 
-            transition: color ease-in-out $page-timing-hover, 
-                        background-color ease-in-out $page-timing-hover;
+            transition: color ease-in-out $widget-timing-hover, 
+                        background-color ease-in-out $widget-timing-hover;
 
             &:hover{
                 color: $widget-button-background-color;

@@ -11,7 +11,7 @@ body{
 body, input, textarea{
     font-family: $page-font-family;
     font-weight: $page-font-weight;
-    color: $page-text-color;
+    color: $page-dark-color;
 }
 
 code, .monospace{
@@ -20,7 +20,7 @@ code, .monospace{
 }
 
 a{
-    color: $page-text-color;
+    color: $page-dark-color;
 }
 
 b{
@@ -31,20 +31,20 @@ hr{
     height: .2em;
     border: none;
     
-    background-color: $page-underline-color;
+    background-color: $page-gray-color;
     opacity: .33;
 
     transition: background-color ease-in-out $page-timing-hover;
     &:hover{
-        background-color: $page-underline-hover-color;
+        background-color: $page-gray-color-hover;
     }
 }
 
 u{
-    text-decoration-color: $page-underline-color;
+    text-decoration-color: $page-gray-color;
 
     transition: text-decoration-color ease-in-out $page-timing-hover;
     &:hover{
-        text-decoration-color: $page-underline-hover-color;
+        text-decoration-color: $page-gray-color-hover;
     }
 }

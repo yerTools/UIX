@@ -1,17 +1,23 @@
-$form-generator-form-background-color: $page-background-color;
+$form-generator-form-background-color: $page-light-color;
 
-$form-generator-text-color: $page-text-color;
-$form-generator-description-text-color: lighten($page-text-color, 35%);
+$form-generator-text-color: $page-dark-color;
+$form-generator-description-text-color:  $page-gray-color;
 
 
-$form-generator-input-container-hover-background-color: lighten($form-generator-form-background-color, 5%);
+$form-generator-input-container-hover-background-color: $page-gray-color-hover;
 
-$form-generator-input-background-color: #fff;
+$form-generator-input-background-color: $page-white-color;
 
-$form-generator-input-border-color: #999;
-$form-generator-input-hover-border-color: #666;
-$form-generator-input-required-border-color: #333;
+$form-generator-input-border-color: $page-gray-color-hover;
+$form-generator-input-hover-border-color: $page-gray-color;
+$form-generator-input-required-border-color: $page-dark-color;
 
+//Status
+$form-generator-status-line-color: $page-gray-color-hover;
+
+$form-generator-status-background-color: $page-white-color-hover;
+$form-generator-status-ready-color: $page-ready-color;
+$form-generator-status-error-color: $page-error-color;
 
 //Timings
 $form-generator-timing-hover: $page-timing-hover;

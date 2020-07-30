@@ -10,5 +10,13 @@ div.uix-markdown{
 
         color: $markdown-code-text-color;
         background-color: $markdown-code-background-color;
+
+        transition: color ease-in-out $markdown-timing-hover, background-color ease-in-out $markdown-timing-hover;
+
+        &:hover{
+            color: $markdown-code-text-color-hover;
+            background-color: transparent;
+        }
     }
+
 }

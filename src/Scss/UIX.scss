@@ -1,3 +1,4 @@
+@use "sass:color" as color;
 @use "sass:math" as math;
 @use "sass:string" as string;
 
@@ -13,6 +14,7 @@
 @import "./Font/SourceSansVariable";
 @import "./Font/SourceCodeVariable";
 
+@import "./General/Classes/Color";
 @import "./General/Layout";
 @import "./General/Site";
 
