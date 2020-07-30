@@ -1,6 +1,5 @@
 form.uix.form-generator{
     padding: 5px;
-    //padding-left: 1.5em;
 
     box-sizing: border-box;
 
@@ -19,7 +18,6 @@ form.uix.form-generator{
         }
 
         &::before{
-            //left: -.8em;
             left: calc(.4em - 1px);
 
             height: calc(100% - .4em);
@@ -29,7 +27,6 @@ form.uix.form-generator{
         }
 
         &::after{
-            //left: -1.2em;
             left: 0;
 
             width: .8em;

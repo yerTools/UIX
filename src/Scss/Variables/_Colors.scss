@@ -55,6 +55,20 @@ $page-gray-color-hover-corresponding-text: $page-dark-color-hover;
 $page-black-color-hover-corresponding-text: $page-light-color-hover;
 $page-white-color-hover-corresponding-text: $page-dark-color-hover;
 
+$page-colors: (
+    "accent": ($page-accent-color, $page-accent-color-hover, $page-accent-color-corresponding-text, $page-accent-color-hover-corresponding-text),
+    "error": ($page-error-color, $page-error-color-hover, $page-error-color-corresponding-text, $page-error-color-hover-corresponding-text),
+    "warning": ($page-warning-color, $page-warning-color-hover, $page-warning-color-corresponding-text, $page-warning-color-hover-corresponding-text),
+    "ready": ($page-ready-color, $page-ready-color-hover, $page-ready-color-corresponding-text, $page-ready-color-hover-corresponding-text),
+    "info": ($page-info-color, $page-info-color-hover, $page-info-color-corresponding-text, $page-info-color-hover-corresponding-text),
+    "code": ($page-code-color, $page-code-color-hover, $page-code-color-corresponding-text, $page-code-color-hover-corresponding-text),
+    "highlight": ($page-highlight-color, $page-highlight-color-hover, $page-highlight-color-corresponding-text, $page-highlight-color-hover-corresponding-text),
+    "dark": ($page-dark-color, $page-dark-color-hover, $page-dark-color-corresponding-text, $page-dark-color-hover-corresponding-text),
+    "light": ($page-light-color, $page-light-color-hover, $page-light-color-corresponding-text, $page-light-color-hover-corresponding-text),
+    "gray": ($page-gray-color, $page-gray-color-hover, $page-gray-color-corresponding-text, $page-gray-color-hover-corresponding-text),
+    "black": ($page-black-color, $page-black-color-hover, $page-black-color-corresponding-text, $page-black-color-hover-corresponding-text),
+    "white": ($page-white-color, $page-white-color-hover, $page-white-color-corresponding-text, $page-white-color-hover-corresponding-text)
+);
 
 //Scrollbar
 $scrollbar-background-color: #dadada;
