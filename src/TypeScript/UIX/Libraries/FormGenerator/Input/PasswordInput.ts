@@ -1,14 +1,12 @@
 /// <reference path="BaseType/InputField.ts" />
 
 namespace UIX.Libraries.FormGenerator.Input{
-    export class TextInput extends BaseType.InputField<TextInput, string, HTMLInputElement|HTMLTextAreaElement>{
+    export class PasswordInput extends BaseType.InputField<PasswordInput, string, HTMLInputElement>{
 
-        public readonly multiline:boolean;
         public readonly placeholder?:string;
 
-        public constructor(parent:Interface.IFormParent, name:string, multiline = false, placeholder?:string, displayName?:string, description?:string, isRequired?:boolean, isReadOnly?:boolean, defaultValue?:string, sortingPriority?:number){
-            super(parent, BaseType.InputType.Text, name, displayName, description, isRequired, isReadOnly, defaultValue, sortingPriority);
-            this.multiline = multiline;
+        public constructor(parent:Interface.IFormParent, name:string, placeholder?:string, displayName?:string, description?:string, isRequired?:boolean, isReadOnly?:boolean, defaultValue?:string, sortingPriority?:number){
+            super(parent, BaseType.InputType.Password, name, displayName, description, isRequired, isReadOnly, defaultValue, sortingPriority);
             this.placeholder = placeholder;
         }
 
@@ -30,7 +28,7 @@ namespace UIX.Libraries.FormGenerator.Input{
 
         public getHTMLElement(namePrefix?:string){
             if(!this._htmlContainerElement){
-                this._htmlInputElement = this.createInput(this.multiline ? "textarea" : "input", true, undefined, namePrefix);
+                this._htmlInputElement = this.createInput("input", true, "password", namePrefix);
 
                 if(this.placeholder){
                     this._htmlInputElement.placeholder = this.placeholder;
@@ -42,7 +40,7 @@ namespace UIX.Libraries.FormGenerator.Input{
         }
 
         public clone(){
-            return new TextInput(this.parent, this.name, this.multiline, this.placeholder, this.displayName, this.description, this.isRequired, this.isReadOnly, this.defaultValue, this.sortingPriority);
+            return new PasswordInput(this.parent, this.name, this.placeholder, this.displayName, this.description, this.isRequired, this.isReadOnly, this.defaultValue, this.sortingPriority);
         }
 
         public hasError(){

@@ -59,18 +59,18 @@ namespace UIX.Libraries.FormGenerator.Builder{
             return this;
         }
 
-        public toFormGenerator(){
-            let formGenerator = new FormGenerator(this._displayName, this._description, this._sortingPriority, this._namePrefix);
+        public toFormGenerator(parent?:Interface.IFormParent){
+            let formGenerator = new FormGenerator(parent, this._displayName, this._description, this._sortingPriority, this._namePrefix);
             if(this._children){
                 for(let i = 0; i < this._children.length; i++){
-                    formGenerator.children.push(this._children[i].toFormChild());
+                    formGenerator.children.push(this._children[i].toFormChild(formGenerator));
                 }
             }
             return formGenerator;
         }
 
-        public toFormChild(){
-            return this.toFormGenerator()
+        public toFormChild(parent?:Interface.IFormParent){
+            return this.toFormGenerator(parent)
         }
     }
 }

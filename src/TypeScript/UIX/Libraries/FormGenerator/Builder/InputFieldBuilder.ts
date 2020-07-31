@@ -1,5 +1,5 @@
 /// <reference path="FormGeneratorBuilder.ts" />
-/// <reference path="../Input/InputField.ts" />
+/// <reference path="../Input/BaseType/InputField.ts" />
 
 namespace UIX.Libraries.FormGenerator.Builder{
     export abstract class InputFieldBuilder<InputFieldType extends InputFieldBuilder<InputFieldType, ValueType>, ValueType> extends FormGeneratorBuilder{

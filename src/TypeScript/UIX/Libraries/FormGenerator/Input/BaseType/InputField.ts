@@ -1,12 +1,18 @@
-/// <reference path="../Helper/IFormChild.ts" />
-/// <reference path="InputType.ts" />
-/// <reference path="IHTMLInputElementTagName.ts" />
-/// <reference path="../../../Core/Tools/EscapeTextForHTML.ts" />
 
-namespace UIX.Libraries.FormGenerator.Input{
+/// <reference path="InputType.ts" />
+/// <reference path="../Helper/IHTMLInputElementTagName.ts" />
+/// <reference path="../Helper/IHTMLInputElementTypeName.ts" />
+/// <reference path="../../Interface/IFormChild.ts" />
+/// <reference path="../../Interface/IFormParent.ts" />
+/// <reference path="../../../../Core/Tools/EscapeTextForHTML.ts" />
+
+namespace UIX.Libraries.FormGenerator.Input.BaseType{
     type HTMLContainerType = HTMLLabelElement;
 
-    export abstract class InputField<InputFieldType extends InputField<InputFieldType, ValueType, InputElementType>, ValueType, InputElementType extends HTMLInputElement|HTMLTextAreaElement> implements Helper.IFormChild{
+    export type AllowedInputValueType = string|number|boolean/*|Color|DateTime|TimeSpan*/|File;
+    export type InputValueType = AllowedInputValueType|(AllowedInputValueType|InputValueType)[];
+
+    export abstract class InputField<InputFieldType extends InputField<InputFieldType, ValueType, InputElementType>, ValueType extends InputValueType, InputElementType extends HTMLInputElement|HTMLTextAreaElement> implements Interface.IFormChild{
         protected getContainerHTMLElement(filedElement:HTMLElement):HTMLContainerType{
             let container = document.createElement("label");
             container.className = "input-container"
@@ -39,7 +45,7 @@ namespace UIX.Libraries.FormGenerator.Input{
             return container;
         }
 
-        protected createInput<TagName extends keyof IHTMLInputElementTagName>(tagName:TagName, setDefaultValue:boolean, namePrefix?:string):IHTMLInputElementTagName[TagName]{
+        protected createInput<TagName extends keyof Helper.IHTMLInputElementTagName, TypeName extends Helper.IHTMLInputElementTypeName[TagName]>(tagName:TagName, setDefaultValue:boolean, typeName?:TypeName, namePrefix?:string): Helper.IHTMLInputElementTagName[TagName]{
             let input = document.createElement(tagName);
             input.className = "form-input";
 
@@ -51,9 +57,18 @@ namespace UIX.Libraries.FormGenerator.Input{
                 input.value = this.getValueAsInputString(this.defaultValue);
             }
 
+            if(typeName){
+                switch(tagName){
+                    case "input":
+                        (<HTMLInputElement>input).type = <string>typeName;
+                        break;
+                }
+            }
+            
             return input;
         }
 
+        public readonly parent:Interface.IFormParent;
         public readonly inputType:InputType;
 
         public readonly name:string;
@@ -69,7 +84,8 @@ namespace UIX.Libraries.FormGenerator.Input{
         protected _htmlContainerElement?:HTMLContainerType;
         protected _htmlInputElement?:InputElementType;
 
-        public constructor(inputType:InputType, name:string, displayName?:string, description?:string, isRequired = true, isReadOnly = false, defaultValue?:ValueType, sortingPriority?:number){
+        public constructor(parent:Interface.IFormParent, inputType:InputType, name:string, displayName?:string, description?:string, isRequired = true, isReadOnly = false, defaultValue?:ValueType, sortingPriority?:number){
+            this.parent = parent;
             this.inputType = inputType;
 
             this.name = name;
@@ -83,7 +99,7 @@ namespace UIX.Libraries.FormGenerator.Input{
             this.sortingPriority = sortingPriority;
         }
 
-        public getFormChildType(){ return Helper.FormChildType.InputField; }
+        public getFormChildType(){ return Interface.FormChildType.InputField; }
 
         public abstract setValue(value:ValueType):boolean;
         public abstract getValue():ValueType|undefined;

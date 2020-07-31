@@ -1,10 +1,10 @@
 /// <reference path="FormChildType.ts" />
 
-namespace UIX.Libraries.FormGenerator.Helper{
+namespace UIX.Libraries.FormGenerator.Interface{
     export interface IFormChild{
-        description?:string;
-        displayName?:string;
-        sortingPriority?:number;
+        readonly description?:string;
+        readonly displayName?:string;
+        readonly sortingPriority?:number;
         
         getFormChildType():FormChildType;
         getHTMLElement(namePrefix?:string):HTMLElement;

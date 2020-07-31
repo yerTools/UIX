@@ -1,35 +1,42 @@
-/// <reference path="Helper/IFormChild.ts" />
+/// <reference path="Interface/IFormParent.ts" />
 /// <reference path="Input/TextInput.ts" />
 
 namespace UIX.Libraries.FormGenerator{
-    export class FormGenerator implements Helper.IFormChild{
-        public readonly children:Helper.IFormChild[] = [];
+    export class FormGenerator implements Interface.IFormParent{
+        public readonly parent?:Interface.IFormParent;
+        public readonly children:Interface.IFormChild[] = [];
 
-        public displayName?:string;
-        public description?:string;
-        public sortingPriority?:number;
-        public namePrefix?:string;
+        public readonly displayName?:string;
+        public readonly description?:string;
+        public readonly sortingPriority?:number;
+        public readonly namePrefix?:string;
 
-        public constructor(displayName?:string, description?:string, sortingPriority?:number, namePrefix?:string){
+        public constructor(parent?:Interface.IFormParent, displayName?:string, description?:string, sortingPriority?:number, namePrefix?:string){
+            this.parent = parent;
+            
             this.displayName = displayName;
             this.description = description;
             this.sortingPriority = sortingPriority;
             this.namePrefix = namePrefix;
         }
 
-        public addChildren(children:Helper.IFormChild[]){
+        public addChildren(children:Interface.IFormChild[]){
             for(let i = 0; i < children.length; i++){
                 this.children.push(children[i]);
             }
         }
 
-        public getFormChildType(){ return Helper.FormChildType.FormGenerator; }
+        public getFormChildType(){ return Interface.FormChildType.FormGenerator; }
 
         public sortChildren(){
             this.children.sort((a, b) => 
                 a.sortingPriority === undefined ? 
                     (b.sortingPriority === undefined ?  0 : 1) :
                     (b.sortingPriority === undefined ? -1 : b.sortingPriority - a.sortingPriority));
+        }
+
+        public childChanged(formChild:Interface.IFormChild){
+
         }
 
         public getHTMLElement(namePrefix?:string):HTMLElement{

@@ -1,4 +1,4 @@
-/// <reference path="../Helper/IFormChild.ts" />
+/// <reference path="../Interface/IFormChild.ts" />
 
 namespace UIX.Libraries.FormGenerator.Builder{
     export type MultiBuilderCallback<T extends FormGeneratorBuilder> = ((this:T, factory:FormFactory, currentBuilder:T) => FormGeneratorBuilder|FormGeneratorBuilder[])|FormGeneratorBuilder|FormGeneratorBuilder[];
@@ -29,6 +29,6 @@ namespace UIX.Libraries.FormGenerator.Builder{
             return child;
         }
 
-        public abstract toFormChild():Helper.IFormChild
+        public abstract toFormChild(parent:Interface.IFormParent):Interface.IFormChild
     }
 }

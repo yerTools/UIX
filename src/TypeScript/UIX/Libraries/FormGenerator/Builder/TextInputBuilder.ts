@@ -34,12 +34,12 @@ namespace UIX.Libraries.FormGenerator.Builder{
             return this;
         }
 
-        public toTextInput(){
-            return new Input.TextInput(this._name, this._multiline, this._placeholder, this._displayName, this._description, this._isRequired, this._isReadOnly, this._defaultValue, this._sortingPriority);
+        public toTextInput(parent:Interface.IFormParent){
+            return new Input.TextInput(parent, this._name, this._multiline, this._placeholder, this._displayName, this._description, this._isRequired, this._isReadOnly, this._defaultValue, this._sortingPriority);
         }
 
-        public toFormChild(){
-            return this.toTextInput()
+        public toFormChild(parent:Interface.IFormParent){
+            return this.toTextInput(parent)
         }
     }
 }
