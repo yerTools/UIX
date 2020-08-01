@@ -1,4 +1,5 @@
 /// <reference path="FormChildType.ts" />
+/// <reference path="../Input/Helper/InputAutocompleteAddressType.ts" />
 
 namespace UIX.Libraries.FormGenerator.Interface{
     export interface IFormChild{
@@ -7,7 +8,7 @@ namespace UIX.Libraries.FormGenerator.Interface{
         readonly sortingPriority?:number;
         
         getFormChildType():FormChildType;
-        getHTMLElement(namePrefix?:string):HTMLElement;
+        getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Input.Helper.InputAutocompleteAddressType):HTMLElement;
 
         hasError():boolean;
         isReady():boolean;

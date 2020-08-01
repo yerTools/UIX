@@ -9,15 +9,21 @@ namespace UIX.Libraries.FormGenerator{
         public readonly displayName?:string;
         public readonly description?:string;
         public readonly sortingPriority?:number;
-        public readonly namePrefix?:string;
 
-        public constructor(parent?:Interface.IFormParent, displayName?:string, description?:string, sortingPriority?:number, namePrefix?:string){
+        public readonly namePrefix?:string;
+        public readonly autocompleteSection?:string;
+        public readonly autocompleteAddressType?:Input.Helper.InputAutocompleteAddressType;
+
+        public constructor(parent?:Interface.IFormParent, displayName?:string, description?:string, sortingPriority?:number, namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Input.Helper.InputAutocompleteAddressType){
             this.parent = parent;
             
             this.displayName = displayName;
             this.description = description;
             this.sortingPriority = sortingPriority;
+
             this.namePrefix = namePrefix;
+            this.autocompleteSection = autocompleteSection;
+            this.autocompleteAddressType = autocompleteAddressType;
         }
 
         public addChildren(children:Interface.IFormChild[]){
@@ -39,12 +45,12 @@ namespace UIX.Libraries.FormGenerator{
 
         }
 
-        public getHTMLElement(namePrefix?:string):HTMLElement{
-            let container = document.createElement("div");
+        public getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Input.Helper.InputAutocompleteAddressType):HTMLElement{
+            let container = document.createElement("fieldset");
             container.className = "form-container";
 
             if(this.displayName){
-                let displayName = document.createElement("span");
+                let displayName = document.createElement("legend");
                 displayName.className = "display-name";
                 displayName.innerHTML = Core.Tools.escapeTextForHTML(this.displayName);
                 container.appendChild(displayName);
@@ -62,8 +68,12 @@ namespace UIX.Libraries.FormGenerator{
 
             this.sortChildren();
 
+            namePrefix = namePrefix ? (this.namePrefix ? namePrefix + this.namePrefix : namePrefix) : this.namePrefix;
+            autocompleteSection = autocompleteSection ? (this.autocompleteSection ? autocompleteSection + "-" + this.autocompleteSection : autocompleteSection) : this.autocompleteSection;
+            autocompleteAddressType = autocompleteAddressType ? autocompleteAddressType : this.autocompleteAddressType;
+
             for(let i = 0; i < this.children.length; i++){
-                childrenContainer.appendChild(this.children[i].getHTMLElement(namePrefix ? (this.namePrefix ? namePrefix + this.namePrefix : namePrefix) : this.namePrefix));
+                childrenContainer.appendChild(this.children[i].getHTMLElement(namePrefix, autocompleteSection, autocompleteAddressType));
             }
 
             container.appendChild(childrenContainer);
@@ -79,11 +89,11 @@ namespace UIX.Libraries.FormGenerator{
             return container;
         }
 
-        public getFormElement(namePrefix?:string){
+        public getFormElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Input.Helper.InputAutocompleteAddressType){
             let form = document.createElement("form");
             form.className = "uix form-generator";
 
-            form.appendChild(this.getHTMLElement(namePrefix));
+            form.appendChild(this.getHTMLElement(namePrefix, autocompleteSection, autocompleteAddressType));
 
             return form;
         }

@@ -1,8 +1,8 @@
 /// <reference path="Basic/TextInputFieldBuilder.ts" />
-/// <reference path="../Input/PasswordInput.ts" />
+/// <reference path="../Input/UrlInput.ts" />
 
 namespace UIX.Libraries.FormGenerator.Builder{
-    export class PasswordInputBuilder extends Basic.TextInputFieldBuilder<PasswordInputBuilder>{
+    export class UrlInputBuilder extends Basic.TextInputFieldBuilder<UrlInputBuilder>{
 
         public constructor(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
@@ -24,12 +24,12 @@ namespace UIX.Libraries.FormGenerator.Builder{
             return this;
         }
 
-        public toPasswordInput(parent:Interface.IFormParent){
-            return new Input.PasswordInput(parent, this._name, this._displayName, this._description, this._autofocus, this._autocomplete, this._placeholder, this._pattern, this._minLength, this._maxLength, this._isRequired, this._isReadOnly, this._isDisabled, this._defaultValue, this._sortingPriority);
+        public toUrlInput(parent:Interface.IFormParent){
+            return new Input.UrlInput(parent, this._name, this._displayName, this._description, this._autofocus, this._autocomplete, this._placeholder, this._pattern, this._minLength, this._maxLength, this._isRequired, this._isReadOnly, this._isDisabled, this._defaultValue, this._sortingPriority);
         }
 
         public toFormChild(parent:Interface.IFormParent){
-            return this.toPasswordInput(parent)
+            return this.toUrlInput(parent)
         }
     }
 }

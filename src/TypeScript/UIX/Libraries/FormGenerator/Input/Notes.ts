@@ -5,21 +5,20 @@ type InputValueType = AllowedInputValueType|(AllowedInputValueType|InputValueTyp
 
 InputField<ValueType extends InputValueType>
     parent:Interface.IFormParent;
-    name:string;
+    inputType:InputType;
+	name:string;
+	isVisible:boolean
     defaultValue?:ValueType;
     sortingPriority?:number;
     
-    isVisible:boolean
 
 VisibleInputField<T>:InputField<T>
-    inputType:InputType;
     displayName?:string;
     description?:string;
-    isReadOnly:boolean;
-    isRequired:boolean;
-
-    autofocus:boolean
+	autofocus:boolean
     autocomplete?:string
+    isRequired:boolean;
+    isReadOnly:boolean;
     isDisabled:boolean
 
 TextInputField:VisibleInputField<string>
@@ -27,6 +26,11 @@ TextInputField:VisibleInputField<string>
     pattern?:string(regex)
     minLength?:number
     maxLength?:number
+
+RangeInputField<T>:VisibleInputField<T>
+    min?:T
+    max?:T
+    step?:T
 
 SelectInputFieldValue<T>
     name:string
@@ -36,10 +40,6 @@ SelectInputFieldValue<T>
 SelectInputField<T>:VisibleInputField<T>
     values:(SelectInputFieldValue<T>|SelectInputFieldValue<T>[])[]
 
-RangeInputField<T>:VisibleInputField<T>
-    min?:T
-    max?:T
-    step?:T
 
 FileInputField:VisibleInputField<File>
     accept?:string|string[]
@@ -48,8 +48,27 @@ FileInputField:VisibleInputField<File>
 
 --------------------------------
 
+HiddenInput<T>:InputField<T>
+
 TextInput:TextInputField
     multiline:boolean
+
+EmailInput:TextInputField
+
+PasswordInput:TextInputField
+
+SearchInput:TextInputField
+
+UrlInput:TextInputField
+
+CheckboxInput:VisibleInputField<boolean>
+
+NumberInput:RangeInputField<number>
+    placeholder?:string
+
+RangeInput:RangeInputField<number>
+
+ColorInput:VisibleInputField<Color>
 
 SingleSelectInput<T>:SelectInputField<T>
     type:Dropdown|Radio
@@ -57,10 +76,6 @@ SingleSelectInput<T>:SelectInputField<T>
 MultiSelectInput<T>:SelectInputField<T>
     type:List|Checkbox
     //select with multiple
-
-CheckboxInput:VisibleInputField<boolean>
-
-ColorInput:VisibleInputField<Color>
 
 DateInput:RangeInputField<DateTime>
 
@@ -72,28 +87,13 @@ DateTimeInput:RangeInputField<DateTime>
     minTime?:TimeSpan
     maxTime?:TimeSpan
 
-EmailInput:TextInputField
+MonthInput:RangeInputField<DateTime>
+
+WeekInput:RangeInputField<DateTime>
 
 FileInput:FileInputField
     
 ImageInput:FileInputField
-
-HiddenInput<T>:InputField<T>
-
-MonthInput:RangeInputField<DateTime>
-
-NumberInput:RangeInputField<number>
-    placeholder?:string
-
-PasswordInput:TextInputField
-
-RangeInput:RangeInputField<number>
-
-SearchInput:TextInputField
-
-UrlInput:TextInputField
-
-WeekInput:RangeInputField<DateTime>
 
 //List input for multiple dates, emails or other things
 
@@ -101,5 +101,7 @@ WeekInput:RangeInputField<DateTime>
 
 Form: use fieldset tag
 Button: Submit, Reset, Clear
+
+//store form  data in session cache if there is an accidentally navigation
 
 */

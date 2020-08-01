@@ -1,26 +1,31 @@
-/// <reference path="InputFieldBuilder.ts" />
+/// <reference path="Basic/TextInputFieldBuilder.ts" />
 /// <reference path="../Input/TextInput.ts" />
 
 namespace UIX.Libraries.FormGenerator.Builder{
-    export class TextInputBuilder extends InputFieldBuilder<TextInputBuilder, string>{
+    export class TextInputBuilder extends Basic.TextInputFieldBuilder<TextInputBuilder>{
 
-        private _multiline?:boolean;
-        private _placeholder?:string; 
+        protected _multiline?:boolean;
 
-        public constructor(name:string, multiline?:boolean, placeholder?:string, displayName?:string, description?:string, isRequired?:boolean, isReadOnly?:boolean, defaultValue?:string, sortingPriority?:number){
-            super(name, displayName, description, isRequired, isReadOnly, defaultValue, sortingPriority);
-            this.setSpecific(multiline, placeholder);
-        }
-
-        public setSpecific(multiline?:boolean, placeholder?:string){
+        public constructor(name:string, multiline?:boolean, displayName?:string, description?:string, 
+            autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
+            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
+            defaultValue?:string, sortingPriority?:number){
+            super(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
+            
             this._multiline = multiline;
-            this._placeholder = placeholder;
-            return this;
         }
+        public set(name:string, multiline?:boolean, displayName?:string, description?:string, 
+            autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
+            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
+            defaultValue?:string, sortingPriority?:number){
+            this.setInputField(name, true, defaultValue, sortingPriority);
+            this.setVisibleInputField(displayName, description, autofocus, autocomplete, isRequired, isReadOnly, isDisabled);
+            this.setTextInputField(placeholder, pattern, minLength, maxLength);
 
-        public set(name:string, multiline?:boolean, placeholder?:string, displayName?:string, description?:string, isRequired?:boolean, isReadOnly?:boolean, defaultValue?:string, sortingPriority?:number){
-            this.setGeneral(name, displayName, description, isRequired, isReadOnly, defaultValue, sortingPriority);
-            this.setSpecific(multiline, placeholder);
+            this._multiline = multiline;
+
             return this;
         }
 
@@ -29,13 +34,8 @@ namespace UIX.Libraries.FormGenerator.Builder{
             return this;
         }
 
-        public placeholder(placeholder?:string){
-            this._placeholder = placeholder;
-            return this;
-        }
-
         public toTextInput(parent:Interface.IFormParent){
-            return new Input.TextInput(parent, this._name, this._multiline, this._placeholder, this._displayName, this._description, this._isRequired, this._isReadOnly, this._defaultValue, this._sortingPriority);
+            return new Input.TextInput(parent, this._name, this._multiline, this._displayName, this._description, this._autofocus, this._autocomplete, this._placeholder, this._pattern, this._minLength, this._maxLength, this._isRequired, this._isReadOnly, this._isDisabled, this._defaultValue, this._sortingPriority);
         }
 
         public toFormChild(parent:Interface.IFormParent){

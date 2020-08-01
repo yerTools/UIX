@@ -60,9 +60,15 @@ namespace UIX{
                             Math.random() < 0.15,
                             randomStringOrUndefined(true, Math.round(Math.random() * 14 + 1), 0.6, true),
                             randomStringOrUndefined(true, Math.round(Math.random() * 6 + 1), 0.15),
+                            undefined,
+                            undefined,
                             randomStringOrUndefined(true, Math.round(Math.random() * 20 + 2), 0.8, true),
+                            undefined,
+                            undefined,
+                            undefined,
                             Math.random() < 0.4,
                             Math.random() < 0.2,
+                            Math.random() < 0.1,
                             randomStringOrUndefined(true, Math.round(Math.random() * 18 + 1), 0.9)
                         ));
                     }
@@ -77,13 +83,13 @@ namespace UIX{
                     factory.form([
                         factory.textInput("firstName", false, undefined, "First Name"),
                         factory.textInput("lastName", false, undefined, "Last Name"),
-                        factory.textInput("email", false, undefined, "E-Mail", undefined, false)
+                        factory.emailInput("email", undefined, "E-Mail")
                     ], "Personal Data", "This are all your personal data, we need from you."),
     
                     factory.form([
-                        factory.textInput("displayName", false, undefined, "Display Name", "This is the name on your profile."),
-                        factory.passwordInput("password", "Choose your password", "Password", undefined, false),
-                        factory.passwordInput("passwordConfirmation", "Confirm your password", "Password Confirmation", undefined, false)
+                        factory.textInput("displayName", false, undefined, "Display Name", false, undefined, "This is the name on your profile."),
+                        factory.passwordInput("password", "Choose your password", "Password"),
+                        factory.passwordInput("passwordConfirmation", "Confirm your password", "Password Confirmation")
                     ], "Account Information", "The information you input here will be visible for everyone.\n(Yes, also your password!)"),
     
                     factory.textInput("message", true, "Your message here", "Message"),
@@ -93,7 +99,7 @@ namespace UIX{
                         factory.textInput("city", false, undefined, "City"),
                         factory.textInput("state", false, undefined, "State"),
                         factory.textInput("zip-code", false, undefined, "Zip Code"),
-                        factory.textInput("phone", false, undefined, "Phone", undefined, false)
+                        factory.textInput("phone", false, undefined, "Phone")
                     ], "Shipping Information", "We will send you a small gift.")
 
                 //], "Demo Form", "This is a simple demo form. :)")

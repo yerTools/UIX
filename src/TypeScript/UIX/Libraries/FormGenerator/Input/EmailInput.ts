@@ -1,7 +1,7 @@
 /// <reference path="BaseType/TextInputField.ts" />
 
 namespace UIX.Libraries.FormGenerator.Input{
-    export class PasswordInput extends BaseType.TextInputField<PasswordInput, HTMLInputElement, "input">{
+    export class EmailInput extends BaseType.TextInputField<EmailInput, HTMLInputElement, "input">{
 
         public constructor(
                 parent:Interface.IFormParent, name:string,
@@ -9,19 +9,19 @@ namespace UIX.Libraries.FormGenerator.Input{
                 placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
                 isRequired = true, isReadOnly = false, isDisabled = false,
                 defaultValue?:string, sortingPriority?:number){
-            super(parent, BaseType.InputType.Password, name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
+            super(parent, BaseType.InputType.Email, name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
 
         public getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Helper.InputAutocompleteAddressType){
             if(!this._htmlContainerElement){
-                this._htmlInputElement = this.createTextInput("input", true, "password", namePrefix, autocompleteSection, autocompleteAddressType);
+                this._htmlInputElement = this.createTextInput("input", true, "email", namePrefix, autocompleteSection, autocompleteAddressType);
                 this._htmlContainerElement = this.getContainerHTMLElement(this._htmlInputElement);
             }
             return this._htmlContainerElement;
         }
 
         public clone(){
-            return new PasswordInput(this.parent, this.name, this.displayName, this.description, this.autofocus, this.autocomplete, this.placeholder, this.pattern, this.minLength, this.maxLength, this.isRequired, this.isReadOnly, this.isDisabled, this.defaultValue, this.sortingPriority);
+            return new EmailInput(this.parent, this.name, this.displayName, this.description, this.autofocus, this.autocomplete, this.placeholder, this.pattern, this.minLength, this.maxLength, this.isRequired, this.isReadOnly, this.isDisabled, this.defaultValue, this.sortingPriority);
         }
 
     }
