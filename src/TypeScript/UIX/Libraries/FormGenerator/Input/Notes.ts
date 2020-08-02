@@ -21,9 +21,13 @@ VisibleInputField<T>:InputField<T>
     isReadOnly:boolean;
     isDisabled:boolean
 
+InputPattern
+    expression:string
+    description?:string
+
 TextInputField:VisibleInputField<string>
     placeholder?:string
-    pattern?:string(regex)
+    pattern?:InputPattern
     minLength?:number
     maxLength?:number
 
@@ -51,7 +55,10 @@ FileInputField:VisibleInputField<File>
 HiddenInput<T>:InputField<T>
 
 TextInput:TextInputField
-    multiline:boolean
+    autocompleteValues?string[];
+    requireFromAutocompleteValues:boolean;
+
+TextBoxInput:TextInputField
 
 EmailInput:TextInputField
 

@@ -6,14 +6,14 @@ namespace UIX.Libraries.FormGenerator.Builder{
 
         public constructor(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             super(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
         public set(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
 

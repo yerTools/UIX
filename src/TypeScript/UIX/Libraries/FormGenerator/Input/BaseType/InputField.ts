@@ -10,8 +10,9 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
     export type InputValueType = AllowedInputValueType|(AllowedInputValueType|InputValueType)[];
 
     export abstract class InputField<
-                InputFieldType extends InputField<InputFieldType, ValueType>, 
-                ValueType extends InputValueType> 
+                InputFieldType extends InputField<InputFieldType, ValueType, HTMLInputElementType>, 
+                ValueType extends InputValueType,
+                HTMLInputElementType extends HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement|HTMLButtonElement> 
             implements Interface.IFormChild{
         
         public readonly parent:Interface.IFormParent;
@@ -22,6 +23,9 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
 
         public readonly defaultValue?:ValueType;
         public readonly sortingPriority?:number;
+
+        protected _htmlInputElement?:HTMLInputElementType;
+        protected _lastRawValue?:string;
 
         public constructor(parent:Interface.IFormParent, inputType:InputType, name:string, isVisible = true, defaultValue?:ValueType, sortingPriority?:number){
             this.parent = parent;
@@ -40,8 +44,11 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
 
             input.name = namePrefix ? namePrefix + this.name : this.name;
 
-            if(setDefaultValue && this.defaultValue){
-                input.value = this.getValueAsInputString(this.defaultValue);
+            if(this._lastRawValue !== undefined){
+                input.value = this._lastRawValue;
+            }else if(setDefaultValue && this.defaultValue){
+                this._lastRawValue = this.getValueAsInputString(this.defaultValue);
+                input.value = this._lastRawValue;
             }
 
             if(typeName){
@@ -53,6 +60,22 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             }
             
             return input;
+        }
+
+        protected setInputRawValue(value:string){
+            if(this._lastRawValue !== value){
+                this._lastRawValue = value;
+                if(this._htmlInputElement){
+                    this._htmlInputElement.value = value;
+                }
+            }
+        }
+
+        protected getInputRawValue(){
+            if(this._htmlInputElement){
+                 return this._htmlInputElement.value;
+            }
+            return undefined;
         }
 
         public getFormChildType(){ return Interface.FormChildType.InputField; }

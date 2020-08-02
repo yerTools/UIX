@@ -6,14 +6,14 @@ namespace UIX.Libraries.FormGenerator.Builder.Basic{
             extends VisibleInputFieldBuilder<InputFieldType, string>{
         
         protected _placeholder?:string;
-        protected _pattern?:string;
+        protected _pattern?:Input.BaseType.InputPattern;
 
         protected _minLength?:number;
         protected _maxLength?:number;
 
         public constructor(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             super(name, displayName, description, autofocus, autocomplete, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
@@ -21,7 +21,7 @@ namespace UIX.Libraries.FormGenerator.Builder.Basic{
             this.setTextInputField(placeholder, pattern, minLength, maxLength);
         }
 
-        public setTextInputField(placeholder?:string, pattern?:string, minLength?:number, maxLength?:number){
+        public setTextInputField(placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number){
             this._placeholder = placeholder;
             this._pattern = pattern;
 
@@ -35,7 +35,7 @@ namespace UIX.Libraries.FormGenerator.Builder.Basic{
             return this;
         }
 
-        public pattern(pattern?:string){
+        public pattern(pattern?:Input.BaseType.InputPattern){
             this._pattern = pattern;
             return this;
         }

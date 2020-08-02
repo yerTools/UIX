@@ -6,10 +6,14 @@ namespace UIX.Libraries.FormGenerator.Input{
         public constructor(
                 parent:Interface.IFormParent, name:string,
                 displayName?:string, description?:string, autofocus = false, autocomplete?:BaseType.InputAutocompleteType,
-                placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+                placeholder?:string, pattern?:BaseType.InputPattern, minLength?:number, maxLength?:number,
                 isRequired = true, isReadOnly = false, isDisabled = false,
                 defaultValue?:string, sortingPriority?:number){
             super(parent, BaseType.InputType.Search, name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
+        }
+
+        protected valueChanged(rawValue:string){
+
         }
 
         public getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Helper.InputAutocompleteAddressType){

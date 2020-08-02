@@ -5,6 +5,6 @@ namespace UIX.Libraries.FormGenerator.Interface{
         readonly children:Interface.IFormChild[];
 
         sortChildren():void;
-        childChanged(formChild:IFormChild):void;
+        childChanged(formChild:IFormChild, rawValue:string):void|undefined|null|string;
     }
 }

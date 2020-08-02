@@ -57,9 +57,10 @@ namespace UIX{
                         children.push(new Libraries.FormGenerator.Input.TextInput(
                             parent,
                             i+"",
-                            Math.random() < 0.15,
                             randomStringOrUndefined(true, Math.round(Math.random() * 14 + 1), 0.6, true),
                             randomStringOrUndefined(true, Math.round(Math.random() * 6 + 1), 0.15),
+                            undefined,
+                            undefined,
                             undefined,
                             undefined,
                             randomStringOrUndefined(true, Math.round(Math.random() * 20 + 2), 0.8, true),
@@ -81,32 +82,32 @@ namespace UIX{
 
                 //factory.form([
                     factory.form([
-                        factory.textInput("firstName", false, undefined, "First Name"),
-                        factory.textInput("lastName", false, undefined, "Last Name"),
-                        factory.emailInput("email", undefined, "E-Mail")
+                        factory.textInput("firstName", "First Name", undefined, undefined, undefined, true, "given-name"),
+                        factory.textInput("lastName", "Last Name", undefined, undefined, undefined, false, "family-name"),
+                        factory.emailInput("email", "E-Mail", undefined, false, "email")
                     ], "Personal Data", "This are all your personal data, we need from you."),
     
                     factory.form([
-                        factory.textInput("displayName", false, undefined, "Display Name", false, undefined, "This is the name on your profile."),
-                        factory.passwordInput("password", "Choose your password", "Password"),
-                        factory.passwordInput("passwordConfirmation", "Confirm your password", "Password Confirmation")
+                        factory.textInput("displayName", "Display Name", undefined, undefined, undefined, false, "username", "This is the name on your profile."),
+                        factory.passwordInput("password", "Password", "Choose your password", false, "new-password"),
+                        factory.passwordInput("passwordConfirmation", "Password Confirmation", "Confirm your password", false, "new-password")
                     ], "Account Information", "The information you input here will be visible for everyone.\n(Yes, also your password!)"),
     
-                    factory.textInput("message", true, "Your message here", "Message"),
+                    factory.textInput("message", "Your message here", "Message"),
 
                     factory.form([
-                        factory.textInput("address", false, undefined, "Address"),
-                        factory.textInput("city", false, undefined, "City"),
-                        factory.textInput("state", false, undefined, "State"),
-                        factory.textInput("zip-code", false, undefined, "Zip Code"),
-                        factory.textInput("phone", false, undefined, "Phone")
+                        factory.textInput("address", "Address", undefined, undefined, undefined, undefined, "street-address"),
+                        factory.textInput("city", "City", undefined, undefined, undefined, undefined, "address-level2"),
+                        factory.textInput("state", "State", undefined, undefined, undefined, undefined, "address-level1"),
+                        factory.textInput("zip-code", "Zip Code", undefined, undefined, undefined, undefined, "postal-code"),
+                        factory.textInput("phone", "Phone", undefined, undefined, undefined, undefined, "tel")
                     ], "Shipping Information", "We will send you a small gift.")
 
                 //], "Demo Form", "This is a simple demo form. :)")
 
             ]).toFormGenerator();
 
-            //formGenerator.addChildren(formGenerator, randomFormChildren(100));
+            //formGenerator.addChildren(randomFormChildren(formGenerator, 100));
 
             let formGeneratorHTML = formGenerator.getFormElement();
             document.body.appendChild(formGeneratorHTML);

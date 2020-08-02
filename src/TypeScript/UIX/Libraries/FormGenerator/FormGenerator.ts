@@ -41,8 +41,12 @@ namespace UIX.Libraries.FormGenerator{
                     (b.sortingPriority === undefined ? -1 : b.sortingPriority - a.sortingPriority));
         }
 
-        public childChanged(formChild:Interface.IFormChild){
-
+        public childChanged(formChild:Interface.IFormChild, rawValue:string){
+            if(this.parent){
+                return this.parent.childChanged(formChild, rawValue);
+            }else{
+                console.log(rawValue);
+            }
         }
 
         public getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Input.Helper.InputAutocompleteAddressType):HTMLElement{

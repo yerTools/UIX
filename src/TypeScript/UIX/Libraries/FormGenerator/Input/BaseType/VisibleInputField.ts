@@ -2,14 +2,30 @@
 /// <reference path="../../../../Core/Tools/EscapeTextForHTML.ts" />
 
 namespace UIX.Libraries.FormGenerator.Input.BaseType{
+    const MAX_INPUT_EVENT_SPEED = 125;
+
     type HTMLContainerType = HTMLLabelElement;
 
-    export type InputAutocompleteType = "off" | "on";
+    export type InputAutocompleteType = 
+        "off"|"on"| 
+        "name"| 
+            "honorific-prefix"|"given-name"|"additional-name"|"family-name"|"honorific-suffix"|"nickname"|
+        "email"|"username"|"new-password"|"current-password"|"one-time-code"|"organization-title"|"organization"|
+        "street-address"|
+            "address-line1"|"address-line2"|"address-line3"|
+            "address-level4"|"address-level3"|"address-level2"|"address-level1"|
+        "country"|"country-name"|"postal-code"|
+        "cc-name"|"cc-given-name"|"cc-additional-name"|"cc-family-name"|"cc-number"|"cc-exp"|"cc-exp-month"|"cc-exp-year"|"cc-csc"|"cc-type"|
+        "transaction-currency"|"transaction-amount"|"language"|"bday"|"bday-day"|"bday-month"|"bday-year"|"sex"|
+        "tel"|
+            "tel-country-code"|"tel-national"|"tel-area-code"|"tel-local"|"tel-extension"|
+        "impp"|"url"|"photo";
 
     export abstract class VisibleInputField<
-                InputFieldType extends VisibleInputField<InputFieldType, ValueType>,
-                ValueType extends InputValueType>
-            extends InputField<InputFieldType, ValueType>{
+                InputFieldType extends VisibleInputField<InputFieldType, ValueType, HTMLInputElementType>,
+                ValueType extends InputValueType,
+                HTMLInputElementType extends HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement|HTMLButtonElement>
+            extends InputField<InputFieldType, ValueType, HTMLInputElementType>{
 
         public readonly displayName?:string;
         public readonly description?:string;
@@ -23,6 +39,9 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
         public readonly isDisabled:boolean;
 
         protected _htmlContainerElement?:HTMLContainerType;
+
+        private _lastInputTime = 0;
+        private _lastInputTimeout:number|null = null;
 
         public constructor(
                 parent:Interface.IFormParent, inputType:InputType, name:string,
@@ -107,7 +126,66 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
                 input.disabled = this.isDisabled;
             }
 
+            if(!this.isDisabled && !this.isReadOnly){
+                let onInput = () =>{
+                    let currentValue = this.getInputRawValue();
+                    if(currentValue !== undefined && currentValue !== this._lastRawValue){
+                        this._lastRawValue = currentValue;
+
+                        let errorMessage = this.valueChanged(currentValue);
+                        let parentErrorMessage = this.parent.childChanged(this, currentValue);
+
+                        if(parentErrorMessage !== undefined){
+                            errorMessage = parentErrorMessage;
+                        }
+
+                        if(errorMessage !== undefined){
+                            if(errorMessage){
+                                this.showErrorMessage(errorMessage);
+                            }else{
+                                this.hideErrorMessage();
+                            }
+                        }
+                    }
+                };
+                let handleInput = (force:boolean) => {
+                    if(this._lastInputTimeout !== null){
+                        clearTimeout(this._lastInputTimeout);
+                        this._lastInputTimeout = null;
+                    }
+
+                    let now = new Date().getTime();
+                    if(force || now >= this._lastInputTime + MAX_INPUT_EVENT_SPEED){
+                        this._lastInputTime = now;
+                        onInput();
+                    }else{
+                        this._lastInputTimeout = setTimeout(() => {
+                            this._lastInputTimeout = null;
+                            this._lastInputTime = new Date().getTime();
+                            onInput();
+                        }, this._lastInputTime + MAX_INPUT_EVENT_SPEED - now);
+                    }
+                };
+
+                input.addEventListener("input", () => handleInput(false) , { passive: true });
+                input.addEventListener("change", () => handleInput(true) , { passive: true });
+            }
+
             return input;
         }
+
+        public showErrorMessage(message:string){
+            if(message){
+                console.error(message);
+            }else{
+                this.hideErrorMessage();
+            }
+        }
+
+        public hideErrorMessage(){
+            console.error("hideErrorMessage");
+        }
+
+        protected abstract valueChanged(rawValue:string):void|undefined|null|string;
     }
 }

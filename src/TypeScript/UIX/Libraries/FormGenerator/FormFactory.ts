@@ -17,17 +17,18 @@ namespace UIX.Libraries.FormGenerator{
             return new Builder.FormGeneratorBuilder(children, displayName, description, sortingPriority, namePrefix, autocompleteSection, autocompleteAddressType);
         }
 
-        public textInput(name:string, multiline?:boolean, displayName?:string, description?:string, 
+        public textInput(name:string, displayName?:string, description?:string,
+                autocompleteValues?:string[], requireFromAutocompleteValues?:boolean,
                 autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-                placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+                placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
                 isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
                 defaultValue?:string, sortingPriority?:number){
-            return new Builder.TextInputBuilder(name, multiline, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
+            return new Builder.TextInputBuilder(name, displayName, description, autocompleteValues, requireFromAutocompleteValues, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
 
         public passwordInput(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             return new Builder.PasswordInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
@@ -35,7 +36,7 @@ namespace UIX.Libraries.FormGenerator{
         
         public emailInput(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             return new Builder.EmailInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
@@ -43,7 +44,7 @@ namespace UIX.Libraries.FormGenerator{
         
         public searchInput(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             return new Builder.SearchInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
@@ -51,7 +52,7 @@ namespace UIX.Libraries.FormGenerator{
         
         public urlInput(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
-            placeholder?:string, pattern?:string, minLength?:number, maxLength?:number,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             return new Builder.UrlInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
