@@ -15,6 +15,11 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
                 HTMLInputElementType extends HTMLInputElement|HTMLTextAreaElement|HTMLSelectElement|HTMLButtonElement> 
             implements Interface.IFormChild{
         
+        private static currentId = 0;
+        protected static getId(){
+            return "uix-form-generator-" + (++this.currentId);
+        }
+
         public readonly parent:Interface.IFormParent;
         public readonly inputType:InputType;
 

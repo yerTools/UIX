@@ -1,10 +1,13 @@
 /// <reference path="BaseType/TextInputField.ts" />
+/// <reference path="../../../Core/Tools/EscapeTextForHTML.ts" />
 
 namespace UIX.Libraries.FormGenerator.Input{
     export class TextInput extends BaseType.TextInputField<TextInput, HTMLInputElement, "input">{
 
         public readonly autocompleteValues?:string[];
         public readonly requireFromAutocompleteValues:boolean;
+
+        protected readonly _autocompleteValuesSet?:Set<string>;
 
         public constructor(
                 parent:Interface.IFormParent, name:string, displayName?:string, description?:string,
@@ -17,17 +20,51 @@ namespace UIX.Libraries.FormGenerator.Input{
             
             this.autocompleteValues = autocompleteValues;
             this.requireFromAutocompleteValues = requireFromAutocompleteValues;
+
+            if(requireFromAutocompleteValues && autocompleteValues){
+                this._autocompleteValuesSet = new Set(autocompleteValues);
+            }
         }
 
         protected valueChanged(rawValue:string){
-
+            if(this._autocompleteValuesSet){
+                if(this._autocompleteValuesSet.has(rawValue)){
+                    console.log("valid");
+                }else{
+                    console.log("invalid");
+                }
+            }
         }
 
+        protected createDatalist(id:string){
+            let datalist = document.createElement("datalist");
+            datalist.id = id;
+
+            if(this.autocompleteValues){
+                for(let i = 0; i < this.autocompleteValues.length; i++){
+                    let option = document.createElement("option");
+                    option.innerHTML = Core.Tools.escapeTextForHTML(this.autocompleteValues[i]);
+                    datalist.appendChild(option);
+                }
+            }
+
+            return datalist;
+        }
 
         public getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Helper.InputAutocompleteAddressType){
             if(!this._htmlContainerElement){
                 this._htmlInputElement = this.createTextInput("input", true, undefined, namePrefix, autocompleteSection, autocompleteAddressType);
-                this._htmlContainerElement = this.getContainerHTMLElement(this._htmlInputElement);
+                
+                if(this.autocompleteValues && this.autocompleteValues.length){
+                    let id = BaseType.InputField.getId();
+                    this._htmlInputElement.setAttribute("list", id);
+
+                    let datalist = this.createDatalist(id);
+                    this._htmlContainerElement = this.getContainerHTMLElement([this._htmlInputElement, datalist]);
+                }else{
+                    this._htmlContainerElement = this.getContainerHTMLElement(this._htmlInputElement);
+                }
+                
             }
             return this._htmlContainerElement;
         }

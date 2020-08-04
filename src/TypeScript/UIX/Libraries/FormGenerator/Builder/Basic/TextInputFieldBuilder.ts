@@ -35,8 +35,12 @@ namespace UIX.Libraries.FormGenerator.Builder.Basic{
             return this;
         }
 
-        public pattern(pattern?:Input.BaseType.InputPattern){
-            this._pattern = pattern;
+        public pattern(expression?:string, description?:string){
+            if(expression){
+                this._pattern = new Input.BaseType.InputPattern(expression, description);
+            }else{
+                this._pattern = undefined;
+            }
             return this;
         }
 

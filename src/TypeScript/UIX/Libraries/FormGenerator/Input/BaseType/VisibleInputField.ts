@@ -61,7 +61,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             this.isDisabled = isDisabled;
         }
 
-        protected getContainerHTMLElement(filedElement:HTMLElement):HTMLContainerType{
+        protected getContainerHTMLElement(filedElements:HTMLElement|HTMLElement[]):HTMLContainerType{
             let container = document.createElement("label");
             container.className = "input-container"
                 + (this.isReadOnly ? " read-only" : "")
@@ -86,7 +86,13 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
 
             let inputFieldWrapper = document.createElement("div");
             inputFieldWrapper.className = "input-field-wrapper";
-            inputFieldWrapper.appendChild(filedElement);
+            if(Array.isArray(filedElements)){
+                for(let i = 0; i < filedElements.length; i++){
+                    inputFieldWrapper.appendChild(filedElements[i]);
+                }
+            }else{
+                inputFieldWrapper.appendChild(filedElements);
+            }
             wrapper.appendChild(inputFieldWrapper);
 
             container.appendChild(wrapper);
@@ -116,7 +122,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
                 input.autocomplete = autocompleteString;
             }
 
-            if(this.isRequired){
+            if(this.isRequired && !this.isReadOnly && !this.isDisabled){
                 input.required = this.isRequired;
             }
             if(this.isReadOnly){

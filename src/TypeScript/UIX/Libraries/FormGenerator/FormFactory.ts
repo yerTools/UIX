@@ -4,6 +4,7 @@
 /// <reference path="Builder/EmailInputBuilder.ts" />
 /// <reference path="Builder/SearchInputBuilder.ts" />
 /// <reference path="Builder/UrlInputBuilder.ts" />
+/// <reference path="Builder/TextBoxInputBuilder.ts" />
 
 namespace UIX.Libraries.FormGenerator{
     export class FormFactory{
@@ -17,7 +18,7 @@ namespace UIX.Libraries.FormGenerator{
             return new Builder.FormGeneratorBuilder(children, displayName, description, sortingPriority, namePrefix, autocompleteSection, autocompleteAddressType);
         }
 
-        public textInput(name:string, displayName?:string, description?:string,
+        public text(name:string, displayName?:string, description?:string,
                 autocompleteValues?:string[], requireFromAutocompleteValues?:boolean,
                 autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
                 placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
@@ -26,7 +27,7 @@ namespace UIX.Libraries.FormGenerator{
             return new Builder.TextInputBuilder(name, displayName, description, autocompleteValues, requireFromAutocompleteValues, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
 
-        public passwordInput(name:string, displayName?:string, description?:string, 
+        public password(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
             placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
@@ -34,7 +35,7 @@ namespace UIX.Libraries.FormGenerator{
             return new Builder.PasswordInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
         
-        public emailInput(name:string, displayName?:string, description?:string, 
+        public email(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
             placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
@@ -42,7 +43,7 @@ namespace UIX.Libraries.FormGenerator{
             return new Builder.EmailInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
         
-        public searchInput(name:string, displayName?:string, description?:string, 
+        public search(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
             placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
@@ -50,12 +51,20 @@ namespace UIX.Libraries.FormGenerator{
             return new Builder.SearchInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
         
-        public urlInput(name:string, displayName?:string, description?:string, 
+        public url(name:string, displayName?:string, description?:string, 
             autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
             placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             return new Builder.UrlInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
+        }
+
+        public textBox(name:string, displayName?:string, description?:string, 
+            autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
+            placeholder?:string, pattern?:Input.BaseType.InputPattern, minLength?:number, maxLength?:number,
+            isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
+            defaultValue?:string, sortingPriority?:number){
+            return new Builder.TextBoxInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
     }
 }

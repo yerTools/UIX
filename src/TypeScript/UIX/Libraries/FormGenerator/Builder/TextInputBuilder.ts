@@ -34,6 +34,28 @@ namespace UIX.Libraries.FormGenerator.Builder{
             return this;
         }
 
+        public autocompleteValues(autocompleteValues?:string[]){
+            this._autocompleteValues = autocompleteValues;
+            return this;
+        }
+
+        public addAutocompleteValues(autocompleteValues?:string[]){
+            if(autocompleteValues && autocompleteValues.length){
+                if(this._autocompleteValues){
+                    this._autocompleteValues = this._autocompleteValues.concat(autocompleteValues);
+                }else{
+                    this.autocompleteValues(autocompleteValues);
+                }
+            }
+            return this;
+        }
+
+        public requireFromAutocompleteValues(requireFromAutocompleteValues?:boolean){
+            this._requireFromAutocompleteValues = requireFromAutocompleteValues;
+            return this;
+        }
+ 
+
         public toTextInput(parent:Interface.IFormParent){
             return new Input.TextInput(parent, this._name, this._displayName, this._description, this._autocompleteValues, this._requireFromAutocompleteValues, this._autofocus, this._autocomplete, this._placeholder, this._pattern, this._minLength, this._maxLength, this._isRequired, this._isReadOnly, this._isDisabled, this._defaultValue, this._sortingPriority);
         }
