@@ -82,7 +82,7 @@ namespace UIX.Libraries.FormGenerator{
 
             container.appendChild(childrenContainer);
 
-            if(this.isReady()){
+            if(this.checkValidity(false)){
                 container.classList.add("is-ready");
             }
             
@@ -111,9 +111,9 @@ namespace UIX.Libraries.FormGenerator{
             return false;
         }
 
-        public isReady(){
+        public checkValidity(showError:boolean){
             for(let i = 0; i < this.children.length; i++){
-                if(!this.children[i].isReady()){
+                if(!this.children[i].checkValidity(showError)){
                     return false;
                 }
             }

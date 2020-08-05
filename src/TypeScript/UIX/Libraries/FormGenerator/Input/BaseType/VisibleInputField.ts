@@ -40,6 +40,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
 
         protected _htmlContainerElement?:HTMLContainerType;
 
+        private _lastErrorMessage?:string|null;
         private _lastInputTime = 0;
         private _lastInputTimeout:number|null = null;
 
@@ -59,6 +60,22 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             this.isRequired = isRequired;
             this.isReadOnly = isReadOnly;
             this.isDisabled = isDisabled;
+        }
+
+        protected setInputValidStatus(showOnEmpty = false, updateLastErrorMessage?:string){
+            if(updateLastErrorMessage){
+                this._lastErrorMessage = updateLastErrorMessage;
+            }
+            if(this._htmlContainerElement){
+                if(this._lastErrorMessage && (this._lastRawValue || showOnEmpty)){
+                    this._htmlContainerElement.classList.add("invalid");
+                }else{
+                    this._htmlContainerElement.classList.remove("invalid");
+                }
+            }
+            if(this._htmlInputElement){
+                this._htmlInputElement.title = this._lastErrorMessage ? this._lastErrorMessage : "";
+            }
         }
 
         protected getContainerHTMLElement(filedElements:HTMLElement|HTMLElement[]):HTMLContainerType{
@@ -109,7 +126,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             let autocompleteString:string|undefined;
 
             if(autocompleteSection){
-                autocompleteString = "section-" + autocompleteSection.replaceAll(" ", "_");
+                autocompleteString = "section-" + autocompleteSection.split(" ").join("_");
             }
             if(autocompleteAddressType){
                 autocompleteString = autocompleteString ? autocompleteString + " " + autocompleteAddressType : autocompleteAddressType;
@@ -133,27 +150,6 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             }
 
             if(!this.isDisabled && !this.isReadOnly){
-                let onInput = () =>{
-                    let currentValue = this.getInputRawValue();
-                    if(currentValue !== undefined && currentValue !== this._lastRawValue){
-                        this._lastRawValue = currentValue;
-
-                        let errorMessage = this.valueChanged(currentValue);
-                        let parentErrorMessage = this.parent.childChanged(this, currentValue);
-
-                        if(parentErrorMessage !== undefined){
-                            errorMessage = parentErrorMessage;
-                        }
-
-                        if(errorMessage !== undefined){
-                            if(errorMessage){
-                                this.showErrorMessage(errorMessage);
-                            }else{
-                                this.hideErrorMessage();
-                            }
-                        }
-                    }
-                };
                 let handleInput = (force:boolean) => {
                     if(this._lastInputTimeout !== null){
                         clearTimeout(this._lastInputTimeout);
@@ -163,12 +159,12 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
                     let now = new Date().getTime();
                     if(force || now >= this._lastInputTime + MAX_INPUT_EVENT_SPEED){
                         this._lastInputTime = now;
-                        onInput();
+                        this.triggerInputValueChanged(force);
                     }else{
                         this._lastInputTimeout = setTimeout(() => {
                             this._lastInputTimeout = null;
                             this._lastInputTime = new Date().getTime();
-                            onInput();
+                            this.triggerInputValueChanged(force);
                         }, this._lastInputTime + MAX_INPUT_EVENT_SPEED - now);
                     }
                 };
@@ -180,16 +176,88 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             return input;
         }
 
+        protected checkVisibleInputField(rawValue:string){
+            if(this.isRequired && rawValue === ""){
+                return Localization.get(Localization.CategoryType.FormValidation, Localization.Category.FormValidation.Field_Is_Required);
+            }
+            return undefined;
+        }
+
+        protected checkHTMLInputElementValidity(){
+            if(this._htmlInputElement){
+                let validationMessage:string|undefined;
+
+                this._htmlInputElement.setCustomValidity("");
+
+                if(!this._htmlInputElement.checkValidity()){
+                    validationMessage = this._htmlInputElement.validationMessage;
+                }
+
+                if(this._lastErrorMessage){
+                    this._htmlInputElement.setCustomValidity(this._lastErrorMessage); 
+                }
+
+                if(validationMessage){
+                    return validationMessage;
+                }
+            }
+            return null;
+        }
+
+        protected triggerInputValueChanged(showErrorMessage:boolean){
+            let currentValue = this.getInputRawValue();
+            if(currentValue !== undefined && currentValue !== this._lastRawValue){
+                this._lastRawValue = currentValue;
+
+                let errorMessage = this.valueChanged(currentValue);
+                let parentErrorMessage = this.parent.childChanged(this, currentValue);
+
+                if(parentErrorMessage !== undefined){
+                    errorMessage = parentErrorMessage;
+                }
+
+                if(errorMessage !== undefined){
+                    this._lastErrorMessage = errorMessage;
+
+                    if(errorMessage && showErrorMessage && currentValue){
+                        this.showErrorMessage(errorMessage);
+                    }else{
+                        this.hideErrorMessage();
+                    }
+                }else{
+                    this._lastErrorMessage = undefined;
+                }
+                this.setInputValidStatus();
+            }else if(showErrorMessage && currentValue && this._lastErrorMessage){
+                this.showErrorMessage(this._lastErrorMessage);
+            }
+        }
+
         public showErrorMessage(message:string){
             if(message){
-                console.error(message);
+                console.error(message, this._htmlInputElement);
+                if(this._htmlInputElement){
+                    this._htmlInputElement.setCustomValidity(message);
+                    this._htmlInputElement.reportValidity();
+                    this._htmlInputElement.focus();
+                }
             }else{
                 this.hideErrorMessage();
             }
         }
 
         public hideErrorMessage(){
-            console.error("hideErrorMessage");
+            if(this._htmlInputElement){
+                this._htmlInputElement.setCustomValidity("");
+            }
+            console.warn("hideErrorMessage");
+        }
+
+        public hasError(): boolean {
+            if(this._lastRawValue){
+                return !this.checkValidity(false);
+            }
+            return false;
         }
 
         protected abstract valueChanged(rawValue:string):void|undefined|null|string;

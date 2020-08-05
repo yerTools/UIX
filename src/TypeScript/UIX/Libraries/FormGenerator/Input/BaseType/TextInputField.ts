@@ -49,27 +49,61 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             return input;
         }
 
+        protected checkTextInputField(rawValue:string){
+            let message = this.checkVisibleInputField(rawValue);
+            if(message || !rawValue){
+                return message;
+            }
+            if(this.minLength !== undefined && rawValue.length < this.minLength){
+                return Localization.get(Localization.CategoryType.FormValidation, Localization.Category.FormValidation.Field_Has_Minimum_Length, { minimumLength: this.minLength.toString() });
+            }
+            if(this.maxLength !== undefined && rawValue.length > this.maxLength){
+                return Localization.get(Localization.CategoryType.FormValidation, Localization.Category.FormValidation.Field_Has_Maximum_Length, { maximumLength: this.maxLength.toString() });
+            }
+            if(this.pattern && this.pattern.regex && !this.pattern.regex.test(rawValue)){
+                if(this.pattern.description){
+                    return this.pattern.description;
+                }
+                return Localization.get(Localization.CategoryType.FormValidation, Localization.Category.FormValidation.Field_Has_Pattern);
+            }
+            return undefined;
+        }
+
         public reset(){
-            return false;
+            return this.setValue(this.defaultValue ? this.defaultValue : "");
         }
 
         public setValue(value:string){
+            if(this.setInputRawValue(value)){
+                this.triggerInputValueChanged(false);
+                return true;
+            }
             return false;
         }
 
         public getValue(){
-            return undefined;
+            return this.getInputRawValue();
         }
 
         public getValueAsInputString(value:string){
             return value;
         }
 
-        public hasError(){
-            return false;
-        }
-
-        public isReady(){
+        public checkValidity(showError: boolean){
+            if(!this.isDisabled && !this.isReadOnly){
+                let currentValue = this.getInputRawValue();
+                if(currentValue !== undefined){
+                    let message = this.valueChanged(currentValue);
+                    if(message){
+                        if(showError){
+                            this.showErrorMessage(message);
+                        }
+                        this.setInputValidStatus(showError, message);
+                        return false;
+                    }
+                }
+            }
+            this.hideErrorMessage();
             return true;
         }
     }

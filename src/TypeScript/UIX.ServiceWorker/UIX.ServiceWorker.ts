@@ -205,7 +205,7 @@ namespace UIX.ServiceWorker{
                 }
                 return null;
               })).then(async () => {
-                    if((<any>self).serviceWorker.state === "activating"){
+                    if(!(<any>self).serviceWorker || (<any>self).serviceWorker.state === "activating"){
                         try{
                             await self.clients.claim();
                         }catch(error){}

@@ -124,6 +124,16 @@ form.uix.form-generator{
 
             }
 
+            &.invalid{
+                .input-wrapper{
+                    .input-field-wrapper{
+                        &>.form-input{
+                            border-color: $form-generator-status-error-color;
+                        }
+                    }
+                }
+            }
+
             &:hover{
                 background-color: $form-generator-input-container-hover-background-color;
             }

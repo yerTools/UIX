@@ -72,8 +72,10 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
                 this._lastRawValue = value;
                 if(this._htmlInputElement){
                     this._htmlInputElement.value = value;
+                    return true;
                 }
             }
+            return false;
         }
 
         protected getInputRawValue(){
@@ -93,6 +95,6 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
 
         public abstract getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Helper.InputAutocompleteAddressType):HTMLElement;
         public abstract hasError():boolean;
-        public abstract isReady():boolean;
+        public abstract checkValidity(showError:boolean):boolean;
     }
 }

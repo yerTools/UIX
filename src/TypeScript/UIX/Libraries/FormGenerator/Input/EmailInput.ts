@@ -13,7 +13,14 @@ namespace UIX.Libraries.FormGenerator.Input{
         }
 
         protected valueChanged(rawValue:string){
-
+            let message = this.checkTextInputField(rawValue);
+            if(message || !rawValue){
+                if(!message){
+                    return null;
+                }
+                return message;
+            }
+            return this.checkHTMLInputElementValidity();
         }
 
         public getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Helper.InputAutocompleteAddressType){

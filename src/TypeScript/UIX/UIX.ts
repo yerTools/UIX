@@ -43,7 +43,7 @@ namespace UIX{
                     
                         factory.form([
                             factory.text("placeholder", "Placeholder", "Text input fields can have a placeholder.").placeholder("This is the placeholder."),
-                            factory.text("pattern", "Pattern", "You can define a pattern, that has to be followed.").pattern("(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-z\d\s]).{8,20}", "You need at least:\n1 uppercase letter,\n1 lowercase letter,\n1 digit and\n1 special char.").placeholder("(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[^A-z\d\s]).+"),
+                            factory.text("pattern", "Pattern", "You can define a pattern, that has to be followed.").pattern("(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-z\\d\\s]).+", "You need at least:\n1 uppercase letter,\n1 lowercase letter,\n1 digit and\n1 special char.").placeholder("(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[^A-z\\d\\s]).+"),
                             factory.text("min-length", "Minimum length", "You can define a minimum length of your input.").minLength(8).placeholder("The minimum length is 8"),
                             factory.text("max-length", "Maximum length", "You can also define a maximum length of your input.").maxLength(8).placeholder("The maximum length is 8"),
 
@@ -176,6 +176,8 @@ namespace UIX{
 
             let formGeneratorHTML = formGenerator.getFormElement();
             document.body.appendChild(formGeneratorHTML);
+
+            (<any>window).formGenerator = formGenerator;
 
             //WidgetSystem.Render.fallback();
         }else{

@@ -27,13 +27,17 @@ namespace UIX.Libraries.FormGenerator.Input{
         }
 
         protected valueChanged(rawValue:string){
-            if(this._autocompleteValuesSet){
-                if(this._autocompleteValuesSet.has(rawValue)){
-                    console.log("valid");
-                }else{
-                    console.log("invalid");
+            let message = this.checkTextInputField(rawValue);
+            if(message || !rawValue){
+                if(!message){
+                    return null;
                 }
+                return message;
             }
+            if(this._autocompleteValuesSet && !this._autocompleteValuesSet.has(rawValue)){
+                return Localization.get(Localization.CategoryType.FormValidation, Localization.Category.FormValidation.Field_Enter_From_Autocomplete_Values);
+            }
+            return this.checkHTMLInputElementValidity();
         }
 
         protected createDatalist(id:string){
