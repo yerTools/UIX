@@ -4,6 +4,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
         Email,
         Password,
         Search,
-        Url
+        Url,
+        Checkbox
     }
 }

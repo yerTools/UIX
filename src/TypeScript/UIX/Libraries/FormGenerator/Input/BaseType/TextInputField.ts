@@ -88,23 +88,5 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
         public getValueAsInputString(value:string){
             return value;
         }
-
-        public checkValidity(showError: boolean){
-            if(!this.isDisabled && !this.isReadOnly){
-                let currentValue = this.getInputRawValue();
-                if(currentValue !== undefined){
-                    let message = this.valueChanged(currentValue);
-                    if(message){
-                        if(showError){
-                            this.showErrorMessage(message);
-                        }
-                        this.setInputValidStatus(showError, message);
-                        return false;
-                    }
-                }
-            }
-            this.hideErrorMessage();
-            return true;
-        }
     }
 }

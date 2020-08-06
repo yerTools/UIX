@@ -1,12 +1,13 @@
 
 /// <reference path="InputType.ts" />
+/// <reference path="../ValueType/NumberValue.ts" />
 /// <reference path="../Helper/IHTMLInputElementTagName.ts" />
 /// <reference path="../Helper/IHTMLInputElementTypeName.ts" />
 /// <reference path="../../Interface/IFormChild.ts" />
 /// <reference path="../../Interface/IFormParent.ts" />
 
 namespace UIX.Libraries.FormGenerator.Input.BaseType{
-    export type AllowedInputValueType = string|number|boolean/*|Color|DateTime|TimeSpan*/|File;
+    export type AllowedInputValueType = string|ValueType.NumberValue|boolean/*|Color|DateTime|TimeSpan*/|File;
     export type InputValueType = AllowedInputValueType|(AllowedInputValueType|InputValueType)[];
 
     export abstract class InputField<
@@ -49,12 +50,22 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
 
             input.name = namePrefix ? namePrefix + this.name : this.name;
 
-            if(this._lastRawValue !== undefined){
-                input.value = this._lastRawValue;
-            }else if(setDefaultValue && this.defaultValue){
-                this._lastRawValue = this.getValueAsInputString(this.defaultValue);
-                input.value = this._lastRawValue;
+            if(tagName === "input" && typeName === "checkbox"){
+                if(this._lastRawValue !== undefined){
+                    (<HTMLInputElement>input).checked = this._lastRawValue === "true";
+                }else if(setDefaultValue && this.defaultValue !== undefined){
+                    this._lastRawValue = this.getValueAsInputString(this.defaultValue);
+                    (<HTMLInputElement>input).checked = this._lastRawValue === "true";
+                }
+            }else{
+                if(this._lastRawValue !== undefined){
+                    input.value = this._lastRawValue;
+                }else if(setDefaultValue && this.defaultValue !== undefined){
+                    this._lastRawValue = this.getValueAsInputString(this.defaultValue);
+                    input.value = this._lastRawValue;
+                }
             }
+            
 
             if(typeName){
                 switch(tagName){
