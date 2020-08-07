@@ -82,6 +82,12 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             if(this._lastRawValue !== value){
                 this._lastRawValue = value;
                 if(this._htmlInputElement){
+                    if(this._htmlInputElement instanceof HTMLInputElement){
+                        if(this._htmlInputElement.type === "checkbox"){
+                            this._htmlInputElement.checked = value === "true";
+                            return true;
+                        }
+                    }
                     this._htmlInputElement.value = value;
                     return true;
                 }
@@ -91,7 +97,12 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
 
         protected getInputRawValue(){
             if(this._htmlInputElement){
-                 return this._htmlInputElement.value;
+                if(this._htmlInputElement instanceof HTMLInputElement){
+                    if(this._htmlInputElement.type === "checkbox"){
+                        return CheckboxInput.getBooleanAsText(this._htmlInputElement.checked);
+                    }
+                }
+                return this._htmlInputElement.value;
             }
             return undefined;
         }

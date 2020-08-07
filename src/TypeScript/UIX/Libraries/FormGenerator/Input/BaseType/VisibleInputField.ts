@@ -1,5 +1,7 @@
 /// <reference path="InputField.ts" />
 /// <reference path="../../../../Core/Tools/EscapeTextForHTML.ts" />
+/// <reference path="../../../Hint/Hint.ts" />
+
 
 namespace UIX.Libraries.FormGenerator.Input.BaseType{
     const MAX_INPUT_EVENT_SPEED = 125;
@@ -210,7 +212,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
                 this._lastRawValue = currentValue;
 
                 let errorMessage = this.valueChanged(currentValue);
-                let parentErrorMessage = this.parent.childChanged(this, currentValue);
+                let parentErrorMessage = this.parent.childChanged(this, currentValue, this);
 
                 if(parentErrorMessage !== undefined){
                     errorMessage = parentErrorMessage;
@@ -233,13 +235,14 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             }
         }
 
-        public showErrorMessage(message:string){
+        public showErrorMessage(message:string, focus = true){
             if(message){
                 console.error(message, this._htmlInputElement);
                 if(this._htmlInputElement){
                     this._htmlInputElement.setCustomValidity(message);
-                    this._htmlInputElement.reportValidity();
-                    this._htmlInputElement.focus();
+                }
+                if(focus){
+                    this.focus();
                 }
             }else{
                 this.hideErrorMessage();
@@ -260,14 +263,14 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             return false;
         }
 
-        public checkValidity(showError: boolean){
+        public checkValidity(showError: boolean, focusOnError = true){
             if(!this.isDisabled && !this.isReadOnly){
                 let currentValue = this.getInputRawValue();
                 if(currentValue !== undefined){
                     let message = this.valueChanged(currentValue);
                     if(message){
                         if(showError){
-                            this.showErrorMessage(message);
+                            this.showErrorMessage(message, focusOnError);
                         }
                         this.setInputValidStatus(showError, message);
                         return false;
@@ -276,6 +279,12 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             }
             this.hideErrorMessage();
             return true;
+        }
+
+        public focus(smoothScroll = true){
+            if(this._htmlInputElement){
+                Hint.Hint.scrollTo(this._htmlInputElement, smoothScroll, true);
+            }
         }
 
         protected abstract valueChanged(rawValue:string):void|undefined|null|string;

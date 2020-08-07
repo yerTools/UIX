@@ -1,18 +1,22 @@
 /// <reference path="BaseType/VisibleInputField.ts" />
 
-namespace UIX.Libraries.FormGenerator.Input.BaseType{
+namespace UIX.Libraries.FormGenerator.Input{
 
-    export class CheckboxInput extends VisibleInputField<CheckboxInput, boolean, HTMLInputElement>{
+    export class CheckboxInput extends BaseType.VisibleInputField<CheckboxInput, boolean, HTMLInputElement>{
+
+        public static getBooleanAsText(value:boolean){
+            return value ? "true" : "";
+        }
 
         public constructor(
                 parent:Interface.IFormParent, name:string,
-                displayName?:string, description?:string, autofocus = false, autocomplete?:InputAutocompleteType,
+                displayName?:string, description?:string, autofocus = false, autocomplete?:BaseType.InputAutocompleteType,
                 isRequired = true, isReadOnly = false, isDisabled = false,
                 defaultValue?:boolean, sortingPriority?:number){
             super(parent, BaseType.InputType.Checkbox, name, displayName, description, autofocus, autocomplete, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
 
-        protected valueChanged(rawValue: string): string | void | null | undefined {
+        protected valueChanged(rawValue: string){
             let message = this.checkVisibleInputField(rawValue);
             if(message || !rawValue){
                 if(!message){
@@ -30,6 +34,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
         public setValue(value:boolean){
             if(this._htmlInputElement){
                 this._htmlInputElement.checked = value;
+                this.triggerInputValueChanged(false);
                 return true;
             }
             return false;
@@ -43,7 +48,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
         }
 
         public getValueAsInputString(value:boolean){
-            return value ? "true" : "false";
+            return CheckboxInput.getBooleanAsText(value);
         }
 
         public getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Helper.InputAutocompleteAddressType){
@@ -53,8 +58,6 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
             }
             return this._htmlContainerElement;
         }
-
-        
 
         public clone(){
             return new CheckboxInput(this.parent, this.name, this.displayName, this.description, this.autofocus, this.autocomplete, this.isRequired, this.isReadOnly, this.isDisabled, this.defaultValue, this.sortingPriority);

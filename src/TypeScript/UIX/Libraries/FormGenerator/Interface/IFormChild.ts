@@ -11,6 +11,6 @@ namespace UIX.Libraries.FormGenerator.Interface{
         getHTMLElement(namePrefix?:string, autocompleteSection?:string, autocompleteAddressType?:Input.Helper.InputAutocompleteAddressType):HTMLElement;
 
         hasError():boolean;
-        checkValidity(showError:boolean):boolean;
+        checkValidity(showError:boolean, focusOnError:boolean):boolean;
     }
 }

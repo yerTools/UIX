@@ -59,6 +59,10 @@ form.uix.form-generator{
                 &>*{
                     flex-basis: 100%;
                 }
+
+                &>.display-name{
+                    transition: color ease-in-out $form-generator-timing-hover;
+                }
     
                 &>.description{
                     font-size: .75em;
@@ -71,6 +75,8 @@ form.uix.form-generator{
                 }
     
                 .input-field-wrapper{
+                    display: inline-flex;
+
                     &>.form-input{
                         box-sizing: border-box;
 
@@ -89,9 +95,14 @@ form.uix.form-generator{
                         color: $form-generator-text-color;
                         background-color: $form-generator-input-background-color;
     
+                        transition: border-color ease-in-out $form-generator-timing-hover;
                         &:hover{
                             border-color: $form-generator-input-hover-border-color;
                         }
+                    }
+                    &>input[type="checkbox"].form-input{
+                        height: 1.5em;
+                        width: 1.5em;
                     }
     
                     &>textarea.form-input{
@@ -99,7 +110,6 @@ form.uix.form-generator{
 
                         min-height: 4em;
                         height: 4em;
-                        margin-bottom: -7px;
                     }
                 }
             }
@@ -126,6 +136,14 @@ form.uix.form-generator{
 
             &.invalid{
                 .input-wrapper{
+                    .display-name{
+                        text-decoration: underline;
+                    }
+
+                    .display-name, .description{
+                        color: $form-generator-status-error-color;
+                    }
+
                     .input-field-wrapper{
                         &>.form-input{
                             border-color: $form-generator-status-error-color;

@@ -41,11 +41,11 @@ namespace UIX.Libraries.FormGenerator{
                     (b.sortingPriority === undefined ? -1 : b.sortingPriority - a.sortingPriority));
         }
 
-        public childChanged(formChild:Interface.IFormChild, rawValue:string){
+        public childChanged(formChild:Interface.IFormChild, rawValue:string, visibleInputField?:Input.BaseType.VisibleInputField<any, any, any>){
             if(this.parent){
-                return this.parent.childChanged(formChild, rawValue);
+                return this.parent.childChanged(formChild, rawValue, visibleInputField);
             }else{
-                console.log(rawValue);
+                console.log(visibleInputField ? visibleInputField.getValue() : rawValue);
             }
         }
 
@@ -99,6 +99,18 @@ namespace UIX.Libraries.FormGenerator{
 
             form.appendChild(this.getHTMLElement(namePrefix, autocompleteSection, autocompleteAddressType));
 
+            let submit = document.createElement("button");
+            submit.type = "submit";
+            submit.innerHTML = "Submit";
+            submit.onclick = (event) => {
+                event.preventDefault();
+                event.cancelBubble = true;
+
+                if(this.checkValidity(true, true)){
+                    location.reload(true);
+                }
+            };
+            form.appendChild(submit);
             return form;
         }
 
@@ -111,13 +123,18 @@ namespace UIX.Libraries.FormGenerator{
             return false;
         }
 
-        public checkValidity(showError:boolean){
-            for(let i = 0; i < this.children.length; i++){
-                if(!this.children[i].checkValidity(showError)){
-                    return false;
+        public checkValidity(showError:boolean, focusOnError = true){
+            let valid = true;
+            for(let i = 0; i <  this.children.length; i++){
+                if(!this.children[i].checkValidity(showError, focusOnError)){
+                    if(!showError){
+                        return false;
+                    }
+                    valid = false;
+                    focusOnError = false;
                 }
             }
-            return true;
+            return valid;
         }
     }
 }

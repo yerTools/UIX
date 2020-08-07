@@ -5,6 +5,7 @@
 /// <reference path="Builder/SearchInputBuilder.ts" />
 /// <reference path="Builder/UrlInputBuilder.ts" />
 /// <reference path="Builder/TextBoxInputBuilder.ts" />
+/// <reference path="Builder/CheckboxInputBuilder.ts" />
 
 namespace UIX.Libraries.FormGenerator{
     export class FormFactory{
@@ -65,6 +66,13 @@ namespace UIX.Libraries.FormGenerator{
             isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
             defaultValue?:string, sortingPriority?:number){
             return new Builder.TextBoxInputBuilder(name, displayName, description, autofocus, autocomplete, placeholder, pattern, minLength, maxLength, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
+        }
+
+        public checkbox(name:string, displayName?:string, description?:string, 
+            autofocus?:boolean, autocomplete?:Input.BaseType.InputAutocompleteType,
+            isRequired?:boolean, isReadOnly?:boolean, isDisabled?:boolean,
+            defaultValue?:boolean, sortingPriority?:number){
+            return new Builder.CheckboxInputBuilder(name, displayName, description, autofocus, autocomplete, isRequired, isReadOnly, isDisabled, defaultValue, sortingPriority);
         }
     }
 }

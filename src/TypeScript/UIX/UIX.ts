@@ -38,7 +38,8 @@ namespace UIX{
                             factory.search("search", "Search", "You can use this one for a search.").placeholder("Enter a term like 'help', 'infos', ..."),
                             factory.text("text", "Text", "This is a simple input for text."). placeholder("You can input anything you want."),
                             factory.textBox("text-box", "Text Box", "This is a box for your text.").placeholder("Write your story here and tell me about your day... :)"),
-                            factory.url("url", "Url", "This input field is for entering urls.").placeholder("Enter your favorite meme right here.")
+                            factory.url("url", "Url", "This input field is for entering urls.").placeholder("Enter your favorite meme right here."),
+                            factory.checkbox("checkbox", "Checkbox", "Check it out.")
                         ], "Different Input Types", "Here are all available input types for demonstration.").namePrefix("input-types-").autocompleteSection("input-types"),
                     
                         factory.form([
@@ -64,7 +65,7 @@ namespace UIX{
                             ], "Text Box", "Features of the text box input.").namePrefix("text-box"),
 
                             factory.form([
-                                factory.text("autocomplete", "Autocomplete", "You can add a list with values, that the user can select from.").placeholder("Enter your favorite vehicle manufacturer").autocompleteValues([
+                                factory.text("autocomplete", "Autocomplete", "You can add a list with values, that the user can select from, if .").placeholder("Enter your favorite vehicle manufacturer").autocompleteValues([
                                     "Daihatsu",
                                     "Hino",
                                     "Lexus",
@@ -151,7 +152,7 @@ namespace UIX{
                     
 
                     factory.form([
-                        factory.text("firstName", "First Name", undefined, undefined, undefined, true, "given-name"),
+                        factory.text("firstName", "First Name", undefined, undefined, undefined, false, "given-name"),
                         factory.text("lastName", "Last Name", undefined, undefined, undefined, false, "family-name"),
                         factory.email("email", "E-Mail", undefined, false, "email")
                     ], "Personal Data", "This are all your personal data, we need from you.").autocompleteSection("personal-data"),
