@@ -40,7 +40,7 @@ namespace UIX.Libraries.Hint{
             element.scrollIntoView({ behavior: smoothScroll ? "smooth" : "auto", block: "center", inline: "center" });
         }
 
-        private _visible=false;
+        private _visible = false;
 
         public position:HintPosition;
         public style:HintStyle;
