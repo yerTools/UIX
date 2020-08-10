@@ -1,0 +1,71 @@
+.uix.popup.blocker{
+    cursor: pointer;
+
+    position: fixed;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: $widget-popup-background-color;
+
+    .uix.popup.wrapper{
+        $padding: 14px;
+
+        cursor: auto;
+
+        display: inline-block;
+
+        width: auto;
+        height: auto;
+        max-width: calc(100% - #{$padding * 6});
+        max-height: calc(100% - #{$padding * 6});
+
+        padding: $padding;
+        margin-top: -2 * $padding;
+        overflow: hidden;
+
+        border-radius: 5px;
+        background-color: $widget-popup-wrapper-background-color;
+
+        .uix.popup.headline{
+            position: relative;
+            text-align: center;
+            user-select: none;
+
+            padding: $padding / 2;
+
+            .uix.popup.title{
+                font-size: 1.2em;
+            }
+
+            .uix.popup.close-button{
+                @include icon-x(16px);
+
+                cursor: pointer;
+
+                position: absolute;
+
+
+                right: -$padding / 2;
+                top: -$padding / 2;
+            }
+        }
+
+        .uix.popup.container{
+
+            overflow: auto;
+
+            .uix.popup.message{
+                text-align: center;
+            }
+        }
+    }
+}

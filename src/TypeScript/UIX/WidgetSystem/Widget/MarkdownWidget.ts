@@ -14,6 +14,7 @@ namespace UIX.WidgetSystem.Widget{
         public readonly id:number;
 
         public get widgetType(){ return Definition.WidgetType.Markdown; };
+        public get serializableWidgetType(){ return  Serializer.WidgetType.Markdown; }
         
         public get markdown(){
             return this._markdown;
@@ -27,7 +28,7 @@ namespace UIX.WidgetSystem.Widget{
 
         public constructor(parent:Definition.IWidget, markdown = ""){
             super();
-            this.id = Definition.Widget.getNextId();
+            this.id = Definition.Widget.getNextId(this);
             
             this.parent = parent;
             this._markdown = markdown;
@@ -37,7 +38,7 @@ namespace UIX.WidgetSystem.Widget{
         }
 
         public toSerializableWidget(){
-            return new Serializer.SerializableWidget(Serializer.WidgetType.Markdown, undefined, undefined, this.markdown);
+            return new Serializer.SerializableWidget(this.serializableWidgetType, undefined, undefined, this.markdown);
         }
 
         public parentWidgetChanged(widget:Definition.IWidget){ }

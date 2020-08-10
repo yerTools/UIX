@@ -1,0 +1,7 @@
+.uix.widget.simple-container{
+    &>a{
+        display: block;
+        text-decoration: unset !important;
+        font-weight: unset !important;
+    }
+}

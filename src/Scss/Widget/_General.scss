@@ -6,6 +6,7 @@
     }
 
     &.widget{
+        position: relative;
         min-width: 100%;
         min-height: 100%;
     }
@@ -16,4 +17,6 @@
 
     min-width: 100%;
     min-height: 100%;
+
+    background-color: $page-background-color;
 }

@@ -11,8 +11,6 @@
         transition: background-color ease-in-out $page-timing-hover;
 
         &:hover{
-            padding: 0 .05em;
-            border: .15em solid $markdown-code-background-color;
             background-color: transparent;
         }
     }

@@ -1,21 +1,47 @@
 body.UIX-Edit-Mode .uix.widget.uix-webpage-editor{
     position: absolute;
+    height: 100vh;
+    width: 100vw;
+
+    overflow: hidden;
     
     background-color: $widget-editor-background-color;
 
-    &>.uix.wrapper.webpage-wrapper{
-        width:  100vw;
-        height: 100vh;
-        margin: auto;
+    .uix.widget.vertical-divider{
+        &>.uix.wrapper{
+            overflow: auto;
+            height: 100vh;
+        }
+    }
 
-        min-width: 75px;
-        min-height: 75px;
-        max-width: 100vw;
-        max-height: 100vh;
-        resize: both;
-
-        overflow: auto;
-
+    .uix.wrapper.webpage-wrapper{
         outline: 2px solid $widget-editor-webpage-wrapper-outline-color;
+
+        .uix.widget.uix-webpage{
+            position: relative;
+
+            .uix.widget{
+                cursor: pointer;
+    
+                &.hover-highlight{
+                    outline: 2px solid $widget-editor-widget-hover-outline-color;
+
+                    &::before{
+                        content: "";
+
+                        position: absolute;
+                        left: 0;
+                        top: 0;
+
+                        width: 100%;
+                        height: 100%;
+                        
+                        opacity: .25;
+                        background-color: $widget-editor-widget-hover-background-color;
+                    }
+                }
+            }
+        }
+        
     }
 }

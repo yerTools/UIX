@@ -1,5 +1,6 @@
 /// <reference path="Node.ts" />
 /// <reference path="../Tokenizer/Token.ts" />
+/// <reference path="../../../Core/Tools/EscapeTextForHTML.ts" />
 
 namespace UIX.Libraries.Markdown.Node{
     export class TokenNode extends Node{
@@ -21,7 +22,7 @@ namespace UIX.Libraries.Markdown.Node{
                 return " ";
             }
             if(this.token.value){
-                return Node.escapeTextForHTML(this.token.value);
+                return Core.Tools.escapeTextForHTML(this.token.value);
             }
             return "";
         }

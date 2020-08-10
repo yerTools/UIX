@@ -3,8 +3,12 @@
 
 /// <reference path="Polyfill/Polyfills.ts" />
 /// <reference path="Core/Static/Initialization.ts" />
+/// <reference path="Localization/Index.ts" />
+
 /// <reference path="Interface/AjaxInterface.ts" />
 /// <reference path="Interface/ServiceWorkerInterface.ts" />
+
+/// <reference path="Core/Tools/ClearCache.ts" />
 /// <reference path="WidgetSystem/Render.ts" />
 /// <reference path="Script/UIXScript.ts" />
 

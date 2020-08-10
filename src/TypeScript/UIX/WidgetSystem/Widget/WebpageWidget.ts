@@ -87,7 +87,7 @@ namespace UIX.WidgetSystem.Widget{
             return new Serializer.SerializableWidget(Serializer.WidgetType.Webpage, [ this.body?.toSerializableWidget() ?? null ], settings);
         }
 
-        public childWidgetChanged(widget:Definition.Widget):void {
+        public childWidgetChanged(widget:Definition.Widget){
             this.update();
         }
 
@@ -99,7 +99,7 @@ namespace UIX.WidgetSystem.Widget{
             return false;
         };
 
-        public render():HTMLElement {
+        public render(){
             if(this.changed){
                 let bodyHTMLElement:HTMLElement|null;
                 if(this.body){

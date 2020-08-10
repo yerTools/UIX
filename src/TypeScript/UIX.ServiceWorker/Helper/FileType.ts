@@ -27,8 +27,7 @@ namespace UIX.ServiceWorker.Helper.FileType{
         return false;
     }
 
-    export function get(request:Request){
-        let uri = new Libraries.Uri(request.url);
+    export function get(uri:Libraries.Uri){
 
         if(uri.path && uri.path.length){
             let fileName = uri.path[uri.path.length - 1].toLowerCase();
@@ -92,7 +91,7 @@ namespace UIX.ServiceWorker.Helper.FileType{
             }
 
         }else{
-            if(ServiceWorker.currentUri.isSameRoot(uri) && (uri.path === null || uri.path.length === 0)){
+            if(Libraries.Uri.current.isSameRoot(uri) && (uri.path === null || uri.path.length === 0)){
                 return FileType.StartPage;
             }
         }

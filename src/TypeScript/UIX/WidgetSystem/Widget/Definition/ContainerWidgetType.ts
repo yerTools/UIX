@@ -2,6 +2,8 @@ namespace UIX.WidgetSystem.Widget.Definition{
     export enum ContainerWidgetType{
         VerticalDivider,
         List,
-        SiteContent
+        Navigation,
+        SiteContent,
+        SimpleContainer
     }
 }
