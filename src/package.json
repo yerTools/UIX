@@ -1,0 +1,36 @@
+{
+  "name": "uix",
+  "version": "0.0.0",
+  "description": "An easy to use CMS with a focus on blazing fast performance.",
+  "jest": {
+    "testEnvironment": "jsdom"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yerTools/UIX.git"
+  },
+  "keywords": [
+    "cms",
+    "framework"
+  ],
+  "author": {
+    "name": "Felix Mayer",
+    "email": "FelixM@yer.tools",
+    "url": "https://yer.tools/"
+  },
+  "dependencies": {
+    "typescript": "latest",
+    "sass": "latest",
+    "jest": "latest",
+    "ts-jest": "latest"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/yerTools/UIX/issues",
+    "email": "FelixM@yer.tools"
+  },
+  "homepage": "https://github.com/yerTools/UIX#readme"
+}

@@ -1,6 +1,7 @@
 build
 
-src/Buildtools.exe.lnk
+src/node_modules
+src/package-lock.json
 
 src/TypeScript/.tsconfig
 src/TypeScript/UIX.Configuration.ts

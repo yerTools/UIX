@@ -179,7 +179,7 @@ namespace UIX.ServiceWorker{
                 let fetchPromise = fetchAndCache(event.request, uri, cachedResponse?.clone());
                 let timeoutHandle:number|null = null;
                 if(cachedResponse){
-                    timeoutHandle = setTimeout(()=>{
+                    timeoutHandle = self.setTimeout(()=>{
                         resolve(cachedResponse);
                     }, MAX_REQUEST_LOADING_TIME);
                 }

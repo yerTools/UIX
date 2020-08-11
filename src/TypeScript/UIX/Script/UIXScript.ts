@@ -192,7 +192,7 @@ namespace UIX.Script{
         let lastTimeoutHandle:number|undefined;
         textarea.oninput = function(){
             clearTimeout(lastTimeoutHandle);
-            lastTimeoutHandle = setTimeout(function(){
+            lastTimeoutHandle = self.setTimeout(function(){
                 let input = textarea.value;
 
                 localStorage.setItem("uixScriptInput", input);
