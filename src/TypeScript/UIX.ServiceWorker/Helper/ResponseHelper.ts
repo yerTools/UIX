@@ -12,8 +12,8 @@ namespace UIX.ServiceWorker.Helper.ResponseHelper{
                 let arrayBufferA = await blobA.arrayBuffer();
                 let arrayBufferB = await bArrayBufferPromise;
 
-                let arrayA = new Uint32Array(arrayBufferA.slice(arrayBufferA.byteLength % 4));
-                let arrayB = new Uint32Array(arrayBufferB.slice(arrayBufferA.byteLength % 4));
+                let arrayA = new Uint32Array(arrayBufferA).subarray(arrayBufferA.byteLength % 4);
+                let arrayB = new Uint32Array(arrayBufferB).subarray(arrayBufferA.byteLength % 4);
 
                 for(let i = 0; i !== arrayA.length; ++i){
                     if(arrayA[i] !== arrayB[i]){
@@ -22,8 +22,8 @@ namespace UIX.ServiceWorker.Helper.ResponseHelper{
                 }
 
                 if(arrayBufferA.byteLength % 4 !== 0){
-                    let byteArrayA = new Uint8Array(arrayBufferA.slice(0, arrayBufferA.byteLength % 4));
-                    let byteArrayB = new Uint8Array(arrayBufferB.slice(0, arrayBufferA.byteLength % 4));
+                    let byteArrayA = new Uint8Array(arrayBufferA).subarray(0, arrayBufferA.byteLength % 4);
+                    let byteArrayB = new Uint8Array(arrayBufferB).subarray(0, arrayBufferA.byteLength % 4);
 
                     for(let i = 0; i !== byteArrayA.length; ++i){
                         if(byteArrayA[i] !== byteArrayB[i]){
