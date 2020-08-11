@@ -1,3 +1,4 @@
+/// <reference path="FeatureStack.ts" />
 /// <reference path="IMarkdownSettings.ts" />
 /// <reference path="../ObjectMerger/ObjectMerger.ts" />
 /// <reference path="Tokenizer/Tokenizer.ts" />

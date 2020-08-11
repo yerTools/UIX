@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "description": "An easy to use CMS with a focus on blazing fast performance.",
   "jest": {
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "verbose": true
   },
   "scripts": {
     "test": "jest"

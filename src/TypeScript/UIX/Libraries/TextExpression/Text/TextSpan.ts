@@ -17,7 +17,24 @@ namespace UIX.Libraries.TextExpression.Text{
         }
 
         public substring(start:number, end?:number){
+            if(end !== undefined && end < start){
+                let tmp = end;
+                end = start;
+                start = tmp;
+            }
             return new TextSpan(this.data.subarray(start, end));
+        }
+        
+        public equals(text:TextSpan){
+            if(this.length !== text.length){
+                return false;
+            }
+            for(let i = 0; i < this.length; i++){
+                if(this.data[i] !== text.data[i]){
+                    return false;
+                }
+            }
+            return true;
         }
 
         public equalsString(text:string){
@@ -26,18 +43,6 @@ namespace UIX.Libraries.TextExpression.Text{
             }
             for(let i = 0; i < this.length; i++){
                 if(this.data[i] !== text.charCodeAt(i)){
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        public equals(text:TextSpan){
-            if(this.length !== text.length){
-                return false;
-            }
-            for(let i = 0; i < this.length; i++){
-                if(this.data[i] !== text.data[i]){
                     return false;
                 }
             }
@@ -68,7 +73,7 @@ namespace UIX.Libraries.TextExpression.Text{
             return true;
         }
         
-        public indexOf(text:TextSpan, startIndex:number){
+        public indexOf(text:TextSpan, startIndex = 0){
             if(this.length < text.length + startIndex){
                 return null;
             }
