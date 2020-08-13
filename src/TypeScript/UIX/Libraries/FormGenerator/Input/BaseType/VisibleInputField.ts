@@ -163,7 +163,7 @@ namespace UIX.Libraries.FormGenerator.Input.BaseType{
                         this._lastInputTime = now;
                         this.triggerInputValueChanged(force);
                     }else{
-                        this._lastInputTimeout = setTimeout(() => {
+                        this._lastInputTimeout = self.setTimeout(() => {
                             this._lastInputTimeout = null;
                             this._lastInputTime = new Date().getTime();
                             this.triggerInputValueChanged(force);
