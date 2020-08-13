@@ -8,6 +8,8 @@
 /// <reference path="Interface/AjaxInterface.ts" />
 /// <reference path="Interface/ServiceWorkerInterface.ts" />
 
+/// <reference path="Libraries/Index.ts" />
+
 /// <reference path="Core/Tools/ClearCache.ts" />
 /// <reference path="WidgetSystem/Render.ts" />
 

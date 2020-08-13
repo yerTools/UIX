@@ -67,8 +67,8 @@ namespace Buildtools
 
                 Configuration.Buildtools.ESVersion[] additionalVersions = new Configuration.Buildtools.ESVersion[]
                 {
-                    Configuration.Buildtools.ESVersion.ES2016,
-                    Configuration.Buildtools.ESVersion.ES2020
+                    //Configuration.Buildtools.ESVersion.ES2016,
+                    //Configuration.Buildtools.ESVersion.ES2020
                 };
 
                 AddTscTask("UIX", TSConfig.BuildTarget.Browser, additionalVersions);
