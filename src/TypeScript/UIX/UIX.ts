@@ -13,12 +13,15 @@
 /// <reference path="Core/Tools/ClearCache.ts" />
 /// <reference path="WidgetSystem/Render.ts" />
 
+/// <reference path="Libraries/FormGenerator/FormFactory.ts" />
+
 namespace UIX{
     if(!Core.Tools.ClearCache.clearCacheIfRequired()){
-        const UIX_DEVELOPMENT_MODE = false;
+        const UIX_DEVELOPMENT_MODE = true;
 
         if(UIX_DEVELOPMENT_MODE){
-            WidgetSystem.Render.fallback();
+            Libraries.FormGenerator.FormGenerator.test();
+            //WidgetSystem.Render.fallback();
         }else{
             let success = false;
             {
