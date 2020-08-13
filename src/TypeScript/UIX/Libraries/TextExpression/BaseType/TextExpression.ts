@@ -16,7 +16,7 @@ namespace UIX.Libraries.TextExpression.BaseType{
             this.flags = flags;
         }
 
-        protected abstract getExecutableExpression():Executable.ExecutableExpression;
+        public abstract getExecutableExpression(overrideFlags?:ExpressionFlag):Executable.ExecutableExpression;
 
         public match(text:string, startIndex = 0){
             return this.getExecutableExpression().matchOne(text, startIndex < 0 ? 0 : startIndex);

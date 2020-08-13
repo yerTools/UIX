@@ -15,41 +15,73 @@ namespace UIX.Libraries.TextExpression.Executable{
             this.flags = flags;
         }
 
-        protected compareToBasicTextExpression(textExpression:BaseType.TextExpression){
-            return textExpression.type === this.type && textExpression.flags === this.flags;
+        protected compareToBasicTextExpression(textExpression:BaseType.TextExpression, flags:BaseType.ExpressionFlag){
+            return textExpression.type === this.type && flags === this.flags;
         }
 
-        protected abstract match(text:Text.TextSpan, startIndex:number):Match.MatchResult|null;
+        public abstract match(text:Text.TextSpan, startIndex:number, rawText:Text.TextSpan, lowerText?:Text.TextSpan):null|Match.MatchResult|Match.MatchResult[];
+
+        public matchInterface(startIndex:number, rawText:Text.TextSpan, lowerText?:Text.TextSpan){
+            if(this.flags & BaseType.ExpressionFlag.IgnoreCase){
+                if(!lowerText){
+                    lowerText = Text.TextSpan.fromString(Text.Manipulation.toLowerCase(rawText.toString()));
+                }
+                return this.match(lowerText, startIndex, rawText, lowerText);
+            }
+            return this.match(rawText, startIndex, rawText, lowerText);
+        }
 
         public matchOne(text:string, startIndex:number){
+            let rawText = Text.TextSpan.fromString(text);
             if(this.flags & BaseType.ExpressionFlag.IgnoreCase){
-                return this.match(Text.TextSpan.fromString(Text.Manipulation.toLowerCase(text)), startIndex);
+                return this.matchInterface(startIndex, rawText, Text.TextSpan.fromString(Text.Manipulation.toLowerCase(text)));
             }
-            return this.match(Text.TextSpan.fromString(text), startIndex);
+            return this.matchInterface(startIndex, rawText);
         }
 
         public matchAll(text:string, startIndex:number){
-            let textSpan = Text.TextSpan.fromString(this.flags & BaseType.ExpressionFlag.IgnoreCase ? Text.Manipulation.toLowerCase(text) : text);
+            let rawText = Text.TextSpan.fromString(text);
+            let lowerText:undefined|Text.TextSpan;
+            if(this.flags & BaseType.ExpressionFlag.IgnoreCase){
+                lowerText = Text.TextSpan.fromString(Text.Manipulation.toLowerCase(text));
+            }
 
             let matches:Match.MatchResult[] = [];
 
             while(startIndex < text.length){
-                let match = this.match(textSpan, startIndex);
+                let match = this.matchInterface(startIndex, rawText, lowerText);
                 if(match){
-                    matches.push(match);
+                    if(Array.isArray(match)){
+                        match.sort((a,b) => 
+                            a.index + a.length - b.index - b.length
+                        );
+
+                        let nextIndex = startIndex + 1;
+                        for(let i = 0; i < match.length; i++){
+                            matches.push(match[i]);
                     
-                    let nextIndex = match.index + match.length;
-                    if(nextIndex > startIndex){
-                        startIndex = nextIndex
+                            let currentIndex = match[i].index + match.length;
+                            if(currentIndex > nextIndex){
+                                nextIndex = currentIndex;
+                            }
+                        }
+                        
                     }else{
-                        startIndex++;
+                        matches.push(match);
+                    
+                        let nextIndex = match.index + match.length;
+                        if(nextIndex > startIndex){
+                            startIndex = nextIndex
+                        }else{
+                            startIndex++;
+                        }
                     }
                 }else{
                     break;
                 }
             }
 
-            return matches
+            return matches;
         }
     }
 }

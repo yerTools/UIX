@@ -1,21 +1,21 @@
 /// <reference path="ExecutableExpression.ts" />
 
 namespace UIX.Libraries.TextExpression.Executable{
-    export class SimpleExecutableExpression extends ExecutableExpression{
+    export class SimpleTextExecutableExpression extends ExecutableExpression{
 
         public readonly query:Text.TextSpan;
 
-        public constructor(simpleTextExpression:SimpleTextExpression){
-            super(simpleTextExpression.type, simpleTextExpression.flags);
-            if(simpleTextExpression.flags & BaseType.ExpressionFlag.IgnoreCase){
+        public constructor(simpleTextExpression:SimpleTextExpression, flags:BaseType.ExpressionFlag){
+            super(simpleTextExpression.type, flags);
+            if(flags & BaseType.ExpressionFlag.IgnoreCase){
                 this.query = Text.TextSpan.fromString(Text.Manipulation.toLowerCase(simpleTextExpression.query));
             }else{
                 this.query = Text.TextSpan.fromString(simpleTextExpression.query);
             }
         }
 
-        public compareToSimpleTextExpression(simpleTextExpression:SimpleTextExpression){
-            if(!this.compareToBasicTextExpression(simpleTextExpression)){
+        public compareToSimpleTextExpression(simpleTextExpression:SimpleTextExpression, flags:BaseType.ExpressionFlag){
+            if(!this.compareToBasicTextExpression(simpleTextExpression, flags)){
                 return false;
             }
             if(this.flags & BaseType.ExpressionFlag.IgnoreCase){
