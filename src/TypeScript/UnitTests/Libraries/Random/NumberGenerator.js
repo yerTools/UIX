@@ -11,8 +11,8 @@
     ];
     for(let i = 0; i < 10_000; i++){
         testData.push([
-            Math.random() * 2_000_0000 - 1_000_0000,
-            Math.random() * 2_000_0000 - 1_000_0000
+            Math.round(Math.random() * 2_000_0000 - 1_000_0000),
+            Math.round(Math.random() * 2_000_0000 - 1_000_0000)
         ]);
     }
 

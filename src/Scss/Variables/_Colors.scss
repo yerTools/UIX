@@ -1,23 +1,83 @@
+//Basic Colors
 $page-accent-color: #4083ca;
+$page-error-color: #f34e4e;
+$page-warning-color: #e1f34e;
+$page-ready-color: #60f34e;
+$page-info-color: #4e9ff3;
+$page-code-color: #0c44c1;
+$page-highlight-color: #2ec5ff;
+$page-dark-color: #252627;
+$page-light-color: #eaecef;
+$page-gray-color: #848688;
+$page-black-color: #000000;
+$page-white-color: #ffffff;
 
-$page-text-color: #222222;
-$page-text-light-color: #cccccc;
+//Hover
+$page-accent-color-hover: color.scale($page-accent-color,       $lightness: -15%, $saturation: 35%);
+$page-error-color-hover: color.scale($page-error-color,         $lightness: -15%, $saturation: 35%);
+$page-warning-color-hover: color.scale($page-warning-color,     $lightness: -15%, $saturation: 35%);
+$page-ready-color-hover: color.scale($page-ready-color,         $lightness: -15%, $saturation: 35%);
+$page-info-color-hover: color.scale($page-info-color,           $lightness: -20%, $saturation: 35%);
+$page-code-color-hover: color.scale($page-code-color,           $lightness: -35%, $saturation: 35%);
+$page-highlight-color-hover: color.scale($page-highlight-color, $lightness:  25%, $saturation: 35%);
+$page-dark-color-hover: color.scale($page-dark-color,           $lightness: -25%);
+$page-light-color-hover: color.scale($page-light-color,         $lightness: 100%);
+$page-gray-color-hover: color.scale($page-gray-color,           $lightness:  25%);
+$page-black-color-hover: color.scale($page-black-color,         $lightness: -25%);
+$page-white-color-hover: color.scale($page-white-color,         $lightness:  25%);
 
-$page-background-color: #eaecef;
 
-$page-select-color: #2ec5ff;
+//Corresponding Text Colors
+$page-accent-color-corresponding-text: $page-black-color;
+$page-error-color-corresponding-text: $page-black-color;
+$page-warning-color-corresponding-text: $page-dark-color;
+$page-ready-color-corresponding-text: $page-dark-color;
+$page-info-color-corresponding-text: $page-dark-color;
+$page-code-color-corresponding-text: $page-light-color;
+$page-highlight-color-corresponding-text: $page-dark-color;
+$page-dark-color-corresponding-text: $page-light-color;
+$page-light-color-corresponding-text: $page-dark-color;
+$page-gray-color-corresponding-text: $page-black-color;
+$page-black-color-corresponding-text: $page-light-color;
+$page-white-color-corresponding-text: $page-dark-color;
 
-$page-underline-color: #999999;
-$page-underline-hover-color: #777777;
+//Hover
+$page-accent-color-hover-corresponding-text: $page-white-color-hover;
+$page-error-color-hover-corresponding-text: $page-black-color-hover;
+$page-warning-color-hover-corresponding-text: $page-dark-color-hover;
+$page-ready-color-hover-corresponding-text: $page-dark-color-hover;
+$page-info-color-hover-corresponding-text: $page-dark-color-hover;
+$page-code-color-hover-corresponding-text: $page-light-color-hover;
+$page-highlight-color-hover-corresponding-text: $page-dark-color-hover;
+$page-dark-color-hover-corresponding-text: $page-light-color-hover;
+$page-light-color-hover-corresponding-text: $page-dark-color-hover;
+$page-gray-color-hover-corresponding-text: $page-dark-color-hover;
+$page-black-color-hover-corresponding-text: $page-light-color-hover;
+$page-white-color-hover-corresponding-text: $page-dark-color-hover;
 
-$header-footer-background-color: #252627;
-$header-footer-hover-background-color: #333536;
+$page-colors: (
+    "accent": ($page-accent-color, $page-accent-color-hover, $page-accent-color-corresponding-text, $page-accent-color-hover-corresponding-text),
+    "error": ($page-error-color, $page-error-color-hover, $page-error-color-corresponding-text, $page-error-color-hover-corresponding-text),
+    "warning": ($page-warning-color, $page-warning-color-hover, $page-warning-color-corresponding-text, $page-warning-color-hover-corresponding-text),
+    "ready": ($page-ready-color, $page-ready-color-hover, $page-ready-color-corresponding-text, $page-ready-color-hover-corresponding-text),
+    "info": ($page-info-color, $page-info-color-hover, $page-info-color-corresponding-text, $page-info-color-hover-corresponding-text),
+    "code": ($page-code-color, $page-code-color-hover, $page-code-color-corresponding-text, $page-code-color-hover-corresponding-text),
+    "highlight": ($page-highlight-color, $page-highlight-color-hover, $page-highlight-color-corresponding-text, $page-highlight-color-hover-corresponding-text),
+    "dark": ($page-dark-color, $page-dark-color-hover, $page-dark-color-corresponding-text, $page-dark-color-hover-corresponding-text),
+    "light": ($page-light-color, $page-light-color-hover, $page-light-color-corresponding-text, $page-light-color-hover-corresponding-text),
+    "gray": ($page-gray-color, $page-gray-color-hover, $page-gray-color-corresponding-text, $page-gray-color-hover-corresponding-text),
+    "black": ($page-black-color, $page-black-color-hover, $page-black-color-corresponding-text, $page-black-color-hover-corresponding-text),
+    "white": ($page-white-color, $page-white-color-hover, $page-white-color-corresponding-text, $page-white-color-hover-corresponding-text)
+);
 
+//Scrollbar
 $scrollbar-background-color: #dadada;
 $scrollbar-indicator-color: #aaaaaa;
 $scrollbar-hover-background-color: #cacaca;
 $scrollbar-hover-indicator-color: #888888;
 
+
+//Icons
 $icon-red-color: #ff5b5b;
 $icon-red-hover-color: #de0202;
 

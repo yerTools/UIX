@@ -11,11 +11,11 @@ div.uix-markdown{
 
     h1, h2{
         text-decoration: underline;
-        text-decoration-color: $page-underline-color;
+        text-decoration-color: $markdown-underline-color;
 
-        transition: text-decoration-color ease-in-out $page-timing-hover;
+        transition: text-decoration-color ease-in-out $markdown-timing-hover;
         &:hover{
-            text-decoration-color: $page-underline-hover-color;
+            text-decoration-color: $markdown-underline-color-hover;
         }
     }
 

@@ -29,6 +29,8 @@
         box-shadow: 0 0 5px 0 $context-menu-border-color;
         background-color: $context-menu-background-color;
 
+        transition: opacity ease-in-out $context-menu-transition-time-hover;
+
         table{
             width: 100%;
             margin: 0;
@@ -45,7 +47,7 @@
                         cursor: pointer;
     
                         &:hover{
-                            background-color: $header-footer-hover-background-color;
+                            background-color: $context-menu-background-color-hover;
                         }
     
                         td{

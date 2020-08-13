@@ -1,0 +1,190 @@
+form.uix.form-generator{
+    padding: 5px;
+
+    box-sizing: border-box;
+
+    background-color: $form-generator-form-background-color;
+
+    .form-container{
+        position: relative;
+        border-color: $form-generator-status-line-color;
+        border-style: solid;
+        border-width: 1px;
+
+        &.is-ready{
+        }
+
+        &.has-error{
+        }
+
+        .display-name, .description{
+            display: block;
+            overflow-wrap: break-word;
+        }
+
+        .display-name{
+            color: $form-generator-text-color;
+        }
+
+        .description{
+            color: $form-generator-description-text-color;
+        }
+
+        &>.display-name{
+            font-size: 1.2em;
+        }
+
+        &>.description{
+
+        }
+
+        .input-container{
+            cursor: pointer;
+
+            padding: 1px;
+            padding-bottom: 0;
+            margin: 1px;
+
+            transition: background-color ease-in-out $form-generator-timing-hover;
+
+            .input-wrapper{
+                width: 100%;
+                height: 100%;
+                
+                display: flex;
+                flex-wrap: wrap;
+                align-items: flex-end;
+                align-content: flex-end;
+
+                &>*{
+                    flex-basis: 100%;
+                }
+
+                &>.display-name{
+                    transition: color ease-in-out $form-generator-timing-hover;
+                }
+    
+                &>.description{
+                    font-size: .75em;
+    
+                    transition: color ease-in-out $form-generator-timing-hover;
+                }
+    
+                &:hover>.description{
+                    color: $form-generator-text-color;
+                }
+    
+                .input-field-wrapper{
+                    display: inline-flex;
+
+                    &>.form-input{
+                        box-sizing: border-box;
+
+                        height: 100%;
+                        width: 100%;
+    
+                        outline: none;
+                        border: none;
+                        border-radius: 0;
+
+                        margin: 0;
+                        padding: .2em;
+
+                        border-bottom: 2px solid $form-generator-input-border-color;
+    
+                        color: $form-generator-text-color;
+                        background-color: $form-generator-input-background-color;
+    
+                        transition: border-color ease-in-out $form-generator-timing-hover;
+                        &:hover{
+                            border-color: $form-generator-input-hover-border-color;
+                        }
+                    }
+                    &>input[type="checkbox"].form-input{
+                        height: 1.5em;
+                        width: 1.5em;
+                    }
+    
+                    &>textarea.form-input{
+                        resize: vertical;
+
+                        min-height: 4em;
+                        height: 4em;
+                    }
+                }
+            }
+
+            &.required{
+                .input-wrapper{
+                    .display-name::after{
+                        content: "*";
+                        margin-left: 2px;
+                        color: $form-generator-status-error-color;
+                    }
+
+                    .input-field-wrapper{
+                        &>.form-input{
+                            border-color: $form-generator-input-required-border-color;
+                        }
+                    }
+                }
+            }
+
+            &.read-only{
+
+            }
+
+            &.invalid{
+                .input-wrapper{
+                    .display-name{
+                        text-decoration: underline;
+                    }
+
+                    .display-name, .description{
+                        color: $form-generator-status-error-color;
+                    }
+
+                    .input-field-wrapper{
+                        &>.form-input{
+                            border-color: $form-generator-status-error-color;
+                        }
+                    }
+                }
+            }
+
+            &:hover{
+                background-color: $form-generator-input-container-hover-background-color;
+            }
+        }
+
+        .children-container{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: stretch;
+
+            &>*{
+                flex-grow: 1;
+                flex-basis: $form-generator-input-target-width;
+            }
+
+            &>.form-container{
+                flex-basis: 100%;
+
+                margin: 20px 0;
+
+                &:first-child, &+.form-container{
+                    margin-top: 0;
+                }
+
+                &:last-child{
+                    margin-bottom: 0;
+                }
+            }
+        }
+    }
+
+    &>.form-container{
+        padding: 0;
+        border: none;
+    }
+}

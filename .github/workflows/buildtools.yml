@@ -1,4 +1,4 @@
-name: Build Buildtools and UIX
+name: Build and test UIX
 
 on: [push, pull_request]
 
