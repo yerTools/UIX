@@ -23,10 +23,10 @@
     "url": "https://yer.tools/"
   },
   "dependencies": {
-    "typescript": "latest",
-    "sass": "latest",
     "jest": "latest",
-    "ts-jest": "latest"
+    "sass": "latest",
+    "ts-jest": "latest",
+    "typescript": "latest"
   },
   "license": "SEE LICENSE IN LICENSE.md",
   "bugs": {
