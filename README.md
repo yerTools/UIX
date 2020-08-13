@@ -2,7 +2,7 @@
 
 **`At the moment there is little to no documentation for this project because it isn't in Alpha/Beta stage yet.`**
 
-[![Build Buildtools and UIX](https://github.com/yerTools/UIX/workflows/Build%20Buildtools%20and%20UIX/badge.svg?branch=master)](https://github.com/yerTools/UIX/actions)
+[![Build and test UIX](https://github.com/yerTools/UIX/workflows/Build%20and%20test%20UIX/badge.svg?branch=master)](https://github.com/yerTools/UIX/actions)
 [![Last commit](https://img.shields.io/github/last-commit/yerTools/UIX)](https://github.com/yerTools/UIX/branches/all)
 [![Issues](https://img.shields.io/github/issues-raw/yerTools/UIX)](https://github.com/yerTools/UIX/issues)
 [![Pull requests](https://img.shields.io/github/issues-pr/yerTools/UIX)](https://github.com/yerTools/UIX/pulls)
