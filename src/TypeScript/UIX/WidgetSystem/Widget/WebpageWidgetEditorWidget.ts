@@ -41,16 +41,16 @@ namespace UIX.WidgetSystem.Widget{
             //Vertical divider
             {
                 this.verticalDividerWidget = Builder.WidgetFactory.factory.verticalDivider(
-                    factory => factory.list(() => [
+                    factory => factory.list([
                         factory.button("GitHub", "https://github.com/yerTools/UIX"),
                         factory.button("Exit edit mode", Libraries.Uri.current.getFullPath())
                     ]),
                 undefined, 200, true , true, true).toWidget(this);
 
                 let widgetList = Builder.WidgetFactory.factory.list(factory => [
-                    factory.navigation(() => [
+                    factory.navigation([
                         factory.button("GitHub", "https://github.com/yerTools/UIX"),
-                    ], () => [
+                    ], [
                         factory.button("Exit edit mode", Libraries.Uri.current.getFullPath())
                     ])
                 ]).toWidget(this.verticalDividerWidget);

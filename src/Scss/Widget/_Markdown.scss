@@ -1,17 +1,9 @@
 .uix.widget.markdown .uix-markdown{
     span.checkbox{
-        transition: transform ease-in-out $page-timing-hover;
+        transition: all ease-in-out $widget-timing-hover;
 
         &:hover{
             transform: scale(1.2);
-        }
-    }
-
-    code{
-        transition: background-color ease-in-out $page-timing-hover;
-
-        &:hover{
-            background-color: transparent;
         }
     }
 }

@@ -1,0 +1,40 @@
+//Text Color
+@each $name, $colors in $page-colors{
+    .uix-text-color-#{$name}{
+        color: list.nth($colors, 1);
+        &.hover{
+            transition: color ease-in-out $page-timing-hover;
+            &:hover{
+                color: list.nth($colors, 2);
+            }
+        }
+    }
+}
+
+//Solid Background
+@each $name, $colors in $page-colors{
+    .uix-solid-bg-#{$name}{
+        background-color: list.nth($colors, 1);
+        &.hover{
+            transition: background-color ease-in-out $page-timing-hover;
+            &:hover{
+                background-color: list.nth($colors, 2);
+            }
+        }
+    }
+}
+
+//Background and Text
+@each $name, $colors in $page-colors{
+    .uix-bg-text-#{$name}{
+        background-color: list.nth($colors, 1);
+        color: list.nth($colors, 3);
+        &.hover{
+            transition: background-color ease-in-out $page-timing-hover, color ease-in-out $page-timing-hover;
+            &:hover{
+                background-color: list.nth($colors, 2);
+                color: list.nth($colors, 4);
+            }
+        }
+    }
+}

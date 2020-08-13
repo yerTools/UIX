@@ -40,16 +40,26 @@ namespace UIX.Localization{
         return false;
     }
 
-    export function get(categoryType:CategoryType, message:number){
-        return getInLanguage(defaultLanguage, categoryType, message) ?? getInLanguage(fallbackLanguage, categoryType, message);
+    export function get(categoryType:CategoryType, message:number, replacePlaceholder?:Object){
+        return getInLanguage(defaultLanguage, categoryType, message, replacePlaceholder) ?? getInLanguage(fallbackLanguage, categoryType, message, replacePlaceholder);
     }
 
-    export function getInLanguage(language:string, categoryType:CategoryType, message:number){
+    export function getInLanguage(language:string, categoryType:CategoryType, message:number, replacePlaceholder?:Object){
         let categories = languages.get(language);
         if(categories){
             let messages = categories.get(categoryType);
             if(messages){
-                return messages.get(message)
+                let messageText = messages.get(message)
+
+                if(messageText && replacePlaceholder && typeof replacePlaceholder === "object"){
+                    for(let placeholder in replacePlaceholder){
+                        if(typeof (<any>replacePlaceholder)[placeholder] === "string"){
+                            messageText = messageText.split("{{" + placeholder + "}}").join((<any>replacePlaceholder)[placeholder]);
+                        }
+                    }
+                }
+
+                return messageText;
             }
         }
         return undefined;

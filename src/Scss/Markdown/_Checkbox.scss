@@ -10,6 +10,8 @@ div.uix-markdown{
         border: .12em solid $markdown-checkbox-color;
         border-radius: .25em;
 
+        transition: border-color ease-in-out $markdown-timing-hover, background-color ease-in-out $markdown-timing-hover;
+
         &::before, &::after{
             content: "";
             position: absolute;
@@ -18,11 +20,16 @@ div.uix-markdown{
             height: 0;
 
             border-radius: .1em;
-            background-color: $markdown-checkbox-hook-color;
+
+            transition: background-color ease-in-out $markdown-timing-hover;
         }
 
         &.checked{
             background-color: $markdown-checkbox-color;
+
+            &::before, &::after{
+                background-color: $markdown-checkbox-hook-color;
+            }
 
             &::before{
                 width: .12em;
@@ -46,8 +53,12 @@ div.uix-markdown{
         }
 
         &.plus{
-            border-color: $markdown-checkbox-plus-color;
-            background-color: $markdown-checkbox-plus-color;
+            border-color: $markdown-checkbox-plus-background-color;
+            background-color: $markdown-checkbox-plus-background-color;
+
+            &::before, &::after{
+                background-color: $markdown-checkbox-plus-color;
+            }
 
             &::before{
                 width: .7em;
@@ -67,8 +78,8 @@ div.uix-markdown{
         }
 
         &.minus{
-            border-color: $markdown-checkbox-minus-color;
-            background-color: $markdown-checkbox-minus-color;
+            border-color: $markdown-checkbox-minus-background-color;
+            background-color: $markdown-checkbox-minus-background-color;
 
             &::before{
                 width: .7em;
@@ -76,6 +87,38 @@ div.uix-markdown{
 
                 margin-left: .03em;
                 margin-top: .32em;
+
+                background-color: $markdown-checkbox-minus-color;
+            }
+        }
+
+        &:hover{
+            border-color: $markdown-checkbox-color-hover;
+
+            &.checked{
+                background-color: $markdown-checkbox-color-hover;
+
+                &::before, &::after{
+                    background-color: $markdown-checkbox-hook-color-hover;
+                }
+            }
+
+            &.plus{
+                border-color: $markdown-checkbox-plus-background-color-hover;
+                background-color: $markdown-checkbox-plus-background-color-hover;
+
+                &::before, &::after{
+                    background-color: $markdown-checkbox-plus-color-hover;
+                }
+            }
+
+            &.minus{
+                border-color: $markdown-checkbox-minus-background-color-hover;
+                background-color: $markdown-checkbox-minus-background-color-hover;
+    
+                &::before{
+                    background-color: $markdown-checkbox-minus-color-hover;
+                }
             }
         }
     }

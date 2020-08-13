@@ -59,7 +59,7 @@
     height: $size;
 }
 
-
+//Icons
 @mixin icon-x($size: 16px, $animate-on-parent-hover: null, $background-color: $icon-red-color, $hover-background-color: $icon-red-hover-color){
     $hover-path: private-icon-hover-path($animate-on-parent-hover);
 

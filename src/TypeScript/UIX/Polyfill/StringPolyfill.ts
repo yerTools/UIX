@@ -4,7 +4,7 @@ if(!String.prototype.startsWith){
         return this.substring(pos, pos + search.length) === search;
     };
 }
-if (!String.prototype.endsWith) {
+if (!String.prototype.endsWith){
 	String.prototype.endsWith = function(search, this_len) {
 		if (this_len === undefined || this_len > this.length) {
 			this_len = this.length;
@@ -12,28 +12,28 @@ if (!String.prototype.endsWith) {
 		return this.substring(this_len - search.length, this_len) === search;
 	};
 }
-if (!String.prototype.trim) {
+if (!String.prototype.trim){
 	String.prototype.trim = function () {
 	  return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
 	};
 }
 
-if (!String.prototype.trimStart) {
+if (!String.prototype.trimStart){
 	String.prototype.trimStart = function () {
 	  return this.replace(/^[\s\uFEFF\xA0]+/g, '');
 	};
 }
 
-if (!String.prototype.trimEnd) {
+if (!String.prototype.trimEnd){
 	String.prototype.trimEnd = function () {
 	  return this.replace(/[\s\uFEFF\xA0]+$/g, '');
 	};
 }
 
-if (!String.prototype.trimLeft) {
+if (!String.prototype.trimLeft){
 	String.prototype.trimLeft = String.prototype.trimStart;
 }
 
-if (!String.prototype.trimRight) {
+if (!String.prototype.trimRight){
 	String.prototype.trimRight = String.prototype.trimEnd;
 }
