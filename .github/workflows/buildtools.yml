@@ -21,6 +21,11 @@ jobs:
       run: |
         npm install -g typescript
         npm install -g sass
+        npm install -g postcss-cli
+        npm install -g autoprefixer
+        npm install -g caniuse-lite
+        npm install -g cssnano
+        npm install -g postcss-cssnext
     - name: Install npm project dependencies
       run: npm install
       working-directory: ./src

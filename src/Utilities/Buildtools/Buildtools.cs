@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -114,26 +115,36 @@ namespace Buildtools
             if (singleBuild)
             {
                 List<CommandExecuter> runningCommandExecuterCopy = new List<CommandExecuter>(runningCommandExecuter);
-                while (runningCommandExecuterCopy.Count > 0)
+
+                void checkRunningCommandExecuterCopy()
                 {
-                    for(int i = 0; i < runningCommandExecuterCopy.Count; i++)
+                    while (runningCommandExecuterCopy.Count > 0)
                     {
-                        if(runningCommandExecuterCopy[i].Status != CommandExecuter.StatusType.Running)
+                        for (int i = 0; i < runningCommandExecuterCopy.Count; i++)
                         {
-                            if(runningCommandExecuterCopy[i].Status == CommandExecuter.StatusType.ErrorOccurred)
+                            if (runningCommandExecuterCopy[i].Status != CommandExecuter.StatusType.Running)
                             {
-                                errorOccurredDuringBuild = true;
-                                Console.WriteLine(">>> error occurred in '" + runningCommandExecuterCopy[i].Name + "' <<<");
+                                if (runningCommandExecuterCopy[i].Status == CommandExecuter.StatusType.ErrorOccurred)
+                                {
+                                    errorOccurredDuringBuild = true;
+                                    Console.WriteLine(">>> error occurred in '" + runningCommandExecuterCopy[i].Name + "' <<<");
+                                }
+                                else
+                                {
+                                    Console.WriteLine(">>> '" + runningCommandExecuterCopy[i].Name + "' finished successfully <<<");
+                                }
+                                runningCommandExecuterCopy.RemoveAt(i--);
                             }
-                            else
-                            {
-                                Console.WriteLine(">>> '" + runningCommandExecuterCopy[i].Name + "' finished successfully <<<");
-                            }
-                            runningCommandExecuterCopy.RemoveAt(i--);
                         }
+                        Task.Delay(100).Wait();
                     }
-                    Task.Delay(100).Wait();
                 }
+                checkRunningCommandExecuterCopy();
+
+                Task.Delay(500);
+                runningCommandExecuterCopy.Add(RunPostCSS());
+                checkRunningCommandExecuterCopy();
+
                 Running = false;
                 foreach (FileMover fileMover in runningFileMover)
                 {
@@ -184,6 +195,19 @@ namespace Buildtools
             if (CommandExecuter.GetFileInfo("sass") == null)
             {
                 Console.WriteLine("Can't find 'sass'! You can install it with: 'npm install -g sass'");
+                errorOccurredDuringBuild = true;
+                return false;
+            }
+            if (CommandExecuter.GetFileInfo("autoprefixer") == null)
+            {
+                Console.WriteLine("Can't find 'autoprefixer'! You can install it with: 'npm install -g autoprefixer'");
+                errorOccurredDuringBuild = true;
+                return false;
+            }
+            if (CommandExecuter.GetFileInfo("postcss") == null)
+            {
+                Console.WriteLine("Can't find 'postcss'! You can install it with: 'npm install -g postcss-cli'");
+                Console.WriteLine("Also make sure you have installed 'cssnano', 'postcss-cssnext' and 'caniuse-lite'. You can install it with: 'npm install -g caniuse-lite cssnano postcss-cssnext'");
                 errorOccurredDuringBuild = true;
                 return false;
             }
@@ -305,6 +329,33 @@ namespace Buildtools
             {
                 runningTasks.Add(fileMover.MoverTask);
             }
+        }
+        
+        private static CommandExecuter RunPostCSS()
+        {
+            StringBuilder argument = new StringBuilder("./../build/css/*.css --no-map");
+            if (configuration.Sass.SourceMap)
+            {
+                argument.Append(" -m");
+            }
+
+            argument.Append(" -u");
+
+            string[] plugins = new string[] {
+                "cssnano",
+                "postcss-cssnext"
+            };
+
+            foreach(string plugin in plugins)
+            {
+                argument.Append(" " + plugin);
+            }
+
+            argument.Append(" -r");
+
+            CommandExecuter result;
+            runningCommandExecuter.Add(result = new CommandExecuter("postcss", argument.ToString(), new DirectoryInfo(srcDirectory.FullName), "postCSS"));
+            return result;
         }
 
         private static void WriteUIXConfiguration()

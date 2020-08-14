@@ -31,11 +31,11 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
 ---
 
 ## Early goals:
-- [ ] Tools for easy building/compiling of all components
+- [x] Tools for easy building/compiling of all components
     - [x] Generating different `tsconfig`-files based on a configurable template
     - [x] Compiling multiple versions of multiple TypeScript 'projects'
     - [x] File watcher to move source maps and declarations to different folders
-    - [ ] Compiling sass stylesheets with autoprefixer
+    - [x] Compiling sass stylesheets with autoprefixer
     - [x] Arguments to control the behavior
 - [x] Polyfills for older browsers
     - [x] Promise-API
@@ -73,7 +73,7 @@ At the end UIX should be an easy to use CMS with a focus on blazing fast perform
 - [x] GitHub integration
     - [x] Automated tests on push
     - [x] Automated build on push
-    - [x] Making use of the projects page
+    - [ ] Making use of the projects page
     - [x] Issue templates
     - [ ] Wiki
 
