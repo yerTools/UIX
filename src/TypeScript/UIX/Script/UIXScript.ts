@@ -1,9 +1,13 @@
+/// <reference path="LowLevelLanguage/Main.ts" />
 /// <reference path="Parser/Parser.ts" />
 /// <reference path="Parser/Evaluable/Evaluator.ts" />
 
 namespace UIX.Script{
 
     export function test(){
+        LowLevelLanguage.main();
+
+        /*
         function createSection(name:string){
             let header = document.createElement("h2");
             header.innerText = name + ":";
@@ -217,5 +221,6 @@ namespace UIX.Script{
             }, 10);
         };
         textarea.oninput(<any>undefined);
+        */
     }
 }
