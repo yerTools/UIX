@@ -112,6 +112,11 @@ namespace Buildtools
                 }, TaskCreationOptions.AttachedToParent));
             }
 
+            if (errorOccurredDuringBuild)
+            {
+                return 1;
+            }
+
             if (singleBuild)
             {
                 List<CommandExecuter> runningCommandExecuterCopy = new List<CommandExecuter>(runningCommandExecuter);
@@ -206,7 +211,7 @@ namespace Buildtools
             }
             if (CommandExecuter.GetFileInfo("postcss") == null)
             {
-                Console.WriteLine("Can't find 'postcss'! You can install it with: 'npm install -g postcss-cli'");
+                Console.WriteLine("Can't find 'postcss'! You can install it with: 'npm install -g postcss postcss-cli'");
                 Console.WriteLine("Also make sure you have installed 'cssnano', 'postcss-cssnext' and 'caniuse-lite'. You can install it with: 'npm install -g caniuse-lite cssnano postcss-cssnext'");
                 errorOccurredDuringBuild = true;
                 return false;
