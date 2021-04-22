@@ -1,6 +1,6 @@
 (() => {
-    const rand = UIX.Libraries.Random.NumberGenerator;
-    const _ = UIX.Libraries.Random.StringGenerator;
+    const rand = new UIX.Libraries.Random.XorShift128();
+    const _ = new UIX.Libraries.Random.StringGenerator();
 
     describe("UIX.Libraries.Random.StringGenerator:", () => {
         let testLength = (text, expectedLength) =>{
@@ -14,9 +14,9 @@
 
         let createRangeTest = (name, generator, min, max) => {
             test(name, () =>{
-                for(let i = 0, error = false; i < 2000 && !error; i++){
-                    let length = rand.intBetween(150);
-                    let text = generator(length, length);
+                for(let i = 0, error = false; i < 1000 && !error; i++){
+                    let length = rand.nextUntil(120);
+                    let text =  generator.call(_, length, length);
                     if(!testLength(text, length)){
                         error = true;
                         break;
@@ -35,9 +35,9 @@
 
         let createRegexTest = (name, generator, regex) => {
             test(name, () =>{
-                for(let i = 0, error = false; i < 5000 && !error; i++){
-                    let length = rand.intBetween(100);
-                    let text = generator(length, length);
+                for(let i = 0, error = false; i < 2500 && !error; i++){
+                    let length = rand.nextUntil(100);
+                    let text = generator.call(_, length, length);
                     if(!testLength(text, length)){
                         error = true;
                         break;

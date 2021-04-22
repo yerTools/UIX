@@ -9,7 +9,7 @@ const currentPath = __dirname + "/";
 const tests = [
     "index.js",
 
-    "Libraries/Random/NumberGenerator.js",
+    "Libraries/Random/XorShift128.js",
     "Libraries/Random/StringGenerator.js",
 
     "Libraries/TextExpression/Text/TextSpan.js"
