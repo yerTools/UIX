@@ -1,6 +1,6 @@
-/// <reference path="NumberGenerator.ts" />
+/// <reference path="XorShift128.ts" />
 
-namespace UIX.Libraries.Random.StringGenerator{
+namespace UIX.Libraries.Random{
     const NUMBER_SET = "0123456789";
     const UPPER_CASE_LETTERS_SET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const LOWER_CASE_LETTERS_SET = "abcdefghijklmnopqrstuvwxyz";
@@ -21,75 +21,85 @@ namespace UIX.Libraries.Random.StringGenerator{
                     + "🏁🚩🎌🏴🏳🏳️‍🌈🏳️‍⚧️🏴‍☠️🇦🇨🇦🇩🇦🇪🇦🇫🇦🇬🇦🇮🇦🇱🇦🇲🇦🇴🇦🇶🇦🇷🇦🇸🇦🇹🇦🇺🇦🇼🇦🇽🇦🇿🇧🇦🇧🇧🇧🇩🇧🇪🇧🇫🇧🇬🇧🇭🇧🇮🇧🇯🇧🇱🇧🇲🇧🇳🇧🇴🇧🇶🇧🇷🇧🇸🇧🇹🇧🇻🇧🇼🇧🇾🇧🇿🇨🇦🇨🇨🇨🇩🇨🇫🇨🇬🇨🇭🇨🇮🇨🇰🇨🇱🇨🇲🇨🇳🇨🇴🇨🇵🇨🇷🇨🇺🇨🇻🇨🇼🇨🇽🇨🇾🇨🇿🇩🇪🇩🇬🇩🇯🇩🇰🇩🇲🇩🇴🇩🇿🇪🇦🇪🇨🇪🇪🇪🇬🇪🇭🇪🇷🇪🇸🇪🇹🇪🇺🇫🇮🇫🇯🇫🇰🇫🇲🇫🇴🇫🇷🇬🇦🇬🇧🇬🇩🇬🇪🇬🇫🇬🇬🇬🇭🇬🇮🇬🇱🇬🇲🇬🇳🇬🇵🇬🇶🇬🇷🇬🇸🇬🇹🇬🇺🇬🇼🇬🇾🇭🇰🇭🇲🇭🇳🇭🇷🇭🇹🇭🇺🇮🇨🇮🇩🇮🇪🇮🇱🇮🇲🇮🇳🇮🇴🇮🇶🇮🇷🇮🇸🇮🇹🇯🇪🇯🇲🇯🇴🇯🇵🇰🇪🇰🇬🇰🇭🇰🇮🇰🇲🇰🇳🇰🇵🇰🇷🇰🇼🇰🇾🇰🇿🇱🇦🇱🇧🇱🇨🇱🇮🇱🇰🇱🇷🇱🇸🇱🇹🇱🇺🇱🇻🇱🇾🇲🇦🇲🇨🇲🇩🇲🇪🇲🇫🇲🇬🇲🇭🇲🇰🇲🇱🇲🇲🇲🇳🇲🇴🇲🇵🇲🇶🇲🇷🇲🇸🇲🇹🇲🇺🇲🇻🇲🇼🇲🇽🇲🇾🇲🇿🇳🇦🇳🇨🇳🇪🇳🇫🇳🇬🇳🇮🇳🇱🇳🇴🇳🇵🇳🇷🇳🇺🇳🇿🇴🇲🇵🇦🇵🇪🇵🇫🇵🇬🇵🇭🇵🇰🇵🇱🇵🇲🇵🇳🇵🇷🇵🇸🇵🇹🇵🇼🇵🇾🇶🇦🇷🇪🇷🇴🇷🇸🇷🇺🇷🇼🇸🇦🇸🇧🇸🇨🇸🇩🇸🇪🇸🇬🇸🇭🇸🇮🇸🇯🇸🇰🇸🇱🇸🇲🇸🇳🇸🇴🇸🇷🇸🇸🇸🇹🇸🇻🇸🇽🇸🇾🇸🇿🇹🇦🇹🇨🇹🇩🇹🇫🇹🇬🇹🇭🇹🇯🇹🇰🇹🇱🇹🇲🇹🇳🇹🇴🇹🇷🇹🇹🇹🇻🇹🇼🇹🇿🇺🇦🇺🇬🇺🇲🇺🇳🇺🇸🇺🇾🇺🇿🇻🇦🇻🇨🇻🇪🇻🇬🇻🇮🇻🇳🇻🇺🇼🇫🇼🇸🇽🇰🇾🇪🇾🇹🇿🇦🇿🇲🇿🇼🏴󠁧󠁢󠁥󠁮󠁧󠁿🏴󠁧󠁢󠁳󠁣󠁴󠁿🏴󠁧󠁢󠁷󠁬󠁳󠁿🏴󠁵󠁳󠁴󠁸󠁿"
                     + "🥲🥸🤌🫀🫁🥷🤵‍♂️👰‍♂️👰‍♀️👩‍🍼🧑‍🍼👨‍🍼🧑‍🎄🫂🐈‍⬛🦬🦣🦫🐻‍❄️🦤🪶🦭🪲🪳🪰🪱🪴🫐🫒🫑🫓🫔🫕🫖🧋🪨🪵🛖🛻🛼🪄🪅🪆🪡🪢🩴🪖🪗🪘🪙🪃🪚🪛🪝🪜🛗🪞🪟🪠🪤🪣🪥🪦🪧🏳️‍⚧️";
 
-    function internal(charMinRange:number, charMaxRange:number, maxLength:number, minLength?:number){
-        let length = NumberGenerator.intBetween(maxLength, minLength);
-        let result = "";
-        while(result.length !== length){
-            while(result.length < length){
-                result += String.fromCharCode(NumberGenerator.intBetween(charMaxRange, charMinRange));
-            }
-            while(result.length > length){
-                result = result.substring(1);
-            }
+    export class StringGenerator{
+        private xorShift128:XorShift128;
+
+        constructor(seed?:number|Uint32Array|XorShift128|Date){
+            this.xorShift128 = new XorShift128(seed);
         }
-        return result;
-    }
 
-    function internalFromSet(set:string, maxLength:number, minLength?:number){
-        let length = NumberGenerator.intBetween(maxLength, minLength);
-        let result = "";
-        while(result.length !== length){
-            while(result.length < length){
-                result += set[Math.floor(Math.random() * set.length)];
+        private internal(charMinRange:number, charMaxRange:number, maxLength:number, minLength?:number){
+            const length = this.xorShift128.nextBetween(minLength ? minLength : 0, maxLength);
+            let result = "";
+            while(result.length !== length){
+                while(result.length < length){
+                    result += String.fromCharCode(this.xorShift128.nextBetween(charMaxRange, charMinRange));
+                }
+                while(result.length > length){
+                    result = result.substring(1);
+                }
             }
-            while(result.length > length){
-                result = result.substring(1);
-            }
+            return result;
         }
-        return result;
+    
+        private internalFromSet(set:string, maxLength:number, minLength?:number){
+            const length = this.xorShift128.nextBetween(minLength ? minLength : 0, maxLength);
+            let result = "";
+            while(result.length !== length){
+                while(result.length < length){
+                    result += set[this.xorShift128.nextUntil(set.length)];
+                }
+                while(result.length > length){
+                    result = result.substring(1);
+                }
+            }
+            return result;
+        }
+
+
+        public utf32(maxLength:number, minLength?:number){
+            return this.internal(0, 0x110000, maxLength, minLength);
+        }
+
+        public utf16(maxLength:number, minLength?:number){
+            return this.internal(0, 0x10000, maxLength, minLength);
+        }
+
+        public iso8859_1(maxLength:number, minLength?:number){
+            return this.internal(0, 0x100, maxLength, minLength);
+        }
+
+        public numbers(maxLength:number, minLength?:number){
+            return this.internalFromSet(NUMBER_SET, maxLength, minLength);
+        }
+
+        public base64(maxLength:number, minLength?:number){
+            return this.internalFromSet(UPPER_CASE_LETTERS_SET + LOWER_CASE_LETTERS_SET + NUMBER_SET + "+/", maxLength, minLength);
+        }
+
+        public text(maxLength:number, minLength?:number){
+            return this.internalFromSet(UPPER_CASE_LETTERS_SET + LOWER_CASE_LETTERS_SET, maxLength, minLength);
+        }
+
+        public special(maxLength:number, minLength?:number){
+            return this.internalFromSet(SPECIAL_SET, maxLength, minLength);
+        }
+
+        public whitespace(maxLength:number, minLength?:number){
+            return this.internalFromSet(WHITESPACE_SET, maxLength, minLength);
+        }
+
+        public umlaut(maxLength:number, minLength?:number){
+            return this.internalFromSet(UMLAUT_SET, maxLength, minLength);
+        }
+
+        public emoji(maxLength:number, minLength?:number){
+            return this.internalFromSet(EMOJI_SET, maxLength, minLength);
+        } 
+
+        public readable(maxLength:number, minLength?:number){
+            return this.internalFromSet(NUMBER_SET + UPPER_CASE_LETTERS_SET + LOWER_CASE_LETTERS_SET + SPECIAL_SET + WHITESPACE_SET + UMLAUT_SET + "ß" + EMOJI_SET, maxLength, minLength);
+        }
     }
 
-    export function utf32(maxLength:number, minLength?:number){
-        return internal(0, 0x10ffff, maxLength, minLength);
-    }
-
-    export function utf16(maxLength:number, minLength?:number){
-        return internal(0, 0xffff, maxLength, minLength);
-    }
-
-    export function iso8859_1(maxLength:number, minLength?:number){
-        return internal(0, 0xff, maxLength, minLength);
-    }
-
-    export function numbers(maxLength:number, minLength?:number){
-        return internalFromSet(NUMBER_SET, maxLength, minLength);
-    }
-
-    export function base64(maxLength:number, minLength?:number){
-        return internalFromSet(UPPER_CASE_LETTERS_SET + LOWER_CASE_LETTERS_SET + NUMBER_SET + "+/", maxLength, minLength);
-    }
-
-    export function text(maxLength:number, minLength?:number){
-        return internalFromSet(UPPER_CASE_LETTERS_SET + LOWER_CASE_LETTERS_SET, maxLength, minLength);
-    }
-
-    export function special(maxLength:number, minLength?:number){
-        return internalFromSet(SPECIAL_SET, maxLength, minLength);
-    }
-
-    export function whitespace(maxLength:number, minLength?:number){
-        return internalFromSet(WHITESPACE_SET, maxLength, minLength);
-    }
-
-    export function umlaut(maxLength:number, minLength?:number){
-        return internalFromSet(UMLAUT_SET, maxLength, minLength);
-    }
-
-    export function emoji(maxLength:number, minLength?:number){
-        return internalFromSet(EMOJI_SET, maxLength, minLength);
-    }
-
-    export function readable(maxLength:number, minLength?:number){
-        return internalFromSet(NUMBER_SET + UPPER_CASE_LETTERS_SET + LOWER_CASE_LETTERS_SET + SPECIAL_SET + WHITESPACE_SET + UMLAUT_SET + "ß" + EMOJI_SET, maxLength, minLength);
-    }
 }

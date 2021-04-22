@@ -122,4 +122,4 @@ If you are unsure, want/need a license or have any other questions, just send me
 
 ---
 
-##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)
+##### [Copyright © 2021 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)

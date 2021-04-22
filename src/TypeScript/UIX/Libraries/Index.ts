@@ -13,7 +13,7 @@
 
 /// <reference path="ObjectMerger/ObjectMerger.ts" />
 
-/// <reference path="Random/NumberGenerator.ts" />
+/// <reference path="Random/XorShift128.ts" />
 /// <reference path="Random/StringGenerator.ts" />
 
 /// <reference path="TextExpression/Factory.ts" />
