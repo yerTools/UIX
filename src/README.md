@@ -18,4 +18,4 @@ If you want to try it anyways, there is some [additional information](/src/Utili
 
 ---
 
-##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)
+##### [Copyright © 2021 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)

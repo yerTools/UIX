@@ -1,4 +1,4 @@
-Copyright (c) 2020 Felix Mayer (FelixM@yer.tools), yerTools
+Copyright (c) 2021 Felix Mayer (FelixM@yer.tools), yerTools
 -----------------------------------------------------------
 
 “Commons Clause” License Condition v1.0

@@ -30,4 +30,4 @@ You can also change the resulting file structure and tweak other settings.
 
 ---
 
-##### [Copyright © 2020 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)
+##### [Copyright © 2021 Felix Mayer (FelixM@yer.tools), yerTools](/LICENSE.md)
