@@ -16,7 +16,13 @@ const tests = [
 ];
 
 //Extreme ugly but it works for now... :)
-let script = fileSystem.readFileSync(currentPath + "../../../build/js/UIX.js").toString();
+const configuration = eval(fileSystem.readFileSync(currentPath + "Jest.Configuration.js").toString());
+
+let script = "";
+
+for(let i = 0; i < configuration.fileSystem.testFiles.length; i++){
+    script += "\n" + fileSystem.readFileSync(configuration.fileSystem.path.jsRootPath + configuration.fileSystem.testFiles[i]).toString();
+}
 
 for(let i = 0; i < tests.length; i++){
     script += "\n" + fileSystem.readFileSync(currentPath + tests[i]).toString();

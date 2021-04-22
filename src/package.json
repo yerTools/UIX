@@ -7,7 +7,10 @@
     "verbose": true
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "develop": "node ./Utilities/BuildTools/Main.js",
+    "build": "node ./Utilities/BuildTools/Main.js --build && jest",
+    "publish": "node ./Utilities/BuildTools/Main.js --publish && jest"
   },
   "repository": {
     "type": "git",
@@ -23,7 +26,13 @@
     "url": "https://yer.tools/"
   },
   "dependencies": {
+    "autoprefixer": "latest",
+    "caniuse-lite": "latest",
+    "cssnano": "latest",
     "jest": "latest",
+    "postcss": "latest",
+    "postcss-cli": "latest",
+    "postcss-cssnext": "latest",
     "sass": "latest",
     "ts-jest": "latest",
     "typescript": "latest"

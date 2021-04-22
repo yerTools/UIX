@@ -1,4 +1,6 @@
+.vscode
 build
+publish
 
 src/node_modules
 src/package-lock.json
@@ -9,7 +11,7 @@ src/TypeScript/UIX/tsconfig.json
 src/TypeScript/UIX.AjaxWorker/tsconfig.json
 src/TypeScript/UIX.ServiceWorker/tsconfig.json
 
-src/Utilities/Buildtools.config.json
-src/Utilities/Buildtools/.vs
-src/Utilities/Buildtools/bin
-src/Utilities/Buildtools/obj
+src/TypeScript/UnitTests/Jest.Configuration.js
+
+src/Utilities/BuildTools/BuildTools.js
+src/Utilities/BuildTools.config.json

@@ -2,7 +2,7 @@
 
 **`At the moment there is little to no documentation for this project because it isn't in Alpha/Beta stage yet.`**
 
-[![Build and test UIX](https://github.com/yerTools/UIX/workflows/Build%20and%20test%20UIX/badge.svg?branch=master)](https://github.com/yerTools/UIX/actions)
+[![Build and Test UIX](https://github.com/yerTools/UIX/actions/workflows/build_and_test.yml/badge.svg?branch=master)](https://github.com/yerTools/UIX/actions/workflows/build_and_test.yml)
 [![Last commit](https://img.shields.io/github/last-commit/yerTools/UIX)](https://github.com/yerTools/UIX/branches/all)
 [![Issues](https://img.shields.io/github/issues-raw/yerTools/UIX)](https://github.com/yerTools/UIX/issues)
 [![Pull requests](https://img.shields.io/github/issues-pr/yerTools/UIX)](https://github.com/yerTools/UIX/pulls)
@@ -19,7 +19,7 @@ So search engines, web crawler and even noscript users are able to read your pag
 But if the client supports javascript, the page rendering is performed on the client side.
 
 `Web Workers` *(if available)* will perform most of the operations, so the main thread should always be responsive.
-Because to this multithreading approach, the available resources on the client devices are getting utilized for the best performance.
+Because to this multi threading approach, the available resources on the client devices are getting utilized for the best performance.
 
 A `Service Worker` *(if available)* will store the main parts of this system offline, on the client device.
 This will result in short to no loading times and site navigation's should happen nearly instantly.
