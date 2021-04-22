@@ -1,0 +1,29 @@
+name: Build and Test UIX
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: ['ubuntu-latest', 'windows-latest']
+        nodeVersion: [ '12', '14', '16' ]
+
+    name: Node version ${{ matrix.nodeVersion }} on ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.nodeVersion }}
+    - name: Install Node Dependencies
+      run: npm install
+      working-directory: ./src
+    - name: Run npm build script with unit tests
+      run: npm run build
+      working-directory: ./src
+    - name: Run npm publish script with unit tests
+      run: npm run publish
+      working-directory: ./src
